@@ -1,0 +1,30 @@
+{
+    "invoice_id": "1124132",
+    "invoice_date": "2024-11-12",
+    "po_number": null,
+    "terms": "Net 30",
+    "ship_date": "2024-11-12",
+    "ship_via": "Our Truck",
+    "unit_number": "9856",
+    "bill_to": {
+        "customer_name": "Lucky Lad Energy",
+        "address": "P.O. Box 1379 Conroe, TX 77305"
+    },
+    "ship_to": {
+        "customer_name": "Lucky Lad Energy",
+        "address": "Kirby McInnis Tank Battery"
+    },
+    "line_items": [
+        {
+            "quantity": "55",
+            "description": "Gallons of OLA-905 (Oil - Low Ash)",
+            "unit_price": "15.75",
+            "amount": "866.25T"
+        }
+    ],
+    "subtotal": "866.25",
+    "sales_tax": "71.47",
+    "total_amount": "937.72",
+    "payments_credits": null,
+    "balance_due": "$937.72"
+}

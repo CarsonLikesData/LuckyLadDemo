@@ -1,0 +1,78 @@
+{
+    "statement_date": "1/5/2024",
+    "to": {
+        "customer_name": "LUCKY LAD ENERGY LLC",
+        "address": "PO BOX 1379\nCONROE, TX 77305-1379"
+    },
+    "transactions": [
+        {
+            "date": "09/20/2023\n\n09/26/2023",
+            "transaction": "INV #6378. Due 10/20/2023. Orig. Amount $562.20.\nINV #6522. Due 10/26/2023. Orig. Amount $1,451.02.",
+            "amount": "562.20\n\n1.451.02",
+            "balance": "562.20\n\n2,013.22"
+        },
+        {
+            "date": "11/30/2023",
+            "transaction": "GENJRNL #23-09-44R. Reverse of GJE 23-09-44- Transfer of Credits for\nLUCKY LAD ENERGY LLC from LUCKY LAD ENERGY LLC to 10032\nTheuvenins Creek",
+            "amount": "-1,708.00",
+            "balance": "305.22"
+        },
+        {
+            "date": "11/30/2023\n\n12/26/2023",
+            "transaction": "GENJRNL #23-09-46R. Reverse of GJE 23-09-46 Transfer of Credits for\nLUCKY LAD ENERGY LLC from LUCKY LAD ENERGY LLC to 10032\nTheuvenins Creek\nINV #8600. Due 01/25/2024. Orig. Amount $665.12.\n\n10032 Theuvenins Creek-",
+            "amount": "-170.00\n\n665.12",
+            "balance": "135.22\n\n800.34"
+        },
+        {
+            "date": "11/01/2023",
+            "transaction": "INV #99056445. Due 11/01/2023. Orig. Amount $1,878.80.",
+            "amount": "1,878.80",
+            "balance": "2,679.14"
+        },
+        {
+            "date": "12/01/2023",
+            "transaction": "INV #99056973. Due 12/01/2023. Orig. Amount $1,878.80.",
+            "amount": "1,878.80",
+            "balance": "4,557.94"
+        },
+        {
+            "date": "01/01/2024",
+            "transaction": "INV #99057514. Due 01/01/2024. Orig. Amount $1,878.80.\n\n10051 LG #1, SPURGER, TX-",
+            "amount": "1.878.80",
+            "balance": "6,436.74"
+        },
+        {
+            "date": "10/01/2023",
+            "transaction": "INV #99055894. Due 10/01/2023. Orig. Amount $3,757.60.",
+            "amount": "3,757.60",
+            "balance": "10,194.34"
+        },
+        {
+            "date": "11/01/2023",
+            "transaction": "INV #99056447. Due 11/01/2023. Orig. Amount $1,878.80.",
+            "amount": "1,878.80",
+            "balance": "12.073.14"
+        },
+        {
+            "date": "12/01/2023",
+            "transaction": "INV #99056975. Due 12/01/2023. Orig. Amount $1,878.80.",
+            "amount": "1.878.80",
+            "balance": "13,951.94"
+        },
+        {
+            "date": "01/01/2024\n\n01/01/2024\n\n01/01/2024",
+            "transaction": "INV #99057516. Due 01/01/2024. Orig. Amount $1,878.80.\n10083 DUPLANTIER ESTATE #2-\nINV #99057612. Due 01/01/2024. Orig. Amount $1,374.38.\n10084 DREYFUS MINERALS #1-\nINV #99057613. Due 01/01/2024. Orig. Amount $1,464.08.",
+            "amount": "1,878.80\n\n1,374.38\n\n1.464.08",
+            "balance": "15,830.74\n\n17,205.12\n\n18.669.20"
+        },
+        {
+            "date": "01/01/2024",
+            "transaction": "10085 DREYFUS MINERALS #2 ALT-\nINV #99057614. Due 01/01/2024. Orig. Amount $1,355.63.",
+            "amount": "1,355.63",
+            "balance": "20.024.83"
+        },
+        {
+            "date": "01/01/2024",
+            "transaction": "10086 JOHNSON BAYOU-\nINV #99057517. Due 01/01/2024. Orig. Amount $2,506.80.\n\n10087 GORDON-",
+            "amount": "2,506.80",
+            "balance": "

@@ -1,0 +1,19 @@
+{
+    "invoice_id": "023797",
+    "invoice_date": "6/26/24",
+    "order_number": null,
+    "charge_field": "Godchaux #3\n\nLive Oak",
+    "parish": "Shop / Laf\n\nMr Dexter Romero",
+    "quantity": null,
+    "description": "Ths Invoice Originated From DT#013797\n\ncheck, repair, test and paint 1-Kimray 4015 Glycol Pump.\n\n\nShop charges to clean,\n\nLabor: 5 Hrs @\n\nMaterials:\n\n1\n1\n1\n4\n2\n2",
+    "labor": "42.00\n\n210.00",
+    "materials": "4015 Viton Repair Kit\n\n764 Cylinder\n\n779A Piston Rod Assy\n\n1307 Darts\n\n1152 Seats\n\n1153 Seats\n\n92.58\n\n196.29\n\n156.69\n\n11.47\n\n14.11\n\n16.54\n\n45.88\n\n28.22\n\n33.08",
+    "taxable_total": "762.74",
+    "state_tax": "$33.94",
+    "parish_tax": "$30.51",
+    "total_amount": "$827.19",
+    "ship_to": "Lucky Lad (invoice@luckylad.com)",
+    "invoice_to": "Shop / Laf",
+    "ord_by": "Mr Dexter Romero",
+    "rcvd_by": null
+}

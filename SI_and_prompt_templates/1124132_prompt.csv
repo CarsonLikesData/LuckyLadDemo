@@ -1,0 +1,31 @@
+DOCUMENT_TYPE,ENTITY_JSON_SCHEMA,ARRAY_FIELD_NAME,ADDITIONAL_INSTRUCTIONS
+invoice,"
+    ""invoice_id"": """",
+    ""invoice_date"": """",
+    ""po_number"": """",
+    ""terms"": """",
+    ""ship_date"": """",
+    ""ship_via"": """",
+    ""unit_number"": """",
+    ""bill_to"": {
+        ""customer_name"": ""Lucky Lad Energy"",
+        ""address"": ""P.O. Box 1379 Conroe, TX 77305""
+    },
+    ""ship_to"": {
+        ""customer_name"": ""Lucky Lad Energy"",
+        ""address"": ""Kirby McInnis Tank Battery""
+    },
+    ""line_items"": [
+        {
+            ""quantity"": """",
+            ""description"": """",
+            ""unit_price"": """",
+            ""amount"": """"
+        }
+    ],
+    ""subtotal"": """",
+    ""sales_tax"": """",
+    ""total_amount"": """",
+    ""payments_credits"": """",
+    ""balance_due"": """"
+",line_items,

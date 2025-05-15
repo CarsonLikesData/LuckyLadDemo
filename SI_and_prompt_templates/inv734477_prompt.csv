@@ -1,0 +1,42 @@
+DOCUMENT_TYPE,ENTITY_JSON_SCHEMA,ARRAY_FIELD_NAME,ADDITIONAL_INSTRUCTIONS
+invoice,"
+    ""invoice_number"": """",
+    ""invoice_date"": """",
+    ""due_date"": """",
+    ""customer_id"": ""LUCK001"",
+    ""lease_name"": ""Godchaux"",
+    ""well_name"": """",
+    ""property_no"": """",
+    ""afe_po_no"": """",
+    ""area"": ""Live Oak"",
+    ""service_date"": ""4/10/2024"",
+    ""order_no"": """",
+    ""sales_person"": ""Justin Hebert"",
+    ""bill_to"": {
+        ""customer_name"": ""Lucky Lad Energy LLC"",
+        ""attention"": ""Richard Hopper"",
+        ""address"": ""PO Box 1379\nConroe, TX 77305\nUSA""
+    },
+    ""ship_to"": {
+        ""customer_name"": ""Lucky Lad Energy LLC"",
+        ""attention"": ""Richard Hopper"",
+        ""address"": ""PO Box 1379\nConroe, TX 77305\nUSA""
+    },
+    ""line_items"": [
+        {
+            ""well_name"": """",
+            ""item"": """",
+            ""description"": """",
+            ""unit"": """",
+            ""quantity"": """",
+            ""unit_price"": """",
+            ""total_price"": """"
+        }
+    ],
+    ""amount_subject_to_sales_tax"": """",
+    ""amount_exempt_from_sales_tax"": """",
+    ""subtotal"": """",
+    ""invoice_discount"": """",
+    ""total_sales_tax"": """",
+    ""total"": """"
+",line_items,

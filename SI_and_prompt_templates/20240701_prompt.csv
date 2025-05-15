@@ -1,0 +1,19 @@
+DOCUMENT_TYPE,ENTITY_JSON_SCHEMA,ARRAY_FIELD_NAME,ADDITIONAL_INSTRUCTIONS
+invoice,"
+    ""invoice_id"": """",
+    ""invoice_date"": """",
+    ""order_number"": """",
+    ""charge_field"": """",
+    ""parish"": """",
+    ""quantity"": """",
+    ""description"": """",
+    ""labor"": """",
+    ""materials"": """",
+    ""taxable_total"": """",
+    ""state_tax"": """",
+    ""parish_tax"": """",
+    ""total_amount"": """",
+    ""ship_to"": ""Lucky Lad (invoice@luckylad.com)"",
+    ""invoice_to"": ""Shop / Laf"",
+    ""ord_by"": ""Mr Dexter Romero""
+",N/A,"Extract ""Charge Field"" and ""Parish"" exactly as they appear in the document."

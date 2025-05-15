@@ -1,0 +1,488 @@
+[
+  {
+    "template_name": "ATKINSON PROPANE CO. INC.pdf",
+    "fields": {
+      "Date:": {
+        "type": "date",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "1-2-24"
+      },
+      "Sold To:": {
+        "type": "address",
+        "relative_position": {
+          "x_offset": 0,
+          "y_offset": 60
+        },
+        "value": "Lucky Lad Energy\nAddress: Temple 26-2 514 232598"
+      },
+      "GALLONS": {
+        "type": "quantity",
+        "relative_position": {
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        "value": "420"
+      },
+      "PRICE/GAL": {
+        "type": "price",
+        "relative_position": {
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        "value": "2.97"
+      },
+      "AMOUNT": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 20,
+          "y_offset": 0
+        },
+        "value": "1,247400"
+      },
+      "FAX": {
+        "type": "fax",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "84.20"
+      },
+      "TAX": {
+        "type": "tax",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "84.20"
+      },
+      "TOTAL PAYMENT DUE": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "1,331.60"
+      },
+      "Invoice #": {
+        "type": "invoice_number",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "101891"
+      },
+      "Tank Serial Number": {
+        "type": "tank_serial_number",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "271900564"
+      },
+      "Tank Size": {
+        "type": "tank_size",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "320\n250"
+      },
+      "Before": {
+        "type": "before_tank_percentage",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "5\n16"
+      },
+      "After": {
+        "type": "after_tank_percentage",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "४८\n४५\n86"
+      },
+      "Start Pressure:": {
+        "type": "start_pressure",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "N/A"
+      },
+      "End Pressure:": {
+        "type": "end_pressure",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "N/A"
+      },
+      "Driver Initial": {
+        "type": "driver_initial",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "Louis"
+      },
+      "Check #": {
+        "type": "check_number",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "N/A"
+      }
+    }
+  },
+  {
+    "template_name": "1124132[90].pdf",
+    "fields": {
+      "Date": {
+        "type": "date",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "11/12/2024"
+      },
+      "Invoice #": {
+        "type": "invoice_number",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "1124132"
+      },
+      "Bill To": {
+        "type": "address",
+        "relative_position": {
+          "x_offset": 0,
+          "y_offset": 80
+        },
+        "value": "Lucky Lad Energy\nP.O. Box 1379\nConroe, TX 77305"
+      },
+      "Ship To": {
+        "type": "address",
+        "relative_position": {
+          "x_offset": 0,
+          "y_offset": 40
+        },
+        "value": "Lucky Lad Energy\nKirby McInnis Tank Battery"
+      },
+      "P.O. No.": {
+        "type": "po_number",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "N/A"
+      },
+      "Terms": {
+        "type": "terms",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "Net 30"
+      },
+      "Rep": {
+        "type": "rep",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "CTH"
+      },
+      "Ship Date": {
+        "type": "date",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "11/12/2024"
+      },
+      "Via": {
+        "type": "via",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "Our Truck"
+      },
+      "Unit No.": {
+        "type": "unit_no",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "9856"
+      },
+      "Qty": {
+        "type": "quantity",
+        "relative_position": {
+          "x_offset": 20,
+          "y_offset": 0
+        },
+        "value": "55"
+      },
+      "Description": {
+        "type": "description",
+        "relative_position": {
+          "x_offset": 100,
+          "y_offset": 0
+        },
+        "value": "Gallons of OLA-905 (Oil - Low Ash)"
+      },
+      "Price Each": {
+        "type": "price",
+        "relative_position": {
+          "x_offset": 20,
+          "y_offset": 0
+        },
+        "value": "15.75"
+      },
+      "Amount": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 20,
+          "y_offset": 0
+        },
+        "value": "866.25T"
+      },
+      "Subtotal": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "866.25"
+      },
+      "Sales Tax": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "71.47"
+      },
+      "Total": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "937.72"
+      },
+      "Balance Due": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "<span class="math-inline">937\.72"
+\}
+\}
+\},
+\{
+"template\_name"\: "20240701\_112438\.PDF",
+"fields"\: \{
+"INV\#"\: \{
+"type"\: "invoice\_number",
+"relative\_position"\: \{
+"x\_offset"\: 50,
+"y\_offset"\: 0
+\},
+"value"\: "023797"
+\},
+"Date\:"\: \{
+"type"\: "date",
+"relative\_position"\: \{
+"x\_offset"\: 50,
+"y\_offset"\: 0
+\},
+"value"\: "6/26/24"
+\},
+"Ship To\:"\: \{
+"type"\: "address",
+"relative\_position"\: \{
+"x\_offset"\: 0,
+"y\_offset"\: 20
+\},
+"value"\: "Lucky Lad \(invoice@luckylad\.com\)"
+\},
+"Order \#\:"\: \{
+"type"\: "order\_number",
+"relative\_position"\: \{
+"x\_offset"\: 50,
+"y\_offset"\: 0
+\},
+"value"\: "DT"
+\},
+"Charge"\: \{
+"type"\: "charge",
+"relative\_position"\: \{
+"x\_offset"\: 50,
+"y\_offset"\: 0
+\},
+"value"\: "Godchaux \#3"
+\},
+"Field"\: \{
+"type"\: "field",
+"relative\_position"\: \{
+"x\_offset"\: 50,
+"y\_offset"\: 0
+\},
+"value"\: "Live Oak"
+\},
+"Invoice To\:"\: \{
+"type"\: "address",
+"relative\_position"\: \{
+"x\_offset"\: 0,
+"y\_offset"\: 20
+\},
+"value"\: "Shop/Laf"
+\},
+"Parish"\: \{
+"type"\: "parish",
+"relative\_position"\: \{
+"x\_offset"\: 50,
+"y\_offset"\: 0
+\},
+"value"\: "Parish"
+\},
+"Ord'd By\:"\: \{
+"type"\: "name",
+"relative\_position"\: \{
+"x\_offset"\: 50,
+"y\_offset"\: 0
+\},
+"value"\: "Mr Dexter Romero"
+\},
+"Quantity"\: \{
+"type"\: "quantity",
+"relative\_position"\: \{
+"x\_offset"\: 20,
+"y\_offset"\: 0
+\},
+"value"\: "2\\n2\\n4\\n1\\n1\\n1"
+\},
+"Rcvd By\:"\: \{
+"type"\: "name",
+"relative\_position"\: \{
+"x\_offset"\: 50,
+"y\_offset"\: 0
+\},
+"value"\: "Romero\\nBy\\nBy"
+\},
+"Description"\: \{
+"type"\: "description",
+"relative\_position"\: \{
+"x\_offset"\: 100,
+"y\_offset"\: 0
+\},
+"value"\: "Seats 1153\\nSeats 1152\\nDarts 1307\\nAssy Rod Piston 779A\\nCylinder 764\\nKit Repair Viton 4015"
+\},
+"TOTAL"\: \{
+"type"\: "amount",
+"relative\_position"\: \{
+"x\_offset"\: 50,
+"y\_offset"\: 0
+\},
+"value"\: "827\.19\\n</span>\n762.74\n16.54\n33.08\n14.11\n28.22\n11.47\n45.88\n156.69\n196.29\n92.58\n42.00\n210.00\n."
+      },
+      "State Tax": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "33.94"
+      },
+      "Parish Tax": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "30.51\n$"
+      },
+      "Taxable Total": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "N/A"
+      },
+      "Materials": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "N/A"
+      },
+      "Hrs": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "5"
+      },
+      "Labor": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "@"
+      },
+      "Shop": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "charges"
+      },
+      "Pump": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "Kimray - 4015 Glycol"
+      },
+      "Business": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "Your"
+      },
+      "Appreciate": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "We"
+      },
+      "repair": {
+        "type": "amount",
+        "relative_position": {
+          "x_offset": 50,
+          "y_offset": 0
+        },
+        "value": "test, paint and"
+      },
+      "013797": {
+        "type": "amount",

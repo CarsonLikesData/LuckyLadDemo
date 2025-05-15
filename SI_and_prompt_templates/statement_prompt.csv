@@ -1,0 +1,22 @@
+DOCUMENT_TYPE,ENTITY_JSON_SCHEMA,ARRAY_FIELD_NAME,ADDITIONAL_INSTRUCTIONS
+statement,"
+    ""statement_date"": ""1/5/2024"",
+    ""to"": {
+        ""customer_name"": ""LUCKY LAD ENERGY LLC"",
+        ""address"": ""PO BOX 1379\nCONROE, TX 77305-1379""
+    },
+    ""transactions"": [
+        {
+            ""date"": """",
+            ""transaction"": """",
+            ""amount"": """",
+            ""balance"": """"
+        }
+    ],
+    ""amount_due"": """",
+    ""current"": """",
+    ""days_1_30_past_due"": """",
+    ""days_31_60_past_due"": """",
+    ""days_61_90_past_due"": """",
+    ""over_90_days_past_due"": """"
+",transactions,

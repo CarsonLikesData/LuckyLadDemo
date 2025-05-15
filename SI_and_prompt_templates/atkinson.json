@@ -1,0 +1,18 @@
+{
+    "invoice_number": "101891",
+    "date": "1-2-24",
+    "sold_to": "Lucky Lad Energy",
+    "address": "Temple 26-2 514 232598",
+    "gallons": "420",
+    "price_per_gallon": "2.97",
+    "amount": "1,247400",
+    "fax": "84.20",
+    "tax": null,
+    "total_payment_due": "1,331.60",
+    "tank_serial_number": "320\n250",
+    "tank_size": null,
+    "before": "5\n\n16",
+    "after": "४८\n४५\n86",
+    "charge": "CHARGE",
+    "parish": "Bezu."
+}

@@ -1,0 +1,95 @@
+{
+    "invoice_number": "INV734477",
+    "invoice_date": "4/11/2024",
+    "due_date": "5/11/2024",
+    "customer_id": "LUCK001",
+    "lease_name": "Godchaux",
+    "well_name": null,
+    "property_no": null,
+    "afe_po_no": null,
+    "area": "Live Oak",
+    "service_date": "4/10/2024",
+    "order_no": null,
+    "sales_person": "Justin Hebert",
+    "bill_to": {
+        "customer_name": "Lucky Lad Energy LLC",
+        "attention": "Richard Hopper",
+        "address": "PO Box 1379\nConroe, TX 77305\nUSA"
+    },
+    "ship_to": {
+        "customer_name": "Lucky Lad Energy LLC",
+        "attention": "Richard Hopper",
+        "address": "PO Box 1379\nConroe, TX 77305\nUSA"
+    },
+    "line_items": [
+        {
+            "well_name": "Godchaux 1",
+            "item": "CS-1148",
+            "description": "Corr-Shield CS-1148",
+            "unit": "GAL",
+            "quantity": "75",
+            "unit_price": "7.15",
+            "total_price": "536,25"
+        },
+        {
+            "well_name": "Godchaux 1",
+            "item": "SS-728",
+            "description": "SCALE-SHIELD SS-728",
+            "unit": "GAL",
+            "quantity": "75",
+            "unit_price": "5.70",
+            "total_price": "427.50"
+        },
+        {
+            "well_name": "Godchaux 1",
+            "item": "METHANOL",
+            "description": "Methanol",
+            "unit": "GAL",
+            "quantity": "100",
+            "unit_price": "2.20",
+            "total_price": "220.00"
+        },
+        {
+            "well_name": "Godchaux 3",
+            "item": "SC-1331",
+            "description": "SC-SHIELD SC-1331",
+            "unit": "GAL",
+            "quantity": "110",
+            "unit_price": "8.15",
+            "total_price": "896.50"
+        },
+        {
+            "well_name": "Godchaux 3",
+            "item": "METHANOL",
+            "description": "Methanol",
+            "unit": "GAL",
+            "quantity": "75",
+            "unit_price": "2.20",
+            "total_price": "165.00"
+        },
+        {
+            "well_name": "Godchaux 3",
+            "item": "PS-653M",
+            "description": "Phase Shield PS-653M",
+            "unit": "GAL",
+            "quantity": "50",
+            "unit_price": "18.80",
+            "total_price": "940.00"
+        },
+        {
+            "well_name": "Godchaux 5 SWD",
+            "item": "DS-129",
+            "description": "D-SHIELD DS-129",
+            "unit": "GAL",
+            "quantity": "120",
+            "unit_price": "11.90",
+            "total_price": "1,428.00"
+        }
+    ],
+    "amount_subject_to_sales_tax": "4613.25",
+    "amount_exempt_from_sales_tax": "0.00",
+    "subtotal": "4,613.25",
+    "invoice_discount": "0.00",
+    "total_sales_tax": "378.29",
+    "total": "4,991.54"
+}

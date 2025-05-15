@@ -1,0 +1,19 @@
+DOCUMENT_TYPE,ENTITY_JSON_SCHEMA,ARRAY_FIELD_NAME,ADDITIONAL_INSTRUCTIONS
+invoice,"
+    ""invoice_number"": """",
+    ""date"": """",
+    ""sold_to"": ""Lucky Lad Energy"",
+    ""address"": ""Temple 26-2 514 232598"",
+    ""gallons"": """",
+    ""price_per_gallon"": """",
+    ""amount"": """",
+    ""fax"": """",
+    ""tax"": """",
+    ""total_payment_due"": """",
+    ""tank_serial_number"": """",
+    ""tank_size"": """",
+    ""before"": """",
+    ""after"": """",
+    ""charge"": """",
+    ""parish"": ""Bezu.""
+",N/A,"Extract ""CHARGE"" exactly as it appears, even if it is circled."

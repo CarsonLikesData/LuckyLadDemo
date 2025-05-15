@@ -1,0 +1,13 @@
+{
+  "title": "Invoice Data Extraction",
+  "parameters": {
+    "temperature": 0.2,  
+    "tokenLimits": 2048,   
+    "topK": 50,         
+    "topP": 0.95          
+  },
+  "type": "multimodal_freeform",
+  "prompt": "You are a document entity extraction specialist. Given an invoice, your task is to extract the text value of the following entities:\n\n{\n    \"invoice_id\": \"\",\n    \"invoice_date\": \"\",\n    \"due_date\": \"\",\n    \"po_number\": \"\",\n    \"terms\": \"\",\n    \"ship_date\": \"\",\n    \"ship_via\": \"\",\n     \"unit_number\": \"\",\n    \"bill_to\": {\n        \"customer_name\": \"\",\n        \"address\": \"\"\n    },\n    \"ship_to\": {\n        \"customer_name\": \"\",\n        \"address\": \"\"\n    },\n    \"line_items\": [\n        {\n            \"quantity\": \"\",\n            \"description\": \"\",\n            \"unit_price\": \"\",\n            \"amount\": \"\"\n        }\n    ],\n    \"subtotal\": \"\",\n    \"sales_tax\": \"\",\n    \"total_amount\": \"\",\n    \"well_name\": \"\",\n    \"lease_name\": \"\",\n    \"customer_id\": \"\",\n    \"order_number\": \"\",\n    \"area\": \"\",\n    \"tank_serial_number\": \"\",\n    \"tank_size\": \"\"\n}\n\n-   The JSON schema must be followed during the extraction.\n-   The values must only include text found in the document.\n-   Do not normalize any entity value (e.g., dates, addresses, etc.). Extract them exactly as they appear in the document.\n-   If an entity is not found in the document, set the entity value to null.\n-   If there are multiple line items, extract each as a separate object within the `line_items` array.",
+  "model": "gemini-1.5-pro-002",
+  "note": "This prompt is designed for accurate extraction of invoice data into a structured JSON format."
+}

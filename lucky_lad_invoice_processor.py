@@ -8,20 +8,18 @@ An automated invoice processing system that:
 4. Stores processed data in Snowflake
 """
 
-
-# TODO:
-# 1. Add in a system to flag invoices as paid or unpaid. Update powerbi dashboard upon status change.
-# 2. Automate job shceduling, client wants to run AM and PM. - Azure handles this, need to confirm scheduling
-# 3. Make application deployable. - What are Azure's requirements for this?
-
-# Email and PDF processing imports
+# Standard library imports
 import os
 import email
 import json
 from email.utils import parsedate_to_datetime
 from datetime import datetime
 from imaplib import IMAP4_SSL
+
+# Third-party imports
 from dateutil import parser as dateutil_parser
+import pandas as pd
+import snowflake.connector
 
 # RAG Engine import
 from rag_engine import get_rag_engine
@@ -42,9 +40,49 @@ from google.api_core.client_options import ClientOptions
 import vertexai
 from vertexai.generative_models import GenerativeModel, SafetySetting
 
-# Data processing imports
-import pandas as pd
-import snowflake.connector
+# Statement handling configuration
+STATEMENT_PROCESSOR_ID = "7892fff45ef396e3"  # Separate processor for statements
+STATEMENT_PROCESSOR_VERSION_ID = "57f4f1dda43d5c51"
+STATEMENT_STORAGE_DIR = "processed_statements"  # Directory for processed statements
+
+# Function to detect if a document is a statement rather than an invoice
+def is_statement(document_text, filename):
+    """
+    Determine if a document is a statement rather than an invoice
+    
+    Args:
+        document_text (str): The extracted text from the document
+        filename (str): The filename of the document
+        
+    Returns:
+        bool: True if the document is a statement, False otherwise
+    """
+    # Check filename for statement indicators
+    if "statement" in filename.lower():
+        return True
+        
+    # Check document text for statement indicators
+    statement_indicators = [
+        "statement of account",
+        "account statement",
+        "statement date",
+        "aging summary",
+        "payment history",
+        "balance forward",
+        "previous balance",
+        "current activity",
+        "account summary"
+    ]
+    
+    # Count how many statement indicators are present
+    indicator_count = sum(1 for indicator in statement_indicators
+                         if indicator in document_text.lower())
+    
+    # If multiple indicators are present, it's likely a statement
+    if indicator_count >= 2:
+        return True
+        
+    return False
 
 # ===== Configuration =====
 
@@ -62,7 +100,7 @@ REVIEW_DIR = "invoices_for_review"  # Directory for invoices that need human rev
 
 # Email configuration
 
-# COMMENT OUT OR REMOVE GMAIL CONFIGURATION BEFORE DEPLOYING - IMPORTANT
+
 
 # Gmail configuration
 GMAIL_USERNAME = "lucky.lad.test.df@gmail.com"
@@ -84,7 +122,11 @@ SNOWFLAKE_PASSWORD = os.environ.get("LLE_SNOWFLAKE_SVC_ACC_PW")
 SNOWFLAKE_DATABASE = "OCCLUSION"
 SNOWFLAKE_SCHEMA = "WELLS"
 SNOWFLAKE_WAREHOUSE = "COMPUTE_WH"
-SNOWFLAKE_TABLE = "LUCKY_LAD_INVOICE_PROCESSOR"
+# Snowflake table configuration
+SNOWFLAKE_INVOICE_HEADER_TABLE = "LLE_INVOICE_HEADER"
+SNOWFLAKE_INVOICE_LINE_ITEMS_TABLE = "LLE_INVOICE_LINE_ITEMS"
+SNOWFLAKE_STATEMENTS_TABLE = "LLE_STATEMENTS"
+SNOWFLAKE_STATEMENT_TRANSACTIONS_TABLE = "LLE_STATEMENT_TRANSACTIONS"
 
 # Vertex AI configuration
 VERTEX_AI_PROJECT = "invoiceprocessing-450716"
@@ -139,8 +181,16 @@ CHARGE 2: [Value] (If present)
 
 Statement Specific Verification:
 Statement Date: [Value]
+Statement Period: [Value]
+Previous Balance: [Value]
+Current Charges: [Value]
+Payments Received: [Value]
 Amount Due (from the summary/aging): [Value]
+Payment Due Date: [Value]
+Account Number: [Value]
 
+# For cross-validation with invoices
+Related Invoices: [List invoice numbers referenced in statement]
 IMPORTANT:
 1. Always use standardized field names as shown above
 2. If you find a well name in ANY field, include it in the "Well Name" field
@@ -159,12 +209,16 @@ Extracted Entities:
 {entities}
 
 This is for an oil and gas company that needs to track expenses by well name.
+
+DOCUMENT TYPE: {document_type}
+
 IMPORTANT: Pay special attention to any fields that might contain well names, especially:
 1. Fields labeled "CHARGE" or "Charge"
 2. Ship To or location information
 3. Description fields that mention wells
 4. Any field containing words like "Well", "Field", or specific well identifiers
 
+{statement_specific_instructions}
 Please extract and verify all invoice information following the format in your instructions.
 For any field that isn't found in the document, respond with "Not found".
 """
@@ -197,7 +251,7 @@ SAFETY_SETTINGS = [
 ]
 # ===== Email Functions =====
 
-# ----- Gmail Functions -----
+# ----- Gmail Functions ----- #TODO GMAIL CODE BLOCK NEEDS TO BE REMOVED OR COMMENTED OUT BEFORE DEPLOYMENT
 
 def get_gmail_service(username, password):
     """Connect to Gmail via IMAP and return the IMAP object"""
@@ -262,6 +316,21 @@ def process_outlook_email(attachment, email_datetime):
             pdf_title_text = "No Title Found"
             
             try:
+                # First get some text to determine if this is a statement
+                initial_document = process_document_from_memory(
+                    image_content=payload,
+                    mime_type=MIME_TYPE,
+                    project_id=PROJECT_ID,
+                    location=LOCATION,
+                    processor_id=PROCESSOR_ID,
+                    field_mask="text",  # Just get text for initial detection
+                    processor_version_id=PROCESSOR_VERSION_ID,
+                )
+                
+                # Check if this is a statement
+                is_statement_doc = is_statement(initial_document.text, attachment.name)
+                
+                # Now process with the appropriate processor
                 document = process_document_from_memory(
                     image_content=payload,
                     mime_type=MIME_TYPE,
@@ -270,6 +339,7 @@ def process_outlook_email(attachment, email_datetime):
                     processor_id=PROCESSOR_ID,
                     field_mask=FIELD_MASK,
                     processor_version_id=PROCESSOR_VERSION_ID,
+                    is_statement_doc=is_statement_doc,
                 )
                 
                 if document.text:
@@ -380,8 +450,14 @@ def process_document_from_memory(
     processor_id,
     field_mask=None,
     processor_version_id=None,
+    is_statement_doc=False,
 ):
     """Process a document using Google Document AI with confidence tracking"""
+    # If this is a statement, use the statement processor instead
+    if is_statement_doc:
+        processor_id = STATEMENT_PROCESSOR_ID
+        processor_version_id = STATEMENT_PROCESSOR_VERSION_ID
+        print(f"Using statement processor: {processor_id}")
     opts = ClientOptions(api_endpoint=f"{location}-documentai.googleapis.com")
     client = documentai.DocumentProcessorServiceClient(client_options=opts)
 
@@ -430,7 +506,7 @@ def process_document_from_memory(
 # ===== Vertex AI Functions =====
 
 
-def generate_content_with_vertex_ai(document_json_string, filename="Unknown"):
+def generate_content_with_vertex_ai(document_json_string, filename="Unknown", is_statement_doc=False):
     """
     Send document data to Vertex AI for validation and standardization
     with RAG enhancement
@@ -447,6 +523,13 @@ def generate_content_with_vertex_ai(document_json_string, filename="Unknown"):
     try:
         doc_data = json.loads(document_json_string)
         document_text = doc_data.get("text", "")
+        
+        # Determine if this is a statement if not already specified
+        if not is_statement_doc:
+            is_statement_doc = is_statement(document_text, filename)
+            
+        document_type = "STATEMENT" if is_statement_doc else "INVOICE"
+        print(f"Document type detected: {document_type}")
 
         # Extract entities in a more readable format
         entities_list = doc_data.get("entities", [])
@@ -470,10 +553,23 @@ def generate_content_with_vertex_ai(document_json_string, filename="Unknown"):
         # Generate context from similar invoices
         rag_context = rag.generate_context_for_vertex_ai(similar_invoices)
         
+        # Add statement-specific instructions if needed
+        statement_specific_instructions = ""
+        if is_statement_doc:
+            statement_specific_instructions = """
+            For STATEMENTS:
+            1. Extract all invoice numbers mentioned in the statement
+            2. Pay special attention to aging summaries and payment history
+            3. Note any discrepancies between statement totals and individual invoice amounts
+            4. Extract account number and customer information for cross-referencing
+            """
+        
         # Format the message with actual document content
         formatted_message = MESSAGE_TEMPLATE.format(
             document_text=document_text[:3000],  # Limit text length if needed
             entities=entities_formatted,
+            document_type=document_type,
+            statement_specific_instructions=statement_specific_instructions
         )
         
         # Add RAG context if available
@@ -642,7 +738,7 @@ def process_vertex_response(response_content):
 
     return flat_data
 
-
+#TODO Current file sorting is for local storage, do we have ability to store in Azure? 
 def sort_invoices_by_well_name(processed_data, pdf_filename, pdf_content=None):
     """
     Sort invoices into directories based on the Well Name found in the invoice.
@@ -865,6 +961,125 @@ def sort_invoices_by_well_name(processed_data, pdf_filename, pdf_content=None):
     return dest_path
 
 
+def sort_statements_by_vendor(processed_data, pdf_filename, pdf_content=None):
+    """
+    Sort statements into directories based on the Vendor Name found in the statement.
+    Organizes statements in a hierarchical structure:
+    /processed_statements/[Vendor Name]/[YYYY-MM-Month]/[statement_file.pdf]
+    
+    Also extracts invoice references for cross-validation.
+    
+    Args:
+        processed_data (dict): The processed data from Vertex AI
+        pdf_filename (str): The original PDF filename
+        pdf_content (bytes, optional): The PDF file content if available
+        
+    Returns:
+        tuple: (path where the statement was saved, list of referenced invoice numbers)
+    """
+    # Create base directory if it doesn't exist
+    if not os.path.exists(STATEMENT_STORAGE_DIR):
+        os.makedirs(STATEMENT_STORAGE_DIR)
+    
+    # Extract vendor name
+    vendor_name = None
+    if "Vendor Name" in processed_data:
+        vendor_name = processed_data["Vendor Name"]
+        print(f"Found vendor name: {vendor_name}")
+    
+    # If no vendor name found, try to extract from filename
+    if not vendor_name or vendor_name.lower() == "not found":
+        # Try to extract vendor name from filename
+        parts = pdf_filename.split('_from_')
+        if len(parts) > 1:
+            vendor_parts = parts[1].split('.')
+            vendor_name = vendor_parts[0].replace('_', ' ')
+            print(f"Extracted vendor name from filename: {vendor_name}")
+    
+    # If still no vendor name, use "Unknown Vendor"
+    if not vendor_name or vendor_name.strip() == "":
+        vendor_name = "Unknown Vendor"
+        print("No vendor name found, using 'Unknown Vendor'")
+    
+    # Clean up vendor name to be directory-friendly
+    vendor_name = vendor_name.replace("/", "_").replace("\\", "_").strip()
+    vendor_name = vendor_name.replace(":", "_").replace("*", "_").replace("?", "_")
+    vendor_name = vendor_name.replace("<", "_").replace(">", "_").replace("|", "_")
+    vendor_name = vendor_name.replace('"', "_").replace("'", "_")
+    
+    # Create directory for this vendor if it doesn't exist
+    vendor_dir = os.path.join(STATEMENT_STORAGE_DIR, vendor_name)
+    if not os.path.exists(vendor_dir):
+        os.makedirs(vendor_dir)
+        print(f"Created directory for vendor: {vendor_dir}")
+    
+    # Create a date-based subdirectory if we have statement date
+    statement_date = None
+    date_fields = ["Statement Date", "Date", "StatementDate"]
+    for field in date_fields:
+        if field in processed_data and processed_data[field]:
+            statement_date = processed_data[field]
+            break
+    
+    if statement_date:
+        try:
+            # Try to parse and standardize the date format
+            parsed_date = dateutil_parser.parse(statement_date)
+            # Create a more descriptive month directory format: YYYY-MM-MonthName
+            month_name = parsed_date.strftime("%B")  # Full month name
+            date_dir = parsed_date.strftime(f"%Y-%m-{month_name}")
+            
+            # Create the month directory within the vendor directory
+            month_dir = os.path.join(vendor_dir, date_dir)
+            if not os.path.exists(month_dir):
+                os.makedirs(month_dir)
+                print(f"Created month subdirectory: {month_dir}")
+            
+            # Update vendor_dir to point to the month directory for file saving
+            vendor_dir = month_dir
+        except (ValueError, TypeError, OverflowError) as e:
+            # If date parsing fails, just use the original vendor directory
+            print(f"Could not parse statement date: {statement_date}. Error: {str(e)}")
+    
+    # Determine the destination path
+    dest_path = os.path.join(vendor_dir, pdf_filename)
+    
+    # If we have the PDF content, save it to the destination
+    if pdf_content:
+        with open(dest_path, "wb") as f:
+            f.write(pdf_content)
+        print(f"Saved statement to {dest_path}")
+    else:
+        print(f"Would save statement to {dest_path} (PDF content not available)")
+    
+    # Extract referenced invoice numbers for cross-validation
+    referenced_invoices = []
+    
+    # Check for Related Invoices field
+    if "Related Invoices" in processed_data:
+        invoice_text = processed_data["Related Invoices"]
+        if invoice_text and invoice_text.lower() != "not found":
+            # Split by commas, semicolons, or newlines
+            import re
+            invoice_list = re.split(r'[,;\n]', invoice_text)
+            referenced_invoices = [inv.strip() for inv in invoice_list if inv.strip()]
+            print(f"Found {len(referenced_invoices)} referenced invoices in statement")
+    
+    # Also look for invoice numbers in line items
+    for key, value in processed_data.items():
+        if isinstance(value, str) and "invoice" in key.lower():
+            if value and value.lower() != "not found":
+                referenced_invoices.append(value.strip())
+                print(f"Found invoice reference in {key}: {value}")
+    
+    # Add the path and vendor name to the processed data for reference
+    processed_data["Statement_Path"] = dest_path
+    processed_data["Vendor_Name"] = vendor_name
+    processed_data["Referenced_Invoices"] = ", ".join(referenced_invoices)
+    
+    return dest_path, referenced_invoices
+
+
 # ===== Email Processing Functions =====
 
 
@@ -886,6 +1101,21 @@ def process_email(gmail_service, msg, num, label_name):
             pdf_title_text = "No Title Found"
 
             try:
+                # First get some text to determine if this is a statement
+                initial_document = process_document_from_memory(
+                    image_content=payload,
+                    mime_type=MIME_TYPE,
+                    project_id=PROJECT_ID,
+                    location=LOCATION,
+                    processor_id=PROCESSOR_ID,
+                    field_mask="text",  # Just get text for initial detection
+                    processor_version_id=PROCESSOR_VERSION_ID,
+                )
+                
+                # Check if this is a statement
+                is_statement_doc = is_statement(initial_document.text, filename)
+                
+                # Now process with the appropriate processor
                 document = process_document_from_memory(
                     image_content=payload,
                     mime_type=MIME_TYPE,
@@ -894,6 +1124,7 @@ def process_email(gmail_service, msg, num, label_name):
                     processor_id=PROCESSOR_ID,
                     field_mask=FIELD_MASK,
                     processor_version_id=PROCESSOR_VERSION_ID,
+                    is_statement_doc=is_statement_doc,
                 )
 
                 if document.text:
@@ -1005,8 +1236,8 @@ def process_gmail_pdfs(username, password):
 # ===== Snowflake Functions =====
 
 
-def add_missing_columns(df: pd.DataFrame):
-    """Add any missing columns to the Snowflake table"""
+def add_missing_columns(df: pd.DataFrame, table_name: str):
+    """Add any missing columns to the specified Snowflake table"""
     ctx = None
     cs = None
 
@@ -1031,7 +1262,7 @@ def add_missing_columns(df: pd.DataFrame):
         FROM {SNOWFLAKE_DATABASE}.INFORMATION_SCHEMA.COLUMNS
         WHERE table_catalog = '{SNOWFLAKE_DATABASE}'
           AND table_schema = '{SNOWFLAKE_SCHEMA}'
-          AND table_name = '{SNOWFLAKE_TABLE}'
+          AND table_name = '{table_name}'
         """
 
         cs.execute(table_columns_sql)
@@ -1043,13 +1274,13 @@ def add_missing_columns(df: pd.DataFrame):
         # Add each new column
         for col in new_columns_to_add:
             alter_table_sql = f"""
-            ALTER TABLE {SNOWFLAKE_DATABASE}.{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_TABLE}
+            ALTER TABLE {SNOWFLAKE_DATABASE}.{SNOWFLAKE_SCHEMA}.{table_name}
             ADD COLUMN {col} VARCHAR;
             """
 
             try:
                 cs.execute(alter_table_sql)
-                print(f"Added column '{col}' to table '{SNOWFLAKE_TABLE}'.")
+                print(f"Added column '{col}' to table '{table_name}'.")
             except snowflake.connector.errors.ProgrammingError as e:
                 print(f"Error adding column '{col}': {e}")
             except snowflake.connector.errors.DatabaseError as e:
@@ -1069,33 +1300,31 @@ def add_missing_columns(df: pd.DataFrame):
             ctx.close()
 
 
-def check_for_duplicate_invoice(cs, vendor_name, invoice_number):
+def check_for_duplicate_invoice(cs, invoice_number):
     """
-    Check if an invoice with the same Vendor Name and Invoice Number already exists in Snowflake
+    Check if an invoice with the same Invoice Number already exists in Snowflake
     
     Args:
         cs: Snowflake cursor
-        vendor_name: Name of the vendor
         invoice_number: Invoice number to check
         
     Returns:
         bool: True if duplicate exists, False otherwise
     """
-    if not vendor_name or not invoice_number:
-        # If either value is missing, we can't check for duplicates properly
+    if not invoice_number:
+        # If invoice number is missing, we can't check for duplicates properly
         return False
         
     try:
         # Query to check for duplicates
         query = f"""
         SELECT COUNT(*)
-        FROM {SNOWFLAKE_DATABASE}.{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_TABLE}
-        WHERE UPPER(VENDORNAME) = UPPER(%s)
-        AND UPPER(INVOICENUMBER) = UPPER(%s)
+        FROM {SNOWFLAKE_DATABASE}.{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_INVOICE_HEADER_TABLE}
+        WHERE UPPER(INVOICE_NUMBER) = UPPER(%s)
         """
         
         # Execute query with parameters
-        cs.execute(query, (vendor_name, invoice_number))
+        cs.execute(query, (invoice_number,))
         
         # Get result
         count = cs.fetchone()[0]
@@ -1108,21 +1337,339 @@ def check_for_duplicate_invoice(cs, vendor_name, invoice_number):
         return False
 
 
-def add_dataframe_to_snowflake(df: pd.DataFrame):
-    """Add DataFrame data to Snowflake table"""
-    if df.empty:
-        print("DataFrame is empty. Nothing to add to Snowflake.")
-        return
+def check_for_duplicate_statement(cs, statement_id):
+    """
+    Check if a statement with the same Statement ID already exists in Snowflake
+    
+    Args:
+        cs: Snowflake cursor
+        statement_id: Statement ID to check
+        
+    Returns:
+        bool: True if duplicate exists, False otherwise
+    """
+    if not statement_id:
+        # If statement ID is missing, we can't check for duplicates properly
+        return False
+        
+    try:
+        # Query to check for duplicates
+        query = f"""
+        SELECT COUNT(*)
+        FROM {SNOWFLAKE_DATABASE}.{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_STATEMENTS_TABLE}
+        WHERE UPPER(STATEMENT_ID) = UPPER(%s)
+        """
+        
+        # Execute query with parameters
+        cs.execute(query, (statement_id,))
+        
+        # Get result
+        count = cs.fetchone()[0]
+        
+        # Return True if duplicate exists
+        return count > 0
+    except Exception as e:
+        print(f"Error checking for duplicate statement: {e}")
+        # In case of error, return False to allow insertion (better to have duplicates than missing data)
+        return False
 
+
+def prepare_invoice_header_data(processed_data):
+    """
+    Prepare data for the LLE_INVOICE_HEADER table
+    
+    Args:
+        processed_data (dict): Processed invoice data
+        
+    Returns:
+        dict: Data formatted for the invoice header table
+    """
+    # Map processed data fields to invoice header table columns
+    header_data = {
+        "INVOICE_NUMBER": processed_data.get("InvoiceNumber"),
+        "VENDOR_NAME": processed_data.get("VendorName"),
+        "INVOICE_DATE": processed_data.get("InvoiceDate"),
+        "SUBTOTAL": processed_data.get("Subtotal"),
+        "TAX": processed_data.get("SalesTax"),
+        "TOTAL_AMOUNT_DUE": processed_data.get("TotalAmountDue"),
+        "CUSTOMER_ID": processed_data.get("CustomerID"),
+        "SHIP_TO_ADDRESS": processed_data.get("ShipToAddress"),
+        "PROCESSED_DATE": datetime.now().strftime("%Y-%m-%d")
+    }
+    
+    # Add any extra details as JSON in EXTRA_DETAILS column
+    extra_details = {}
+    for key, value in processed_data.items():
+        if key not in ["InvoiceNumber", "VendorName", "InvoiceDate", "Subtotal",
+                      "SalesTax", "TotalAmountDue", "CustomerID", "ShipToAddress"] and value:
+            extra_details[key] = value
+    
+    if extra_details:
+        header_data["EXTRA_DETAILS"] = json.dumps(extra_details)
+    
+    return header_data
+
+
+def prepare_invoice_line_items(processed_data):
+    """
+    Prepare data for the LLE_INVOICE_LINE_ITEMS table
+    
+    Args:
+        processed_data (dict): Processed invoice data
+        
+    Returns:
+        list: List of dictionaries for each line item
+    """
+    line_items = []
+    invoice_number = processed_data.get("InvoiceNumber")
+    
+    # Extract line items from processed data
+    # Line items are typically numbered (e.g., Description 1, Quantity 1, etc.)
+    item_count = 0
+    while True:
+        item_count += 1
+        description_key = f"Description{item_count}"
+        quantity_key = f"Quantity{item_count}"
+        unit_price_key = f"UnitPrice{item_count}"
+        line_total_key = f"TotalAmount{item_count}"
+        well_name_key = f"CHARGE{item_count}"
+        
+        # Check if this line item exists
+        if description_key not in processed_data and description_key.replace("Description", "Description ") not in processed_data:
+            # Try with space
+            description_key = description_key.replace("Description", "Description ")
+            quantity_key = quantity_key.replace("Quantity", "Quantity ")
+            unit_price_key = unit_price_key.replace("UnitPrice", "Unit Price ")
+            line_total_key = line_total_key.replace("TotalAmount", "Total Amount ")
+            well_name_key = well_name_key.replace("CHARGE", "CHARGE ")
+            
+            # Check again with space
+            if description_key not in processed_data:
+                # No more line items
+                break
+        
+        # Extract line item data
+        description = processed_data.get(description_key)
+        quantity = processed_data.get(quantity_key)
+        unit_price = processed_data.get(unit_price_key)
+        line_total = processed_data.get(line_total_key)
+        well_name = processed_data.get(well_name_key)
+        
+        # Skip if no description (likely not a valid line item)
+        if not description or description.lower() == "not found":
+            continue
+        
+        # Create line item record
+        line_item = {
+            "INVOICE_NUMBER": invoice_number,
+            "WELL_NAME": well_name,
+            "ITEM_DESCRIPTION": description,
+            "QUANTITY": quantity,
+            "UNIT_PRICE": unit_price,
+            "LINE_TOTAL": line_total
+        }
+        
+        # Add any extra details as JSON
+        extra_details = {}
+        for key, value in processed_data.items():
+            if key.startswith(f"LineItem{item_count}") and value:
+                extra_details[key] = value
+        
+        if extra_details:
+            line_item["EXTRA_DETAILS"] = json.dumps(extra_details)
+        
+        line_items.append(line_item)
+    
+    return line_items
+
+
+def prepare_statement_data(processed_data):
+    """
+    Prepare data for the LLE_STATEMENTS table
+    
+    Args:
+        processed_data (dict): Processed statement data
+        
+    Returns:
+        dict: Data formatted for the statements table
+    """
+    # Generate a statement ID if not present
+    statement_id = processed_data.get("StatementID")
+    if not statement_id:
+        vendor_name = processed_data.get("VendorName", "Unknown")
+        statement_date = processed_data.get("StatementDate", datetime.now().strftime("%Y-%m-%d"))
+        statement_id = f"{vendor_name}_{statement_date}_{hash(vendor_name + statement_date) % 10000}"
+    
+    # Map processed data fields to statements table columns
+    statement_data = {
+        "STATEMENT_ID": statement_id,
+        "VENDOR_NAME": processed_data.get("VendorName"),
+        "CUSTOMER_NAME": processed_data.get("CustomerName", "Lucky Lad Energy"),
+        "STATEMENT_DATE": processed_data.get("StatementDate"),
+        "TOTAL_AMOUNT_DUE": processed_data.get("TotalAmountDue"),
+        "CURRENT_AMOUNT": processed_data.get("CurrentAmount"),
+        "PAST_DUE_1_30": processed_data.get("PastDue1_30"),
+        "PAST_DUE_31_60": processed_data.get("PastDue31_60"),
+        "PAST_DUE_61_90": processed_data.get("PastDue61_90"),
+        "PAST_DUE_OVER_90": processed_data.get("PastDueOver90"),
+        "CREATED_AT": datetime.now(),
+        "UPDATED_AT": datetime.now()
+    }
+    
+    return statement_data
+
+
+def prepare_statement_transactions(processed_data, statement_id):
+    """
+    Prepare data for the LLE_STATEMENT_TRANSACTIONS table
+    
+    Args:
+        processed_data (dict): Processed statement data
+        statement_id (str): The ID of the parent statement
+        
+    Returns:
+        list: List of dictionaries for each transaction
+    """
+    transactions = []
+    
+    # Extract referenced invoices
+    referenced_invoices = []
+    if "ReferencedInvoices" in processed_data:
+        invoice_str = processed_data.get("ReferencedInvoices", "")
+        if invoice_str and invoice_str.strip():
+            referenced_invoices = [inv.strip() for inv in invoice_str.split(",")]
+    
+    # Process each transaction
+    transaction_count = 0
+    while True:
+        transaction_count += 1
+        
+        # Check for transaction fields with different possible naming patterns
+        date_key = f"TransactionDate{transaction_count}"
+        desc_key = f"Description{transaction_count}"
+        amount_key = f"Amount{transaction_count}"
+        balance_key = f"BalanceAfter{transaction_count}"
+        
+        # Try with spaces in keys
+        if date_key not in processed_data:
+            date_key = date_key.replace("TransactionDate", "Transaction Date ")
+            desc_key = desc_key.replace("Description", "Description ")
+            amount_key = amount_key.replace("Amount", "Amount ")
+            balance_key = balance_key.replace("BalanceAfter", "Balance After ")
+        
+        # Check if this transaction exists
+        if date_key not in processed_data and desc_key not in processed_data:
+            # No more transactions
+            break
+        
+        # Extract transaction data
+        transaction_date = processed_data.get(date_key)
+        description = processed_data.get(desc_key)
+        amount = processed_data.get(amount_key)
+        balance_after = processed_data.get(balance_key)
+        
+        # Skip if no description or amount (likely not a valid transaction)
+        if (not description or description.lower() == "not found") and (not amount or amount.lower() == "not found"):
+            continue
+        
+        # Generate transaction ID
+        transaction_id = f"{statement_id}_TRANS_{transaction_count}"
+        
+        # Try to extract invoice number from description
+        invoice_number = None
+        well_name = None
+        due_date = None
+        original_amount = None
+        transaction_type = "UNKNOWN"
+        
+        if description:
+            # Look for invoice number pattern
+            import re
+            invoice_match = re.search(r'(?:INV|INVOICE)[:\s#]*(\w+)', description, re.IGNORECASE)
+            if invoice_match:
+                invoice_number = invoice_match.group(1)
+                transaction_type = "INVOICE"
+            
+            # Look for well name
+            well_patterns = [
+                r'(?:WELL|LEASE)[:\s#]*(\w+(?:\s+\w+)?)',
+                r'(GODCHAUX|MCINIS|KIRBY|TEMPLE)'
+            ]
+            
+            for pattern in well_patterns:
+                well_match = re.search(pattern, description, re.IGNORECASE)
+                if well_match:
+                    well_name = well_match.group(1)
+                    break
+            
+            # Look for due date
+            due_match = re.search(r'DUE[:\s]*([\d/]+)', description, re.IGNORECASE)
+            if due_match:
+                due_date = due_match.group(1)
+            
+            # Look for original amount
+            amount_match = re.search(r'ORIGINAL[:\s]*\$?([\d,.]+)', description, re.IGNORECASE)
+            if amount_match:
+                original_amount = amount_match.group(1)
+            
+            # Determine transaction type
+            if "PAYMENT" in description.upper() or "PAID" in description.upper():
+                transaction_type = "PAYMENT"
+            elif "CREDIT" in description.upper():
+                transaction_type = "CREDIT"
+            elif "JOURNAL" in description.upper() or "REVERSAL" in description.upper():
+                transaction_type = "JOURNAL_REVERSAL"
+        
+        # Create transaction record
+        transaction = {
+            "TRANSACTION_ID": transaction_id,
+            "STATEMENT_ID": statement_id,
+            "TRANSACTION_DATE": transaction_date,
+            "DESCRIPTION": description,
+            "AMOUNT": amount,
+            "BALANCE_AFTER": balance_after,
+            "DUE_DATE": due_date,
+            "ORGINAL_AMOUNT": original_amount,
+            "WELL_NAME": well_name,
+            "TRANSACTION_TYPE": transaction_type
+        }
+        
+        transactions.append(transaction)
+    
+    return transactions
+
+
+def upload_to_snowflake_tables(processed_data_list):
+    """
+    Upload processed data to appropriate Snowflake tables based on document type
+    
+    Args:
+        processed_data_list (list): List of processed document data
+        
+    Returns:
+        dict: Statistics about the upload operation
+    """
+    if not processed_data_list:
+        print("No data to upload to Snowflake.")
+        return {"success": False, "message": "No data to upload"}
+    
     ctx = None
     cs = None
     
     # Track statistics
-    total_rows = len(df)
-    inserted_rows = 0
-    duplicate_rows = 0
-
+    stats = {
+        "total_documents": len(processed_data_list),
+        "invoices_processed": 0,
+        "statements_processed": 0,
+        "invoice_headers_inserted": 0,
+        "invoice_line_items_inserted": 0,
+        "statements_inserted": 0,
+        "statement_transactions_inserted": 0,
+        "errors": []
+    }
+    
     try:
+        # Connect to Snowflake
         ctx = snowflake.connector.connect(
             account=SNOWFLAKE_ACCOUNT,
             user=SNOWFLAKE_USER,
@@ -1131,54 +1678,150 @@ def add_dataframe_to_snowflake(df: pd.DataFrame):
             schema=SNOWFLAKE_SCHEMA,
             warehouse=SNOWFLAKE_WAREHOUSE,
         )
-
+        
         cs = ctx.cursor()
-
-        # Ensure all necessary columns exist
-        add_missing_columns(df)
-
-        # Prepare SQL for inserting data
-        columns = ", ".join(df.columns)
-        placeholders = ", ".join(["%s"] * len(df.columns))
-        sql = f"INSERT INTO {SNOWFLAKE_DATABASE}.{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_TABLE} ({columns}) VALUES ({placeholders})"
-
-        # Insert each row
-        for row in df.itertuples(index=False):
+        
+        # Process each document
+        for processed_data in processed_data_list:
             try:
-                # Convert row to dictionary for easier access
-                row_dict = df.iloc[row.Index].to_dict()
+                # Determine document type
+                document_type = processed_data.get("DocumentType", "UNKNOWN")
                 
-                # Check for duplicate invoice
-                vendor_name = row_dict.get('VendorName')
-                invoice_number = row_dict.get('InvoiceNumber')
+                if document_type == "INVOICE":
+                    # Process invoice
+                    stats["invoices_processed"] += 1
+                    
+                    # Check for duplicate invoice
+                    invoice_number = processed_data.get("InvoiceNumber")
+                    if check_for_duplicate_invoice(cs, invoice_number):
+                        print(f"Skipping duplicate invoice: Invoice Number={invoice_number}")
+                        continue
+                    
+                    # Prepare and insert invoice header
+                    header_data = prepare_invoice_header_data(processed_data)
+                    if header_data and header_data["INVOICE_NUMBER"]:
+                        # Convert header_data to DataFrame
+                        header_df = pd.DataFrame([header_data])
+                        
+                        # Ensure all necessary columns exist
+                        add_missing_columns(header_df, SNOWFLAKE_INVOICE_HEADER_TABLE)
+                        
+                        # Insert header data
+                        columns = ", ".join(header_df.columns)
+                        placeholders = ", ".join(["%s"] * len(header_df.columns))
+                        sql = f"INSERT INTO {SNOWFLAKE_DATABASE}.{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_INVOICE_HEADER_TABLE} ({columns}) VALUES ({placeholders})"
+                        
+                        cs.execute(sql, tuple(header_df.iloc[0].values))
+                        stats["invoice_headers_inserted"] += 1
+                        
+                        # Prepare and insert line items
+                        line_items = prepare_invoice_line_items(processed_data)
+                        if line_items:
+                            # Convert line_items to DataFrame
+                            line_items_df = pd.DataFrame(line_items)
+                            
+                            # Ensure all necessary columns exist
+                            add_missing_columns(line_items_df, SNOWFLAKE_INVOICE_LINE_ITEMS_TABLE)
+                            
+                            # Insert each line item
+                            columns = ", ".join(line_items_df.columns)
+                            placeholders = ", ".join(["%s"] * len(line_items_df.columns))
+                            sql = f"INSERT INTO {SNOWFLAKE_DATABASE}.{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_INVOICE_LINE_ITEMS_TABLE} ({columns}) VALUES ({placeholders})"
+                            
+                            for _, row in line_items_df.iterrows():
+                                cs.execute(sql, tuple(row.values))
+                                stats["invoice_line_items_inserted"] += 1
+                    
+                elif document_type == "STATEMENT":
+                    # Process statement
+                    stats["statements_processed"] += 1
+                    
+                    # Prepare statement data
+                    statement_data = prepare_statement_data(processed_data)
+                    
+                    # Check for duplicate statement
+                    statement_id = statement_data.get("STATEMENT_ID")
+                    if check_for_duplicate_statement(cs, statement_id):
+                        print(f"Skipping duplicate statement: Statement ID={statement_id}")
+                        continue
+                    
+                    # Insert statement data
+                    if statement_data and statement_id:
+                        # Convert statement_data to DataFrame
+                        statement_df = pd.DataFrame([statement_data])
+                        
+                        # Ensure all necessary columns exist
+                        add_missing_columns(statement_df, SNOWFLAKE_STATEMENTS_TABLE)
+                        
+                        # Insert statement data
+                        columns = ", ".join(statement_df.columns)
+                        placeholders = ", ".join(["%s"] * len(statement_df.columns))
+                        sql = f"INSERT INTO {SNOWFLAKE_DATABASE}.{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_STATEMENTS_TABLE} ({columns}) VALUES ({placeholders})"
+                        
+                        cs.execute(sql, tuple(statement_df.iloc[0].values))
+                        stats["statements_inserted"] += 1
+                        
+                        # Prepare and insert transactions
+                        transactions = prepare_statement_transactions(processed_data, statement_id)
+                        if transactions:
+                            # Convert transactions to DataFrame
+                            transactions_df = pd.DataFrame(transactions)
+                            
+                            # Ensure all necessary columns exist
+                            add_missing_columns(transactions_df, SNOWFLAKE_STATEMENT_TRANSACTIONS_TABLE)
+                            
+                            # Insert each transaction
+                            columns = ", ".join(transactions_df.columns)
+                            placeholders = ", ".join(["%s"] * len(transactions_df.columns))
+                            sql = f"INSERT INTO {SNOWFLAKE_DATABASE}.{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_STATEMENT_TRANSACTIONS_TABLE} ({columns}) VALUES ({placeholders})"
+                            
+                            for _, row in transactions_df.iterrows():
+                                cs.execute(sql, tuple(row.values))
+                                stats["statement_transactions_inserted"] += 1
                 
-                if check_for_duplicate_invoice(cs, vendor_name, invoice_number):
-                    print(f"Skipping duplicate invoice: Vendor={vendor_name}, Invoice Number={invoice_number}")
-                    duplicate_rows += 1
-                    continue
-                
-                # Insert if not a duplicate
-                cs.execute(sql, row)
-                inserted_rows += 1
-            except snowflake.connector.errors.ProgrammingError as e:
-                print(f"Error inserting row: {row}")
-                print(f"Snowflake Programming Error: {e}")
+                else:
+                    # Unknown document type
+                    print(f"Unknown document type: {document_type}")
+                    stats["errors"].append(f"Unknown document type: {document_type}")
+            
             except Exception as e:
-                print(f"General error inserting row: {row}")
-                print(f"Python Error: {e}")
-
+                error_msg = f"Error processing document: {str(e)}"
+                print(error_msg)
+                stats["errors"].append(error_msg)
+        
+        # Commit all changes
         ctx.commit()
-        print(
-            f"Successfully processed {total_rows} rows: {inserted_rows} inserted, {duplicate_rows} duplicates skipped"
-        )
-
+        
+        print(f"Successfully processed {stats['total_documents']} documents:")
+        print(f"  - Invoices: {stats['invoices_processed']} (Headers: {stats['invoice_headers_inserted']}, Line Items: {stats['invoice_line_items_inserted']})")
+        print(f"  - Statements: {stats['statements_processed']} (Headers: {stats['statements_inserted']}, Transactions: {stats['statement_transactions_inserted']})")
+        
+        if stats["errors"]:
+            print(f"  - Errors: {len(stats['errors'])}")
+        
+        stats["success"] = True
+        
     except snowflake.connector.errors.Error as e:
-        print(f"Snowflake Error in add_dataframe_to_snowflake: {e}")
-
+        error_msg = f"Snowflake Error: {str(e)}"
+        print(error_msg)
+        stats["success"] = False
+        stats["message"] = error_msg
+        stats["errors"].append(error_msg)
+    
+    except Exception as e:
+        error_msg = f"General Error: {str(e)}"
+        print(error_msg)
+        stats["success"] = False
+        stats["message"] = error_msg
+        stats["errors"].append(error_msg)
+    
     finally:
-        if ctx:
+        if cs:
             cs.close()
+        if ctx:
             ctx.close()
+    
+    return stats
 
 
 # ===== Debugging Functions =====
@@ -1243,8 +1886,18 @@ def debug_vertex_output(response_content):
 # ===== Main Process =====
 
 
-def process_all_responses(vertex_ai_responses, extracted_data):
-    """Process all Vertex AI responses into a DataFrame"""
+def process_all_responses(vertex_ai_responses, extracted_data, perform_cross_validation=True):
+    """
+    Process all Vertex AI responses into a DataFrame
+    
+    Args:
+        vertex_ai_responses (dict): Responses from Vertex AI
+        extracted_data (list): Extracted data from documents
+        perform_cross_validation (bool): Whether to perform cross-validation for statements
+        
+    Returns:
+        pd.DataFrame: Processed data as a DataFrame
+    """
     all_processed_data = []
 
     for i, (response_name, response_content) in enumerate(vertex_ai_responses.items()):
@@ -1255,13 +1908,37 @@ def process_all_responses(vertex_ai_responses, extracted_data):
         if extracted_data and i < len(extracted_data):
             processed_data["PDF Filename"] = extracted_data[i].get("filename")
 
-            # Sort invoice by well name and save to appropriate directory
+            # Determine if this is a statement or invoice
+            filename = extracted_data[i].get("filename", "")
+            document_text = extracted_data[i].get("text", "")
+            is_statement_doc = is_statement(document_text, filename)
+            
+            # Add document type to processed data
+            processed_data["Document Type"] = "STATEMENT" if is_statement_doc else "INVOICE"
+            
+            # Sort and save to appropriate directory based on document type
             if "filename" in extracted_data[i] and "pdf_content" in extracted_data[i]:
-                sort_invoices_by_well_name(
-                    processed_data,
-                    extracted_data[i]["filename"],
-                    extracted_data[i]["pdf_content"],
-                )
+                if is_statement_doc:
+                    # For statements, sort by vendor and extract referenced invoices
+                    statement_path, referenced_invoices = sort_statements_by_vendor(
+                        processed_data,
+                        extracted_data[i]["filename"],
+                        extracted_data[i]["pdf_content"],
+                    )
+                    
+                    # Store referenced invoices for cross-validation
+                    processed_data["Referenced Invoices"] = ", ".join(referenced_invoices)
+                else:
+                    # For invoices, sort by well name
+                    sort_invoices_by_well_name(
+                        processed_data,
+                        extracted_data[i]["filename"],
+                        extracted_data[i]["pdf_content"],
+                    )
+
+                    # Flag new invoice types for human review
+                    if is_statement_doc and "new_statement_type" in processed_data.get("flags", []):
+                        flag_for_human_review(processed_data, "New statement type detected")
 
         all_processed_data.append(processed_data)
 
@@ -1271,24 +1948,172 @@ def process_all_responses(vertex_ai_responses, extracted_data):
 
         # Clean column names (remove spaces)
         final_df.columns = [col.replace(" ", "") for col in final_df.columns]
+        
+        # Perform cross-validation for statements if requested
+        if perform_cross_validation:
+            # Connect to Snowflake for cross-validation
+            try:
+                ctx = snowflake.connector.connect(
+                    account=SNOWFLAKE_ACCOUNT,
+                    user=SNOWFLAKE_USER,
+                    password=SNOWFLAKE_PASSWORD,
+                    database=SNOWFLAKE_DATABASE,
+                    schema=SNOWFLAKE_SCHEMA,
+                    warehouse=SNOWFLAKE_WAREHOUSE,
+                )
+                
+                cs = ctx.cursor()
+                
+                # Find statements in the processed data
+                statement_rows = final_df[final_df["DocumentType"] == "STATEMENT"]
+                
+                if not statement_rows.empty:
+                    print(f"\nPerforming cross-validation for {len(statement_rows)} statements...")
+                    
+                    for idx, statement in statement_rows.iterrows():
+                        statement_dict = statement.to_dict()
+                        
+                        # Cross-validate with invoices
+                        validation_results = cross_validate_statement_with_invoices(statement_dict, cs)
+                        
+                        # Update the DataFrame with validation results
+                        final_df.at[idx, "ValidationStatus"] = validation_results["status"]
+                        final_df.at[idx, "DiscrepanciesFound"] = len(validation_results["discrepancies"])
+                        
+                        # Flag for human review if discrepancies found
+                        if validation_results["discrepancies"]:
+                            print(f"Found {len(validation_results['discrepancies'])} discrepancies in statement {statement_dict.get('PDFFilename', '')}")
+                            statement_dict["validation_results"] = validation_results
+                            flag_for_human_review(statement_dict, "Discrepancies found during cross-validation")
+                
+                # Close Snowflake connection
+                cs.close()
+                ctx.close()
+                
+            except Exception as e:
+                print(f"Error during cross-validation: {e}")
+                print("Cross-validation skipped due to error")
 
         return final_df
     else:
         return pd.DataFrame()
 
 
-def flag_for_human_review(invoice_data, reason):
-    """Flag an invoice for human review and store it for later processing"""
+def cross_validate_statement_with_invoices(statement_data, snowflake_cursor):
+    """
+    Cross-validate statement data with invoices in the database
+    
+    Args:
+        statement_data (dict): Processed statement data
+        snowflake_cursor: Snowflake cursor for database queries
+        
+    Returns:
+        dict: Validation results with discrepancies
+    """
+    # Extract referenced invoice numbers
+    referenced_invoices = []
+    if "Referenced_Invoices" in statement_data:
+        invoice_str = statement_data["Referenced_Invoices"]
+        if invoice_str and invoice_str.strip():
+            referenced_invoices = [inv.strip() for inv in invoice_str.split(",")]
+    
+    if not referenced_invoices:
+        print("No invoice references found in statement for cross-validation")
+        return {"status": "no_references", "discrepancies": []}
+    
+    # Get vendor name
+    vendor_name = statement_data.get("Vendor_Name", statement_data.get("VendorName", ""))
+    if not vendor_name:
+        print("No vendor name found in statement for cross-validation")
+        return {"status": "no_vendor", "discrepancies": []}
+    
+    # Query Snowflake for matching invoices
+    discrepancies = []
+    found_invoices = []
+    
+    try:
+        for invoice_number in referenced_invoices:
+            query = f"""
+            SELECT *
+            FROM {SNOWFLAKE_DATABASE}.{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_INVOICE_HEADER_TABLE}
+            WHERE UPPER(VENDOR_NAME) = UPPER(%s)
+            AND UPPER(INVOICE_NUMBER) = UPPER(%s)
+            """
+            
+            snowflake_cursor.execute(query, (vendor_name, invoice_number))
+            result = snowflake_cursor.fetchone()
+            
+            if result:
+                # Convert result to dictionary
+                columns = [col[0] for col in snowflake_cursor.description]
+                invoice_data = dict(zip(columns, result))
+                found_invoices.append(invoice_data)
+                
+                # Check for amount discrepancies
+                statement_amount = statement_data.get(f"Amount_{invoice_number}",
+                                                     statement_data.get("TotalAmountDue", "0"))
+                invoice_amount = invoice_data.get("TOTAL_AMOUNT_DUE", "0")
+                
+                # Convert to float for comparison
+                try:
+                    statement_amount = float(statement_amount.replace("$", "").replace(",", ""))
+                    invoice_amount = float(invoice_amount.replace("$", "").replace(",", ""))
+                    
+                    # Check for discrepancy (allow small rounding differences)
+                    if abs(statement_amount - invoice_amount) > 0.01:
+                        discrepancies.append({
+                            "invoice_number": invoice_number,
+                            "statement_amount": statement_amount,
+                            "invoice_amount": invoice_amount,
+                            "difference": statement_amount - invoice_amount
+                        })
+                except (ValueError, AttributeError):
+                    # If conversion fails, log as potential discrepancy
+                    discrepancies.append({
+                        "invoice_number": invoice_number,
+                        "statement_amount": statement_amount,
+                        "invoice_amount": invoice_amount,
+                        "difference": "Could not compare amounts"
+                    })
+            else:
+                # Invoice referenced in statement not found in database
+                discrepancies.append({
+                    "invoice_number": invoice_number,
+                    "issue": "Invoice referenced in statement not found in database"
+                })
+        
+        # Return validation results
+        return {
+            "status": "completed",
+            "invoices_referenced": len(referenced_invoices),
+            "invoices_found": len(found_invoices),
+            "discrepancies": discrepancies
+        }
+    
+    except Exception as e:
+        print(f"Error during statement cross-validation: {e}")
+        return {"status": "error", "message": str(e), "discrepancies": []}
+
+
+def flag_for_human_review(document_data, reason):
+    """Flag a document (invoice or statement) for human review and store it for later processing"""
     if not os.path.exists(REVIEW_DIR):
         os.makedirs(REVIEW_DIR)
     
     # Create a unique filename
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"{REVIEW_DIR}/review_{timestamp}.json"
     
-    # Store the invoice data and reason for review
+    # Determine document type
+    document_type = "invoice"
+    if "Document Type" in document_data and document_data["Document Type"] == "STATEMENT":
+        document_type = "statement"
+    
+    filename = f"{REVIEW_DIR}/review_{document_type}_{timestamp}.json"
+    
+    # Store the document data and reason for review
     review_data = {
-        "invoice_data": invoice_data,
+        "document_data": document_data,
+        "document_type": document_type,
         "reason": reason,
         "timestamp": timestamp,
         "status": "pending_review"
@@ -1337,9 +2162,15 @@ def add_to_document_ai_dataset(project_id, location, processor_id, dataset_id,
         return None
 
 
-def main(debug_mode=False):
-    """Main function to run the invoice processor"""
-    print("=== Lucky Lad Invoice Processor ===")
+def main(debug_mode=False, cross_validate=True):
+    """
+    Main function to run the document processor
+    
+    Args:
+        debug_mode (bool): Whether to run in debug mode with detailed logging
+        cross_validate (bool): Whether to perform cross-validation for statements
+    """
+    print("=== Lucky Lad Document Processor ===")
     print(f"Starting at {datetime.now()}")
 
     # Initialize variables
@@ -1348,19 +2179,19 @@ def main(debug_mode=False):
     
     # Process emails based on configuration
     if USE_OUTLOOK and OUTLOOK_AVAILABLE and OUTLOOK_EMAIL and OUTLOOK_PASSWORD:
-        print("\nChecking for new invoices in Outlook...")
+        print("\nChecking for new documents in Outlook...")
         outlook_data = process_outlook_pdfs(OUTLOOK_EMAIL, OUTLOOK_PASSWORD, OUTLOOK_SERVER)
         extracted_data.extend(outlook_data)
-        print(f"Found {len(outlook_data)} new invoices in Outlook")
+        print(f"Found {len(outlook_data)} new documents in Outlook")
     else:
         print("\nOutlook processing skipped (not configured or library not available)")
         
     # Always process Gmail for testing purposes unless explicitly disabled
     if GMAIL_USERNAME and GMAIL_PASSWORD:
-        print("\nChecking for new invoices in Gmail...")
+        print("\nChecking for new documents in Gmail...")
         gmail_data = process_gmail_pdfs(GMAIL_USERNAME, GMAIL_PASSWORD)
         extracted_data.extend(gmail_data)
-        print(f"Found {len(gmail_data)} new invoices in Gmail")
+        print(f"Found {len(gmail_data)} new documents in Gmail")
     else:
         print("\nGmail processing skipped (not configured)")
 
@@ -1378,8 +2209,17 @@ def main(debug_mode=False):
                 print("\n--- DEBUG MODE: Vertex AI Input ---")
                 debug_vertex_input(document_json_string)
 
-            # Call Vertex AI with RAG enhancement
-            vertex_ai_response = generate_content_with_vertex_ai(document_json_string, filename)
+            # Determine if this is a statement
+            doc_data = json.loads(document_json_string)
+            document_text = doc_data.get("text", "")
+            is_statement_doc = is_statement(document_text, filename)
+            
+            # Call Vertex AI with RAG enhancement and document type
+            vertex_ai_response = generate_content_with_vertex_ai(
+                document_json_string,
+                filename,
+                is_statement_doc=is_statement_doc
+            )
 
             if vertex_ai_response:
                 response_variable_name = f"vertex_ai_response_{i + 1}"
@@ -1400,8 +2240,12 @@ def main(debug_mode=False):
     if vertex_ai_responses:
         print("\nCreating structured data from Vertex AI responses...")
 
-        # Process responses into a DataFrame
-        final_df = process_all_responses(vertex_ai_responses, extracted_data)
+        # Process responses into a DataFrame with optional cross-validation
+        final_df = process_all_responses(
+            vertex_ai_responses,
+            extracted_data,
+            perform_cross_validation=cross_validate
+        )
 
         if not final_df.empty:
             # Convert all columns to string to avoid Snowflake type issues
@@ -1414,9 +2258,16 @@ def main(debug_mode=False):
 
             # Add to Snowflake
             try:
-                print("\nUploading data to Snowflake...")
-                add_dataframe_to_snowflake(final_df)
-                print("Successfully added data to Snowflake.")
+                print("\nUploading data to Snowflake tables...")
+                # Convert DataFrame rows to list of dictionaries for processing
+                processed_data_list = final_df.to_dict('records')
+                upload_stats = upload_to_snowflake_tables(processed_data_list)
+                if upload_stats["success"]:
+                    print("Successfully added data to Snowflake tables.")
+                    print(f"  - Invoices: {upload_stats['invoices_processed']} (Headers: {upload_stats['invoice_headers_inserted']}, Line Items: {upload_stats['invoice_line_items_inserted']})")
+                    print(f"  - Statements: {upload_stats['statements_processed']} (Headers: {upload_stats['statements_inserted']}, Transactions: {upload_stats['statement_transactions_inserted']})")
+                else:
+                    print(f"Error adding data to Snowflake: {upload_stats.get('message', 'Unknown error')}")
             except Exception as e:
                 print(f"Error adding data to Snowflake: {e}")
                 
@@ -1447,12 +2298,19 @@ def main(debug_mode=False):
 
 
 if __name__ == "__main__":
+    import argparse
+    
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description="Lucky Lad Document Processor")
+    parser.add_argument("--debug", action="store_true", help="Enable debug mode with detailed logging")
+    parser.add_argument("--no-cross-validate", action="store_true", help="Disable cross-validation for statements")
+    args = parser.parse_args()
+    
     # Set environment variable for GCP authentication
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.environ.get(
         "GOOGLE_APPLICATION_CREDENTIALS",
         "path/to/your/application_default_credentials.json",
     )
 
-    # Run the main process
-    # Set debug_mode=True for detailed logging
-    main(debug_mode=False)
+    # Run the main process with command line arguments
+    main(debug_mode=args.debug, cross_validate=not args.no_cross_validate)

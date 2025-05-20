@@ -1,0 +1,49 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy LLC",
+    "statement_date": "3/30/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "CS-5350",
+      "description": "Propane",
+      "quantity": 395,
+      "price": 11.67
+    },
+    
+    {
+      "product_code": "DS-9248",
+      "description": "OLA-905 (Oil - Low Ash)",
+      "quantity": 314,
+      "price": 4.89
+    },
+    
+    {
+      "product_code": "CS-7501",
+      "description": "Kit Repair Viton",
+      "quantity": 82,
+      "price": 16.36
+    },
+    
+    {
+      "product_code": "DS-2374",
+      "description": "Seats",
+      "quantity": 68,
+      "price": 17.57
+    },
+    
+    {
+      "product_code": "CS-9537",
+      "description": "SCALE-SHIELD SS-728",
+      "quantity": 423,
+      "price": 14.58
+    }
+    
+  ],
+  "subtotal": "14848.73",
+  "tax": "1225.02",
+  "total": "16073.75"
+}

@@ -1,0 +1,64 @@
+{
+  "statement_date": "5/1/2025",
+  "to": {
+    "customer_name": "LUCKY LAD ENERGY LLC",
+    "attention": null,
+    "address": "PO BOX 2402\nCONROE, TX 77305-1379"
+  },
+  "transactions": [
+    {
+      "date": "11/26/2024",
+      "transaction": "INV #90139. Due 12/26/2024. Orig. Amount $3,385.49.",
+      "amount": "3,385.49",
+      "balance": "3,385.49"
+    },
+    {
+      "date": "12/14/2024",
+      "transaction": "INV #3352. Due 1/13/2025. Orig. Amount $1,709.17.",
+      "amount": "1,709.17",
+      "balance": "5,094.66"
+    },
+    {
+      "date": "1/1/2025",
+      "transaction": "INV #29152. Due 1/31/2025. Orig. Amount $1,522.09.",
+      "amount": "1,522.09",
+      "balance": "6,616.75"
+    },
+    {
+      "date": "1/8/2025",
+      "transaction": "INV #50404. Due 2/7/2025. Orig. Amount $3,983.24.",
+      "amount": "3,983.24",
+      "balance": "10,599.99"
+    },
+    {
+      "date": "1/22/2025",
+      "transaction": "INV #49893. Due 2/21/2025. Orig. Amount $3,198.82.\nGodchaux 3-",
+      "amount": "3,198.82",
+      "balance": "13,798.81"
+    },
+    {
+      "date": "2/5/2025",
+      "transaction": "INV #83821. Due 3/7/2025. Orig. Amount $1,487.41.",
+      "amount": "1,487.41",
+      "balance": "15,286.22"
+    },
+    {
+      "date": "2/18/2025",
+      "transaction": "INV #20117. Due 3/20/2025. Orig. Amount $683.72.",
+      "amount": "683.72",
+      "balance": "15,969.94"
+    },
+    {
+      "date": "3/4/2025",
+      "transaction": "GENJRNL #60-75-97R. Reverse of GJE 51-32-70 Transfer of Credits for\nLUCKY LAD ENERGY LLC from LUCKY LAD ENERGY LLC to Lindsey C-77",
+      "amount": "-1,758.39",
+      "balance": "14,211.55"
+    },
+    {
+      "date": "3/30/2025",
+      "transaction": "INV #64727. Due 4/29/2025. Orig. Amount $1,133.89.",
+      "amount": "1,133.89",
+      "balance": "15,345.44"
+    }
+  ]
+}

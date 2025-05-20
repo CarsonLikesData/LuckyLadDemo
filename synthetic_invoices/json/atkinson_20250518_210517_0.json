@@ -1,0 +1,15 @@
+
+{
+  "invoice_number": "BE-8840",
+  "date": "5/5/2025",
+  "sold_to": "LUCKY LAD ENERGY LLC 6186 Grant Fort Conroe, TX 77305",
+  "gallons": "528",
+  "price_per_gal": "3.05",
+  "amount": "1610.4",
+  "tax": "132.86",
+  "total_payment_due": "1743.2600000000002",
+  "tank_serial_number": "395632658",
+  "tank_size": "1000",
+  "before_percentage": "13",
+  "after_percentage": "68"
+}

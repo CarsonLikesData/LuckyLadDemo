@@ -1,0 +1,110 @@
+
+{
+  "invoice_number": "INV-0124-566",
+  "invoice_date": "4/6/2025",
+  "due_date": "4/21/2025",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy, LLC",
+    "address": "20059 Tammy Port Apt. 794 Conroe, TX 77305"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy, LLC",
+    "address": "Kirby Anderson Tank Battery"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "Nelson-Brown Combined 4",
+      "item": "21-CH-8347",
+      "description": "Cylinder",
+      "quantity": 26,
+      "unit_price": 16.31,
+      "total_price": 424.06
+    },
+    
+    {
+      "well_name": "Miller C-61",
+      "item": "SS/709-G60",
+      "description": "Flow Control Unit",
+      "quantity": 414,
+      "unit_price": 11.16,
+      "total_price": 4620.24
+    },
+    
+    {
+      "well_name": "Porter B-51",
+      "item": "DS-753",
+      "description": "Inhibitor Solution",
+      "quantity": 973,
+      "unit_price": 37.89,
+      "total_price": 36866.97
+    },
+    
+    {
+      "well_name": "13479 Garcia Creek",
+      "item": "CHZY-957",
+      "description": "Methanol",
+      "quantity": 43,
+      "unit_price": 32.42,
+      "total_price": 1394.06
+    },
+    
+    {
+      "well_name": "Godchaux 8",
+      "item": "MS335",
+      "description": "OLA-905 (Oil - Low Ash)",
+      "quantity": 931,
+      "unit_price": 358.38,
+      "total_price": 333651.78
+    },
+    
+    {
+      "well_name": "Powers 8",
+      "item": "SSRX-319",
+      "description": "Cylinder",
+      "quantity": 367,
+      "unit_price": 388.62,
+      "total_price": 142623.54
+    },
+    
+    {
+      "well_name": "Aguilar D-43",
+      "item": "PS/795-E49",
+      "description": "Flow Control Unit",
+      "quantity": 78,
+      "unit_price": 309.43,
+      "total_price": 24135.54
+    },
+    
+    {
+      "well_name": "Rice B-35",
+      "item": "PSID-843",
+      "description": "Pressure Regulator",
+      "quantity": 16,
+      "unit_price": 22.15,
+      "total_price": 354.4
+    },
+    
+    {
+      "well_name": "",
+      "item": "OLA-3507",
+      "description": "Flow Control Unit",
+      "quantity": 526,
+      "unit_price": 144.38,
+      "total_price": 75943.88
+    },
+    
+    {
+      "well_name": "Best-Parker Combined 2",
+      "item": "36-OLA-1122",
+      "description": "Methanol",
+      "quantity": 892,
+      "unit_price": 20.95,
+      "total_price": 18687.4
+    }
+    
+  ],
+  "subtotal": "638701.87",
+  "tax": "52692.9",
+  "total": "691394.77"
+}

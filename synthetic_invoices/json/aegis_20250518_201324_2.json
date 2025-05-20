@@ -1,0 +1,65 @@
+
+{
+  "invoice_number": "INV268807",
+  "invoice_date": "4/12/2025",
+  "due_date": "5/12/2025",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy LLC",
+    "address": "PO Box 8321 Conroe, TX 77305 USA"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy LLC",
+    "address": "Adams SWD Tank Battery"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "Berry B-64",
+      "item": "DS-4240",
+      "description": "METHANOL",
+      "quantity": 81,
+      "unit_price": 6.89,
+      "total_price": 558.09
+    },
+    
+    {
+      "well_name": "Godchaux 7",
+      "item": "OLA-7725",
+      "description": "Phase Shield PS-653M",
+      "quantity": 399,
+      "unit_price": 13.8,
+      "total_price": 5506.2
+    },
+    
+    {
+      "well_name": "Godchaux 9",
+      "item": "PS-9272",
+      "description": "Methanol",
+      "quantity": 258,
+      "unit_price": 19.53,
+      "total_price": 5038.74
+    },
+    
+    {
+      "well_name": "Daniels 5",
+      "item": "PS-8928",
+      "description": "Phase Shield PS-653M",
+      "quantity": 310,
+      "unit_price": 19.32,
+      "total_price": 5989.2
+    },
+    
+    {
+      "well_name": "Melendez 5",
+      "item": "CS-8137",
+      "description": "Kit Repair Viton",
+      "quantity": 252,
+      "unit_price": 18.58,
+      "total_price": 4682.16
+    }
+    
+  ],
+  "subtotal": "21774.39",
+  "tax": "1796.39",
+  "total": "23570.78"
+}

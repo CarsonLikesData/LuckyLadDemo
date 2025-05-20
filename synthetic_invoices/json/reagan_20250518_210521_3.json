@@ -1,0 +1,56 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy LLC",
+    "statement_date": "5/6/25"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "77-CS-9845",
+      "description": "PetroSol Propane 1 inch",
+      "quantity": 3.34,
+      "price": 4.12
+    },
+    
+    {
+      "product_code": "WS856",
+      "description": "Biocide Formula 3/4 inch",
+      "quantity": 388.28,
+      "price": 44.53
+    },
+    
+    {
+      "product_code": "DSUU-760",
+      "description": "D-SHIELD DS-129",
+      "quantity": 71.62,
+      "price": 33.85
+    },
+    
+    {
+      "product_code": "MS-6985",
+      "description": "Seats",
+      "quantity": 556,
+      "price": 1.4
+    },
+    
+    {
+      "product_code": "SS396",
+      "description": "Seats Standard Model",
+      "quantity": 161,
+      "price": 3.84
+    },
+    
+    {
+      "product_code": "SS-1307",
+      "description": "Demulsifier 1/4 inch",
+      "quantity": 201,
+      "price": 3.55
+    }
+    
+  ],
+  "subtotal": "21838.4",
+  "tax": "1801.67",
+  "total": "23640.07"
+}

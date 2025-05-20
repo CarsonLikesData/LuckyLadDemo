@@ -1,0 +1,56 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy LLC",
+    "statement_date": "4/10/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "DS-7889",
+      "description": "OLA-905 (Oil - Low Ash)",
+      "quantity": 149,
+      "price": 9.85
+    },
+    
+    {
+      "product_code": "SS-1545",
+      "description": "SCALE-SHIELD SS-728",
+      "quantity": 100,
+      "price": 4.85
+    },
+    
+    {
+      "product_code": "PS-2014",
+      "description": "D-SHIELD DS-129",
+      "quantity": 228,
+      "price": 1.85
+    },
+    
+    {
+      "product_code": "SS-7310",
+      "description": "Methanol",
+      "quantity": 170,
+      "price": 7.02
+    },
+    
+    {
+      "product_code": "CS-7907",
+      "description": "SCALE-SHIELD SS-728",
+      "quantity": 435,
+      "price": 16.26
+    },
+    
+    {
+      "product_code": "CS-2341",
+      "description": "D-SHIELD DS-129",
+      "quantity": 318,
+      "price": 5.34
+    }
+    
+  ],
+  "subtotal": "12339.07",
+  "tax": "1017.97",
+  "total": "13357.039999999999"
+}

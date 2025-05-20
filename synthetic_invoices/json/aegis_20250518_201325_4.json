@@ -1,0 +1,29 @@
+
+{
+  "invoice_number": "28407[19]",
+  "invoice_date": "5/8/2025",
+  "due_date": "6/7/2025",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy LLC",
+    "address": "PO Box 7239 Conroe, TX 77305 USA"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy LLC",
+    "address": "Roberts C-5 Tank Battery"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "Foster UNIT",
+      "item": "CS-4396",
+      "description": "Methanol",
+      "quantity": 409,
+      "unit_price": 17.39,
+      "total_price": 7112.51
+    }
+    
+  ],
+  "subtotal": "7112.51",
+  "tax": "586.78",
+  "total": "7699.29"
+}

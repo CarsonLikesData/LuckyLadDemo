@@ -1,0 +1,56 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy LLC",
+    "statement_date": "4/17/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "DS-2878",
+      "description": "Corr-Shield CS-1148",
+      "quantity": 493,
+      "price": 9.76
+    },
+    
+    {
+      "product_code": "SS-9123",
+      "description": "Seats",
+      "quantity": 482,
+      "price": 12.27
+    },
+    
+    {
+      "product_code": "PS-1293",
+      "description": "Darts",
+      "quantity": 39,
+      "price": 5.78
+    },
+    
+    {
+      "product_code": "DS-1872",
+      "description": "Methanol",
+      "quantity": 337,
+      "price": 17.65
+    },
+    
+    {
+      "product_code": "DS-6732",
+      "description": "SCALE-SHIELD SS-728",
+      "quantity": 429,
+      "price": 4.29
+    },
+    
+    {
+      "product_code": "PS-6129",
+      "description": "SCALE-SHIELD SS-728",
+      "quantity": 229,
+      "price": 9.5
+    }
+    
+  ],
+  "subtotal": "20915.2",
+  "tax": "1725.5",
+  "total": "22640.7"
+}

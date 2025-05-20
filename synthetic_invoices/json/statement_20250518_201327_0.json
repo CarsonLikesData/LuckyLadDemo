@@ -1,0 +1,40 @@
+{
+  "statement_date": "5/10/2025",
+  "to": {
+    "customer_name": "LUCKY LAD ENERGY LLC",
+    "attention": null,
+    "address": "PO BOX 3214\nCONROE, TX 77305-1379"
+  },
+  "transactions": [
+    {
+      "date": "11/28/2024",
+      "transaction": "INV #75605. Due 12/28/2024. Orig. Amount $1,131.42.",
+      "amount": "1,131.42",
+      "balance": "1,131.42"
+    },
+    {
+      "date": "12/14/2024",
+      "transaction": "INV #7935. Due 1/13/2025. Orig. Amount $2,528.70.",
+      "amount": "2,528.70",
+      "balance": "3,660.12"
+    },
+    {
+      "date": "12/20/2024",
+      "transaction": "GENJRNL #61-10-70R. Reverse of GJE 81-42-23 Transfer of Credits for\nLUCKY LAD ENERGY LLC from LUCKY LAD ENERGY LLC to Williams SWD",
+      "amount": "-1,251.28",
+      "balance": "2,408.84"
+    },
+    {
+      "date": "1/5/2025",
+      "transaction": "GENJRNL #26-27-36R. Reverse of GJE 43-71-18 Transfer of Credits for\nLUCKY LAD ENERGY LLC from LUCKY LAD ENERGY LLC to Godchaux 2",
+      "amount": "-1,681.99",
+      "balance": "726.85"
+    },
+    {
+      "date": "1/24/2025",
+      "transaction": "INV #33041. Due 2/23/2025. Orig. Amount $3,765.18.\n90323 Lamb Creek-",
+      "amount": "3,765.18",
+      "balance": "4,492.03"
+    }
+  ]
+}

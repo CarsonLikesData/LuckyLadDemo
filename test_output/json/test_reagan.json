@@ -1,0 +1,21 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy LLC",
+    "statement_date": "3/27/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "PS-6072",
+      "description": "Propane",
+      "quantity": 300,
+      "price": 14.61
+    }
+    
+  ],
+  "subtotal": "4383.0",
+  "tax": "361.6",
+  "total": "4744.6"
+}

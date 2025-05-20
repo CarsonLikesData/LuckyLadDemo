@@ -1,0 +1,64 @@
+{
+  "statement_date": "4/21/2025",
+  "to": {
+    "customer_name": "LUCKY LAD ENERGY LLC",
+    "attention": null,
+    "address": "PO BOX 2924\nCONROE, TX 77305-1379"
+  },
+  "transactions": [
+    {
+      "date": "11/25/2024",
+      "transaction": "INV #28988. Due 12/25/2024. Orig. Amount $689.02.\n66886 Williams Creek-",
+      "amount": "689.02",
+      "balance": "689.02"
+    },
+    {
+      "date": "12/8/2024",
+      "transaction": "INV #6845. Due 1/7/2025. Orig. Amount $3,160.32.",
+      "amount": "3,160.32",
+      "balance": "3,849.34"
+    },
+    {
+      "date": "12/24/2024",
+      "transaction": "INV #64101. Due 1/23/2025. Orig. Amount $3,225.60.",
+      "amount": "3,225.60",
+      "balance": "7,074.94"
+    },
+    {
+      "date": "1/16/2025",
+      "transaction": "INV #14131. Due 2/15/2025. Orig. Amount $1,805.94.\n67458 Lamb Creek-",
+      "amount": "1,805.94",
+      "balance": "8,880.88"
+    },
+    {
+      "date": "1/29/2025",
+      "transaction": "INV #87751. Due 2/28/2025. Orig. Amount $2,783.10.",
+      "amount": "2,783.10",
+      "balance": "11,663.98"
+    },
+    {
+      "date": "2/10/2025",
+      "transaction": "INV #68172. Due 3/12/2025. Orig. Amount $2,403.75.\nLang D-92-",
+      "amount": "2,403.75",
+      "balance": "14,067.73"
+    },
+    {
+      "date": "3/1/2025",
+      "transaction": "INV #74844. Due 3/31/2025. Orig. Amount $1,705.37.\nRussellstad North 8-",
+      "amount": "1,705.37",
+      "balance": "15,773.10"
+    },
+    {
+      "date": "3/6/2025",
+      "transaction": "INV #44875. Due 4/5/2025. Orig. Amount $3,186.48.",
+      "amount": "3,186.48",
+      "balance": "18,959.58"
+    },
+    {
+      "date": "3/27/2025",
+      "transaction": "INV #64964. Due 4/26/2025. Orig. Amount $1,945.77.\nKemp-Davidson Joint 4-",
+      "amount": "1,945.77",
+      "balance": "20,905.35"
+    }
+  ]
+}

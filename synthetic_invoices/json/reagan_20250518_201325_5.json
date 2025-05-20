@@ -1,0 +1,56 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy LLC",
+    "statement_date": "4/12/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "SS-1059",
+      "description": "Corr-Shield CS-1148",
+      "quantity": 350,
+      "price": 12.82
+    },
+    
+    {
+      "product_code": "PS-6795",
+      "description": "Phase Shield PS-653M",
+      "quantity": 108,
+      "price": 19.65
+    },
+    
+    {
+      "product_code": "DS-6272",
+      "description": "Phase Shield PS-653M",
+      "quantity": 311,
+      "price": 14.4
+    },
+    
+    {
+      "product_code": "OLA-7979",
+      "description": "OLA-905 (Oil - Low Ash)",
+      "quantity": 364,
+      "price": 7.49
+    },
+    
+    {
+      "product_code": "DS-1097",
+      "description": "Seats",
+      "quantity": 393,
+      "price": 3.7
+    },
+    
+    {
+      "product_code": "CS-7416",
+      "description": "Kit Repair Viton",
+      "quantity": 365,
+      "price": 5.02
+    }
+    
+  ],
+  "subtotal": "17100.36",
+  "tax": "1410.78",
+  "total": "18511.14"
+}

@@ -1,0 +1,42 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy LLC",
+    "statement_date": "4/10/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "WS-3178",
+      "description": "Compression Fitting",
+      "quantity": 697.41,
+      "price": 1.63
+    },
+    
+    {
+      "product_code": "CH-5050",
+      "description": "OilMaster Assy Rod Piston",
+      "quantity": 652,
+      "price": 2.68
+    },
+    
+    {
+      "product_code": "CH/103-L95",
+      "description": "ChemTech SCALE-SHIELD SS-728",
+      "quantity": 689,
+      "price": 4.88
+    },
+    
+    {
+      "product_code": "TS-3826",
+      "description": "Valve Assembly",
+      "quantity": 13.49,
+      "price": 319.9
+    }
+    
+  ],
+  "subtotal": "10561.91",
+  "tax": "871.36",
+  "total": "11433.27"
+}

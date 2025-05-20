@@ -10,15 +10,9 @@ An automated invoice processing system that:
 
 
 # TODO:
-# 1. Finish implenting the RAG engine for enhanced data validation and standardization.
-# 2. Implement form of manual review for invoices captured by run. - Need help from Callaway
-# 3. Add in notification system for when new invoices are processed. - Callaway
-# 4. Add in error handling for when the system fails to process an invoice.
-# 5. Convert Email processing for Outlook
-# 6. Add in a system to flag invoices as paid or unpaid. Update powerbi dashboard upon status change.
-# 7. Automate job shceduling, client wants to run AM and PM. - if this can be knocked out quickly, feel free to do so.
-# 8. Add in a system to check for duplicate invoices in the Snowflake table before inserting new data. - Need help from Callaway
-# 9. Make application deployable. - I've never deployed an application before, so I will need help with this.
+# 1. Add in a system to flag invoices as paid or unpaid. Update powerbi dashboard upon status change.
+# 2. Automate job shceduling, client wants to run AM and PM. - Azure handles this, need to confirm scheduling
+# 3. Make application deployable. - What are Azure's requirements for this?
 
 # Email and PDF processing imports
 import os
@@ -28,6 +22,19 @@ from email.utils import parsedate_to_datetime
 from datetime import datetime
 from imaplib import IMAP4_SSL
 from dateutil import parser as dateutil_parser
+
+# RAG Engine import
+from rag_engine import get_rag_engine
+
+# Outlook/Exchange imports
+try:
+    from exchangelib import Credentials, Account, Configuration, DELEGATE, FileAttachment
+    from exchangelib.protocol import BaseProtocol, NoVerifyHTTPAdapter
+    import requests
+    OUTLOOK_AVAILABLE = True
+except ImportError:
+    print("Warning: exchangelib not installed. Outlook functionality will be disabled.")
+    OUTLOOK_AVAILABLE = False
 
 # Google Cloud and Vertex AI imports
 from google.cloud import documentai
@@ -51,17 +58,29 @@ FIELD_MASK = "text,entities,pages.pageNumber"
 
 # Invoice storage configuration
 INVOICE_BASE_DIR = "processed_invoices"
+REVIEW_DIR = "invoices_for_review"  # Directory for invoices that need human review
+
+# Email configuration
+
+# COMMENT OUT OR REMOVE GMAIL CONFIGURATION BEFORE DEPLOYING - IMPORTANT
 
 # Gmail configuration
 GMAIL_USERNAME = "lucky.lad.test.df@gmail.com"
 # In production, use environment variables or a secrets manager
 GMAIL_PASSWORD = os.environ.get("GMAIL_PASSWORD", "your_app_password_here")
 
+# Outlook configuration
+USE_OUTLOOK = os.environ.get("USE_OUTLOOK", "False").lower() == "true"
+OUTLOOK_EMAIL = os.environ.get("OUTLOOK_EMAIL", "")
+OUTLOOK_PASSWORD = os.environ.get("OUTLOOK_PASSWORD", "")
+OUTLOOK_SERVER = os.environ.get("OUTLOOK_SERVER", "outlook.office365.com")
+# Set to True to disable SSL certificate verification (use only in development)
+OUTLOOK_DISABLE_VERIFY_SSL = os.environ.get("OUTLOOK_DISABLE_VERIFY_SSL", "False").lower() == "true"
+
 # Snowflake configuration
 SNOWFLAKE_ACCOUNT = "ifb67743.us-east-1"
-SNOWFLAKE_USER = "DF_SVC_US_WELLS_UPDATE"
-# In production, use environment variables or a secrets manager
-SNOWFLAKE_PASSWORD = os.environ.get("SNOWFLAKE_PASSWORD", "your_password_here")
+SNOWFLAKE_USER = os.environ.get("LLE_SNOWFLAKE_SVC_ACC")
+SNOWFLAKE_PASSWORD = os.environ.get("LLE_SNOWFLAKE_SVC_ACC_PW")
 SNOWFLAKE_DATABASE = "OCCLUSION"
 SNOWFLAKE_SCHEMA = "WELLS"
 SNOWFLAKE_WAREHOUSE = "COMPUTE_WH"
@@ -71,8 +90,7 @@ SNOWFLAKE_TABLE = "LUCKY_LAD_INVOICE_PROCESSOR"
 VERTEX_AI_PROJECT = "invoiceprocessing-450716"
 VERTEX_AI_LOCATION = "us-central1"
 VERTEX_AI_API_ENDPOINT = "aiplatform.googleapis.com"
-VERTEX_AI_MODEL = "gemini-1.5-pro-002"
-
+VERTEX_AI_MODEL = "gemini-pro"  
 # ===== System Instructions for Vertex AI =====
 
 SYSTEM_INSTRUCTION = """
@@ -158,28 +176,28 @@ GENERATION_CONFIG = {
     "top_p": 0.95,
 }
 
-# Vertex AI safety settings
+# Vertex AI safety settings for gemini-pro
 SAFETY_SETTINGS = [
     SafetySetting(
-        category=SafetySetting.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-        threshold=SafetySetting.HarmBlockThreshold.OFF,
+        category="HARM_CATEGORY_HATE_SPEECH",
+        threshold=SafetySetting.HarmBlockThreshold.BLOCK_NONE,
     ),
     SafetySetting(
-        category=SafetySetting.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-        threshold=SafetySetting.HarmBlockThreshold.OFF,
+        category="HARM_CATEGORY_DANGEROUS_CONTENT",
+        threshold=SafetySetting.HarmBlockThreshold.BLOCK_NONE,
     ),
     SafetySetting(
-        category=SafetySetting.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-        threshold=SafetySetting.HarmBlockThreshold.OFF,
+        category="HARM_CATEGORY_SEXUALLY_EXPLICIT",
+        threshold=SafetySetting.HarmBlockThreshold.BLOCK_NONE,
     ),
     SafetySetting(
-        category=SafetySetting.HarmCategory.HARM_CATEGORY_HARASSMENT,
-        threshold=SafetySetting.HarmBlockThreshold.OFF,
+        category="HARM_CATEGORY_HARASSMENT",
+        threshold=SafetySetting.HarmBlockThreshold.BLOCK_NONE,
     ),
 ]
+# ===== Email Functions =====
 
-# ===== Gmail Functions =====
-
+# ----- Gmail Functions -----
 
 def get_gmail_service(username, password):
     """Connect to Gmail via IMAP and return the IMAP object"""
@@ -196,6 +214,161 @@ def get_gmail_service(username, password):
         return None
 
 
+# ----- Outlook Functions -----
+
+def disable_ssl_verification():
+    """Disable SSL verification for Outlook connections (development only)"""
+    if not OUTLOOK_AVAILABLE:
+        return
+        
+    BaseProtocol.HTTP_ADAPTER_CLS = NoVerifyHTTPAdapter
+    requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+
+
+def get_outlook_service(email_address, password, server):
+    """Connect to Outlook/Exchange and return the Account object"""
+    if not OUTLOOK_AVAILABLE:
+        print("Error: exchangelib not installed. Cannot connect to Outlook.")
+        return None
+        
+    try:
+        # Disable SSL verification if configured (for development environments)
+        if OUTLOOK_DISABLE_VERIFY_SSL:
+            disable_ssl_verification()
+            
+        # Set up credentials and connect
+        credentials = Credentials(username=email_address, password=password)
+        config = Configuration(server=server, credentials=credentials)
+        account = Account(
+            primary_smtp_address=email_address,
+            config=config,
+            autodiscover=False,
+            access_type=DELEGATE
+        )
+        return account
+    except Exception as e:
+        print(f"Error connecting to Outlook: {e}")
+        return None
+
+
+def process_outlook_email(attachment, email_datetime):
+    """Process a single Outlook email attachment"""
+    extracted_data = []
+    
+    try:
+        if attachment.name.lower().endswith('.pdf'):
+            # Get the PDF content
+            payload = attachment.content
+            pdf_title_text = "No Title Found"
+            
+            try:
+                document = process_document_from_memory(
+                    image_content=payload,
+                    mime_type=MIME_TYPE,
+                    project_id=PROJECT_ID,
+                    location=LOCATION,
+                    processor_id=PROCESSOR_ID,
+                    field_mask=FIELD_MASK,
+                    processor_version_id=PROCESSOR_VERSION_ID,
+                )
+                
+                if document.text:
+                    pdf_title_text = " ".join(document.text.split()[:10]) + "..."
+                
+                text = document.text
+                entities = document.entities
+                
+                extracted_entities = {}
+                for entity in entities:
+                    extracted_entities[entity.type_] = entity.mention_text
+                
+                document_data = {
+                    "text": text,
+                    "entities": [
+                        {"type_": e.type_, "mention_text": e.mention_text}
+                        for e in entities
+                    ],
+                }
+                
+                extracted_data.append(
+                    {
+                        "filename": attachment.name,
+                        "email_datetime": email_datetime,
+                        "text": text,
+                        "entities": extracted_entities,
+                        "document_json": json.dumps(document_data),
+                        "gmail_search_query": f'in:inbox "{pdf_title_text}"',  # For compatibility
+                        "pdf_content": payload,  # Store the PDF content for later use
+                    }
+                )
+                
+                print(f"Extracted from {attachment.name}: {text[:100]}...")
+            except Exception as e:
+                print(f"Error processing {attachment.name}: {e}")
+    except Exception as e:
+        print(f"Error processing attachment: {e}")
+        
+    return extracted_data
+
+
+def process_outlook_pdfs(email_address, password, server):
+    """Main function to process PDFs from Outlook"""
+    if not OUTLOOK_AVAILABLE:
+        print("Error: exchangelib not installed. Cannot process Outlook emails.")
+        return []
+        
+    outlook_account = get_outlook_service(email_address, password, server)
+    if outlook_account is None:
+        return []
+    
+    all_extracted_data = []
+    
+    try:
+        # Get unread emails from inbox
+        inbox = outlook_account.inbox
+        unread_emails = list(inbox.filter(is_read=False).order_by('-datetime_received'))
+        
+        # Create a folder for this month's invoices if it doesn't exist
+        now = datetime.now()
+        folder_name = now.strftime("%B_%Y_Invoices")
+        
+        # Check if folder exists, create if it doesn't
+        try:
+            invoice_folder = outlook_account.root / folder_name
+            # Test if folder exists by accessing it
+            _ = invoice_folder.total_count
+        except Exception:
+            # Folder doesn't exist, create it
+            invoice_folder = outlook_account.inbox.create_folder(folder_name)
+            print(f"Created folder '{folder_name}'")
+        
+        # Process each email
+        for email_item in unread_emails:
+            try:
+                # Process attachments
+                for attachment in email_item.attachments:
+                    if isinstance(attachment, FileAttachment):
+                        extracted_data = process_outlook_email(
+                            attachment,
+                            email_item.datetime_received
+                        )
+                        all_extracted_data.extend(extracted_data)
+                
+                # Mark as read and move to invoice folder
+                email_item.is_read = True
+                email_item.save()
+                email_item.move(invoice_folder)
+                print(f"Processed email from {email_item.sender} received at {email_item.datetime_received}")
+            except Exception as e:
+                print(f"Error processing email: {e}")
+    
+    except Exception as e:
+        print(f"An error occurred while processing Outlook emails: {e}")
+    
+    return all_extracted_data
+
+
+
 # ===== Document AI Functions =====
 
 
@@ -208,7 +381,7 @@ def process_document_from_memory(
     field_mask=None,
     processor_version_id=None,
 ):
-    """Process a document using Google Document AI"""
+    """Process a document using Google Document AI with confidence tracking"""
     opts = ClientOptions(api_endpoint=f"{location}-documentai.googleapis.com")
     client = documentai.DocumentProcessorServiceClient(client_options=opts)
 
@@ -235,15 +408,32 @@ def process_document_from_memory(
 
     result = client.process_document(request=request)
     document = result.document
+    
+    # Track confidence scores for entities
+    low_confidence_entities = []
+    for entity in document.entities:
+        if hasattr(entity, 'confidence') and entity.confidence < 0.7:  # Threshold for low confidence
+            low_confidence_entities.append({
+                'type': entity.type_,
+                'mention_text': entity.mention_text,
+                'confidence': entity.confidence
+            })
+    
+    # Log low confidence entities for potential human review
+    if low_confidence_entities:
+        print(f"Found {len(low_confidence_entities)} low-confidence entities that may need review")
+        # These will be handled during the Vertex AI processing stage
+    
     return document
 
 
 # ===== Vertex AI Functions =====
 
 
-def generate_content_with_vertex_ai(document_json_string):
+def generate_content_with_vertex_ai(document_json_string, filename="Unknown"):
     """
     Send document data to Vertex AI for validation and standardization
+    with RAG enhancement
     """
     vertexai.init(
         project=VERTEX_AI_PROJECT,
@@ -263,12 +453,48 @@ def generate_content_with_vertex_ai(document_json_string):
         entities_formatted = "\n".join(
             [f"{entity['type_']}: {entity['mention_text']}" for entity in entities_list]
         )
-
+        
+        # Convert entities list to dictionary for RAG
+        entities_dict = {entity['type_']: entity['mention_text'] for entity in entities_list}
+        
+        # Get RAG engine and retrieve similar invoices
+        rag = get_rag_engine()
+        similar_invoices = rag.retrieve_similar_invoices(document_text, entities_dict)
+        
+        # Detect if this is a new invoice type
+        is_new_invoice_type = len(similar_invoices) == 0 or all(
+            similar_invoice.get('metadata', {}).get('similarity_score', 0) < 0.5
+            for similar_invoice in similar_invoices
+        )
+        
+        # Generate context from similar invoices
+        rag_context = rag.generate_context_for_vertex_ai(similar_invoices)
+        
         # Format the message with actual document content
         formatted_message = MESSAGE_TEMPLATE.format(
             document_text=document_text[:3000],  # Limit text length if needed
             entities=entities_formatted,
         )
+        
+        # Add RAG context if available
+        if rag_context:
+            formatted_message += f"\n\n{rag_context}"
+            
+        # If this is a new invoice type, add a note to the prompt
+        if is_new_invoice_type:
+            formatted_message += "\n\nNOTE: This appears to be a new invoice type not seen before. " \
+                                "Please pay extra attention to field extraction and validation."
+            
+            # Flag for human review
+            flag_for_human_review(
+                {
+                    "document_text": document_text,
+                    "entities": entities_dict,
+                    "document_json": document_json_string,
+                    "filename": filename
+                },
+                "New invoice type detected"
+            )
 
         # Send to model
         chat = model.start_chat()
@@ -277,7 +503,12 @@ def generate_content_with_vertex_ai(document_json_string):
             generation_config=GENERATION_CONFIG,
             safety_settings=SAFETY_SETTINGS,
         )
-
+        
+        # After successful processing, add the invoice to RAG database if it's not already there
+        if not is_new_invoice_type:
+            metadata = {"filename": filename, "processing_time": datetime.now().isoformat()}
+            rag.add_invoice(document_text, entities_dict, metadata)
+        
         return response.text
     except json.JSONDecodeError as e:
         print(
@@ -765,7 +996,7 @@ def process_gmail_pdfs(username, password):
         try:
             gmail_service.close()
             gmail_service.logout()
-        except:
+        except Exception:
             pass
 
     return all_extracted_data
@@ -838,6 +1069,45 @@ def add_missing_columns(df: pd.DataFrame):
             ctx.close()
 
 
+def check_for_duplicate_invoice(cs, vendor_name, invoice_number):
+    """
+    Check if an invoice with the same Vendor Name and Invoice Number already exists in Snowflake
+    
+    Args:
+        cs: Snowflake cursor
+        vendor_name: Name of the vendor
+        invoice_number: Invoice number to check
+        
+    Returns:
+        bool: True if duplicate exists, False otherwise
+    """
+    if not vendor_name or not invoice_number:
+        # If either value is missing, we can't check for duplicates properly
+        return False
+        
+    try:
+        # Query to check for duplicates
+        query = f"""
+        SELECT COUNT(*)
+        FROM {SNOWFLAKE_DATABASE}.{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_TABLE}
+        WHERE UPPER(VENDORNAME) = UPPER(%s)
+        AND UPPER(INVOICENUMBER) = UPPER(%s)
+        """
+        
+        # Execute query with parameters
+        cs.execute(query, (vendor_name, invoice_number))
+        
+        # Get result
+        count = cs.fetchone()[0]
+        
+        # Return True if duplicate exists
+        return count > 0
+    except Exception as e:
+        print(f"Error checking for duplicate invoice: {e}")
+        # In case of error, return False to allow insertion (better to have duplicates than missing data)
+        return False
+
+
 def add_dataframe_to_snowflake(df: pd.DataFrame):
     """Add DataFrame data to Snowflake table"""
     if df.empty:
@@ -846,6 +1116,11 @@ def add_dataframe_to_snowflake(df: pd.DataFrame):
 
     ctx = None
     cs = None
+    
+    # Track statistics
+    total_rows = len(df)
+    inserted_rows = 0
+    duplicate_rows = 0
 
     try:
         ctx = snowflake.connector.connect(
@@ -870,7 +1145,21 @@ def add_dataframe_to_snowflake(df: pd.DataFrame):
         # Insert each row
         for row in df.itertuples(index=False):
             try:
+                # Convert row to dictionary for easier access
+                row_dict = df.iloc[row.Index].to_dict()
+                
+                # Check for duplicate invoice
+                vendor_name = row_dict.get('VendorName')
+                invoice_number = row_dict.get('InvoiceNumber')
+                
+                if check_for_duplicate_invoice(cs, vendor_name, invoice_number):
+                    print(f"Skipping duplicate invoice: Vendor={vendor_name}, Invoice Number={invoice_number}")
+                    duplicate_rows += 1
+                    continue
+                
+                # Insert if not a duplicate
                 cs.execute(sql, row)
+                inserted_rows += 1
             except snowflake.connector.errors.ProgrammingError as e:
                 print(f"Error inserting row: {row}")
                 print(f"Snowflake Programming Error: {e}")
@@ -880,7 +1169,7 @@ def add_dataframe_to_snowflake(df: pd.DataFrame):
 
         ctx.commit()
         print(
-            f"Successfully added {len(df)} rows to {SNOWFLAKE_DATABASE}.{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_TABLE}"
+            f"Successfully processed {total_rows} rows: {inserted_rows} inserted, {duplicate_rows} duplicates skipped"
         )
 
     except snowflake.connector.errors.Error as e:
@@ -988,22 +1277,100 @@ def process_all_responses(vertex_ai_responses, extracted_data):
         return pd.DataFrame()
 
 
+def flag_for_human_review(invoice_data, reason):
+    """Flag an invoice for human review and store it for later processing"""
+    if not os.path.exists(REVIEW_DIR):
+        os.makedirs(REVIEW_DIR)
+    
+    # Create a unique filename
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"{REVIEW_DIR}/review_{timestamp}.json"
+    
+    # Store the invoice data and reason for review
+    review_data = {
+        "invoice_data": invoice_data,
+        "reason": reason,
+        "timestamp": timestamp,
+        "status": "pending_review"
+    }
+    
+    with open(filename, 'w') as f:
+        json.dump(review_data, f, indent=2)
+    
+    print(f"Flagged invoice for human review: {filename}")
+    return filename
+
+
+def add_to_document_ai_dataset(project_id, location, processor_id, dataset_id,
+                              document_content, ground_truth_entities):
+    """Add a corrected document to a Document AI dataset for retraining"""
+    try:
+        from google.cloud import documentai_v1 as documentai_dataset
+        
+        # Initialize Document AI client
+        client = documentai_dataset.DocumentProcessorServiceClient()
+        
+        # Format the dataset path
+        dataset_path = client.dataset_path(project_id, location, processor_id, dataset_id)
+        
+        # Create the document with ground truth annotations
+        # This is a simplified example - actual implementation would be more complex
+        document = {
+            "raw_document": {
+                "content": document_content,
+                "mime_type": "application/pdf"
+            },
+            "ground_truth": {
+                "entities": ground_truth_entities
+            }
+        }
+        
+        # Add document to dataset
+        response = client.add_dataset_schema_document(
+            request={"dataset": dataset_path, "document": document}
+        )
+        
+        print(f"Added document to dataset: {response}")
+        return response
+    except Exception as e:
+        print(f"Error adding document to Document AI dataset: {e}")
+        return None
+
+
 def main(debug_mode=False):
     """Main function to run the invoice processor"""
     print("=== Lucky Lad Invoice Processor ===")
     print(f"Starting at {datetime.now()}")
 
-    # Process emails and extract PDFs
-    print("\nChecking for new invoices in Gmail...")
-    extracted_data = process_gmail_pdfs(GMAIL_USERNAME, GMAIL_PASSWORD)
+    # Initialize variables
+    extracted_data = []
     vertex_ai_responses = {}
+    
+    # Process emails based on configuration
+    if USE_OUTLOOK and OUTLOOK_AVAILABLE and OUTLOOK_EMAIL and OUTLOOK_PASSWORD:
+        print("\nChecking for new invoices in Outlook...")
+        outlook_data = process_outlook_pdfs(OUTLOOK_EMAIL, OUTLOOK_PASSWORD, OUTLOOK_SERVER)
+        extracted_data.extend(outlook_data)
+        print(f"Found {len(outlook_data)} new invoices in Outlook")
+    else:
+        print("\nOutlook processing skipped (not configured or library not available)")
+        
+    # Always process Gmail for testing purposes unless explicitly disabled
+    if GMAIL_USERNAME and GMAIL_PASSWORD:
+        print("\nChecking for new invoices in Gmail...")
+        gmail_data = process_gmail_pdfs(GMAIL_USERNAME, GMAIL_PASSWORD)
+        extracted_data.extend(gmail_data)
+        print(f"Found {len(gmail_data)} new invoices in Gmail")
+    else:
+        print("\nGmail processing skipped (not configured)")
 
     # Call Vertex AI for each document
     if extracted_data:
         print(f"\nProcessing {len(extracted_data)} documents with Vertex AI...")
 
         for i, data in enumerate(extracted_data):
-            print(f"\nProcessing document {i + 1}: {data.get('filename', 'Unknown')}")
+            filename = data.get('filename', 'Unknown')
+            print(f"\nProcessing document {i + 1}: {filename}")
             document_json_string = data["document_json"]
 
             # Debug info if requested
@@ -1011,8 +1378,8 @@ def main(debug_mode=False):
                 print("\n--- DEBUG MODE: Vertex AI Input ---")
                 debug_vertex_input(document_json_string)
 
-            # Call Vertex AI
-            vertex_ai_response = generate_content_with_vertex_ai(document_json_string)
+            # Call Vertex AI with RAG enhancement
+            vertex_ai_response = generate_content_with_vertex_ai(document_json_string, filename)
 
             if vertex_ai_response:
                 response_variable_name = f"vertex_ai_response_{i + 1}"
@@ -1052,6 +1419,24 @@ def main(debug_mode=False):
                 print("Successfully added data to Snowflake.")
             except Exception as e:
                 print(f"Error adding data to Snowflake: {e}")
+                
+            # Update RAG database with processed invoices
+            print("\nUpdating RAG database with processed invoices...")
+            rag = get_rag_engine()
+            for i, data in enumerate(extracted_data):
+                if i < len(vertex_ai_responses):
+                    document_text = data.get("text", "")
+                    entities_dict = data.get("entities", {})
+                    metadata = {
+                        "filename": data.get("filename", "unknown"),
+                        "email_datetime": data.get("email_datetime", datetime.now()).isoformat(),
+                        "processed_data": final_df.iloc[i].to_dict() if i < len(final_df) else {}
+                    }
+                    success = rag.add_invoice(document_text, entities_dict, metadata)
+                    if success:
+                        print(f"Added invoice {data.get('filename', 'unknown')} to RAG database")
+                    else:
+                        print(f"Failed to add invoice {data.get('filename', 'unknown')} to RAG database")
         else:
             print("No data could be extracted from Vertex AI responses.")
     else:

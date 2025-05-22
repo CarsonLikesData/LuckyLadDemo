@@ -1,0 +1,8 @@
+# Basic email functionality (usually pre-installed)
+# These are part of Python standard library, listed for reference
+# email
+# smtplib
+# pathlib
+
+# No additional packages needed for Gmail support
+# The script uses only Python standard library modules

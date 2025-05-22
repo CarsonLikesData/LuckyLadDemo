@@ -1,0 +1,16 @@
+# For Outlook/Exchange support
+exchangelib>=4.9.0
+
+# Dependencies that come with exchangelib
+# These will be installed automatically:
+# - requests
+# - lxml
+# - defusedxml
+# - cached-property
+# - tzlocal
+# - pygments
+# - dnspython
+# - oauthlib
+# - requests-oauthlib
+# - requests-ntlm
+# - cryptography

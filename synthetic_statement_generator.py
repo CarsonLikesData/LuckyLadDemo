@@ -11,9 +11,8 @@ import os
 import json
 import random
 import datetime
-from typing import List, Dict, Optional, Union, Tuple
+from typing import List, Optional
 from enum import Enum
-from decimal import Decimal
 
 # Data generation
 from faker import Faker
@@ -24,8 +23,7 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, PageBreak
-from reportlab.platypus.flowables import Flowable
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
 
 # Image processing for degradation
 from PIL import Image, ImageFilter, ImageOps
@@ -33,10 +31,9 @@ import numpy as np
 from io import BytesIO
 
 # Data validation
-from pydantic import BaseModel, field_validator, model_validator
+from pydantic import BaseModel
 
 # Template rendering
-from jinja2 import Template
 
 # Create directories if they don't exist
 os.makedirs("synthetic_statements/pdf", exist_ok=True)
@@ -584,7 +581,7 @@ def create_statement_pdf(statement_data: Statement, output_path: str) -> str:
     elements.append(Spacer(1, 0.2*inch))
     
     # Statement header
-    elements.append(Paragraph(f"Statement Date", header_style))
+    elements.append(Paragraph("Statement Date", header_style))
     elements.append(Paragraph(statement_data.statement_date, subtitle_style))
     elements.append(Spacer(1, 0.2*inch))
     

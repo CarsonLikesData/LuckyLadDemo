@@ -1,0 +1,42 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy L.L.C.",
+    "statement_date": "4/26/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "SS226",
+      "description": "Propane",
+      "quantity": 51.41,
+      "price": 431.59
+    },
+    
+    {
+      "product_code": "SS-4191",
+      "description": "Biocide Formula",
+      "quantity": 749,
+      "price": 117.52
+    },
+    
+    {
+      "product_code": "39-TS-1389",
+      "description": "Darts Low-Pressure",
+      "quantity": 186,
+      "price": 3.1
+    },
+    
+    {
+      "product_code": "SS-1917",
+      "description": "Propane",
+      "quantity": 338,
+      "price": 24.06
+    }
+    
+  ],
+  "subtotal": "118919.4",
+  "tax": "9810.85",
+  "total": "128730.25"
+}

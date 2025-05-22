@@ -1,0 +1,49 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy L.L.C.",
+    "statement_date": "5-11-2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "SS696",
+      "description": "Phase Shield PS-653M",
+      "quantity": 239,
+      "price": 2.77
+    },
+    
+    {
+      "product_code": "FS/277-Y46",
+      "description": "Demulsifier 1/2 inch",
+      "quantity": 642,
+      "price": 4.43
+    },
+    
+    {
+      "product_code": "55-CH-4439",
+      "description": "Inhibitor Solution Type L",
+      "quantity": 554,
+      "price": 2.07
+    },
+    
+    {
+      "product_code": "SS250",
+      "description": "ChemTech Phase Shield PS-653M Medium-Pressure",
+      "quantity": 341,
+      "price": 1.48
+    },
+    
+    {
+      "product_code": "FS-6277",
+      "description": "Phase Shield PS-653M",
+      "quantity": 652,
+      "price": 3.53
+    }
+    
+  ],
+  "subtotal": "7459.11",
+  "tax": "615.38",
+  "total": "8074.49"
+}

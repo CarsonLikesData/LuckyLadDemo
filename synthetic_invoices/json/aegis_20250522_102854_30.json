@@ -1,0 +1,92 @@
+
+{
+  "invoice_number": "858-2029",
+  "invoice_date": "March 24, 2025",
+  "due_date": "April 8, 2025",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy",
+    "address": "59235 Sullivan Rest Apt. 702 Conroe, TX 77305"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy",
+    "address": "Field Office: Eagleford"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "Blakefort West 3",
+      "item": "CH90",
+      "description": "Oxygen Scavenger",
+      "quantity": 375,
+      "unit_price": 13.07,
+      "total_price": 4901.25
+    },
+    
+    {
+      "well_name": "",
+      "item": "FS171",
+      "description": "Pressure Regulator",
+      "quantity": 740,
+      "unit_price": 2.72,
+      "total_price": 2012.8
+    },
+    
+    {
+      "well_name": "",
+      "item": "CH/974-M20",
+      "description": "Valve Assembly",
+      "quantity": 914,
+      "unit_price": 3.53,
+      "total_price": 3226.42
+    },
+    
+    {
+      "well_name": "",
+      "item": "OLA-5413",
+      "description": "FlowPro Phase Shield PS-653M Type F",
+      "quantity": 145,
+      "unit_price": 3.56,
+      "total_price": 516.2
+    },
+    
+    {
+      "well_name": "59122 Guerra Creek",
+      "item": "OLA898",
+      "description": "WellGuard Phase Shield PS-653M",
+      "quantity": 858,
+      "unit_price": 70.06,
+      "total_price": 60111.48
+    },
+    
+    {
+      "well_name": "30981 Brooks Creek",
+      "item": "33-TS-4822",
+      "description": "EnerChem Wellhead Component Grade A",
+      "quantity": 697,
+      "unit_price": 201.16,
+      "total_price": 140208.52
+    },
+    
+    {
+      "well_name": "East Brendastad North 10",
+      "item": "CH-7299",
+      "description": "OLA-905 (Oil - Low Ash)",
+      "quantity": 221,
+      "unit_price": 1.15,
+      "total_price": 254.15
+    },
+    
+    {
+      "well_name": "",
+      "item": "FS/359-L26",
+      "description": "Seats Grade C",
+      "quantity": 433,
+      "unit_price": 138.9,
+      "total_price": 60143.7
+    }
+    
+  ],
+  "subtotal": "271374.52",
+  "tax": "22388.4",
+  "total": "293762.92000000004"
+}

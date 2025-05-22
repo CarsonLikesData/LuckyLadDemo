@@ -1,0 +1,211 @@
+{
+  "metadata": {
+    "processor_id": "statement-processor-v1",
+    "document_type": "vendor_statement",
+    "confidence_threshold": 0.7,
+    "source_filename": "statement_4222025.pdf",
+    "generation_timestamp": "2025-05-22T13:00:26.588520"
+  },
+  "vendor_information": {
+    "name": "REAGAN POWER COMPRESSION LLC",
+    "address": {
+      "full_address": "1347 EVANGELINE THRUWAY\nBROUSSARD, LA 70518",
+      "city": "BROUSSARD",
+      "state": "LA",
+      "postal_code": "70518",
+      "street": "1347 EVANGELINE THRUWAY"
+    }
+  },
+  "customer_information": {
+    "name": "LUCKY LAD ENERGY LLC",
+    "address": {
+      "full_address": "P O BOX 8351\nCONROE, TX 77305-1379",
+      "city": "CONROE",
+      "state": "TX",
+      "postal_code": "77305-1379",
+      "street": "P O BOX 8351"
+    }
+  },
+  "statement_details": {
+    "statement_date": "4/22/2025",
+    "amount_due": "$14,182.18",
+    "amount_due_numeric": 14182.179999999998,
+    "currency": "USD"
+  },
+  "aging_summary": {
+    "current": "$1,757.63",
+    "current_numeric": 1757.63,
+    "days_1_30": "$3,431.19",
+    "days_1_30_numeric": 3431.19,
+    "days_31_60": "$1,728.43",
+    "days_31_60_numeric": 1728.43,
+    "days_61_90": "$5,459.87",
+    "days_61_90_numeric": 5459.87,
+    "days_over_90": "$1,805.06",
+    "days_over_90_numeric": 1805.06,
+    "total": "$14,182.18",
+    "total_numeric": 14182.179999999998
+  },
+  "transactions": [
+    {
+      "date": "12/1/2024",
+      "description": "INV #43712. Due 12/31/2024. Orig. Amount $692.70.",
+      "amount": "692.70",
+      "amount_numeric": 692.7,
+      "balance": "692.70",
+      "balance_numeric": 692.7,
+      "transaction_type": "invoice",
+      "well_name": "10032 Theuvenins Creek",
+      "invoice_number": "43712",
+      "due_date": "12/31/2024"
+    },
+    {
+      "date": "12/7/2024",
+      "description": "INV #24230. Due 1/6/2025. Orig. Amount $714.73.",
+      "amount": "714.73",
+      "amount_numeric": 714.73,
+      "balance": "1,407.43",
+      "balance_numeric": 1407.43,
+      "transaction_type": "invoice",
+      "well_name": "10051 LG #1, SPURGER, TX",
+      "invoice_number": "24230",
+      "due_date": "1/6/2025"
+    },
+    {
+      "date": "12/17/2024",
+      "description": "INV #65291. Due 1/16/2025. Orig. Amount $530.10.",
+      "amount": "530.10",
+      "amount_numeric": 530.1,
+      "balance": "1,937.53",
+      "balance_numeric": 1937.5300000000002,
+      "transaction_type": "invoice",
+      "well_name": "10083 DUPLANTIER ESTATE #2",
+      "invoice_number": "65291",
+      "due_date": "1/16/2025"
+    },
+    {
+      "date": "12/27/2024",
+      "description": "GENJRNL #10-84-10R. Reverse of GJE 55-18-39 Transfer of Credits for\nLUCKY LAD ENERGY LLC from LUCKY LAD ENERGY LLC to 10084 DREYFUS MINERALS #1",
+      "amount": "-1,602.82",
+      "amount_numeric": -1602.82,
+      "balance": "334.71",
+      "balance_numeric": 334.71000000000026,
+      "transaction_type": "credit",
+      "well_name": "10084 DREYFUS MINERALS #1"
+    },
+    {
+      "date": "1/11/2025",
+      "description": "INV #25179. Due 2/10/2025. Orig. Amount $3,908.71.",
+      "amount": "3,908.71",
+      "amount_numeric": 3908.71,
+      "balance": "4,243.42",
+      "balance_numeric": 4243.42,
+      "transaction_type": "invoice",
+      "well_name": "10085 DREYFUS MINERALS #2 ALT",
+      "invoice_number": "25179",
+      "due_date": "2/10/2025"
+    },
+    {
+      "date": "1/21/2025",
+      "description": "INV #69366. Due 2/20/2025. Orig. Amount $2,961.04.",
+      "amount": "2,961.04",
+      "amount_numeric": 2961.04,
+      "balance": "7,204.46",
+      "balance_numeric": 7204.46,
+      "transaction_type": "invoice",
+      "well_name": "10085 DREYFUS MINERALS #2 ALT",
+      "invoice_number": "69366",
+      "due_date": "2/20/2025"
+    },
+    {
+      "date": "1/22/2025",
+      "description": "INV #65491. Due 2/21/2025. Orig. Amount $1,830.70.",
+      "amount": "1,830.70",
+      "amount_numeric": 1830.7,
+      "balance": "9,035.16",
+      "balance_numeric": 9035.16,
+      "transaction_type": "invoice",
+      "well_name": "10085 DREYFUS MINERALS #2 ALT",
+      "invoice_number": "65491",
+      "due_date": "2/21/2025"
+    },
+    {
+      "date": "2/1/2025",
+      "description": "GENJRNL #65-82-55R. Reverse of GJE 21-15-60 Transfer of Credits for\nLUCKY LAD ENERGY LLC from LUCKY LAD ENERGY LLC to 10086 JOHNSON BAYOU",
+      "amount": "-1,102.34",
+      "amount_numeric": -1102.34,
+      "balance": "7,932.82",
+      "balance_numeric": 7932.82,
+      "transaction_type": "credit",
+      "well_name": "10086 JOHNSON BAYOU"
+    },
+    {
+      "date": "2/20/2025",
+      "description": "GENJRNL #84-71-29R. Reverse of GJE 94-64-45 Transfer of Credits for\nLUCKY LAD ENERGY LLC from LUCKY LAD ENERGY LLC to 10086 JOHNSON BAYOU",
+      "amount": "-201.17",
+      "amount_numeric": -201.17,
+      "balance": "7,731.65",
+      "balance_numeric": 7731.65,
+      "transaction_type": "credit",
+      "well_name": "10086 JOHNSON BAYOU"
+    },
+    {
+      "date": "2/24/2025",
+      "description": "GENJRNL #32-44-53R. Reverse of GJE 61-94-51 Transfer of Credits for\nLUCKY LAD ENERGY LLC from LUCKY LAD ENERGY LLC to 10086 JOHNSON BAYOU",
+      "amount": "-1,752.97",
+      "amount_numeric": -1752.97,
+      "balance": "5,978.68",
+      "balance_numeric": 5978.679999999999,
+      "transaction_type": "credit",
+      "well_name": "10086 JOHNSON BAYOU"
+    },
+    {
+      "date": "3/8/2025",
+      "description": "INV #58890. Due 4/7/2025. Orig. Amount $3,523.45.",
+      "amount": "3,523.45",
+      "amount_numeric": 3523.45,
+      "balance": "9,502.13",
+      "balance_numeric": 9502.13,
+      "transaction_type": "invoice",
+      "well_name": "10087 GORDON",
+      "invoice_number": "58890",
+      "due_date": "4/7/2025"
+    },
+    {
+      "date": "3/22/2025",
+      "description": "INV #73589. Due 4/21/2025. Orig. Amount $2,096.29.",
+      "amount": "2,096.29",
+      "amount_numeric": 2096.29,
+      "balance": "11,598.42",
+      "balance_numeric": 11598.419999999998,
+      "transaction_type": "invoice",
+      "well_name": "10087 GORDON",
+      "invoice_number": "73589",
+      "due_date": "4/21/2025"
+    },
+    {
+      "date": "3/31/2025",
+      "description": "INV #25537. Due 4/30/2025. Orig. Amount $2,510.60.",
+      "amount": "2,510.60",
+      "amount_numeric": 2510.6,
+      "balance": "14,109.02",
+      "balance_numeric": 14109.019999999999,
+      "transaction_type": "invoice",
+      "well_name": "10087 GORDON",
+      "invoice_number": "25537",
+      "due_date": "4/30/2025"
+    },
+    {
+      "date": "4/4/2025",
+      "description": "INV #60392. Due 5/4/2025. Orig. Amount $2,341.70.",
+      "amount": "2,341.70",
+      "amount_numeric": 2341.7,
+      "balance": "16,450.72",
+      "balance_numeric": 16450.719999999998,
+      "transaction_type": "invoice",
+      "well_name": "10087 GORDON",
+      "invoice_number": "60392",
+      "due_date": "5/4/2025"
+    }
+  ]
+}

@@ -2,20 +2,48 @@
 {
   "header": {
     "vendor": "Reagan Power Compression LLC",
-    "client": "Lucky Lad Energy LLC",
-    "statement_date": "3/27/2025"
+    "client": "Lucky Lad Energy, LLC",
+    "statement_date": "5/11/2025"
   },
   "line_items": [
     
     {
-      "product_code": "PS-6072",
-      "description": "Propane",
-      "quantity": 300,
-      "price": 14.61
+      "product_code": "MS690",
+      "description": "ChemTech Assy Rod Piston",
+      "quantity": 570,
+      "price": 207.27
+    },
+    
+    {
+      "product_code": "DS-9375",
+      "description": "Corr-Shield CS-1148",
+      "quantity": 800,
+      "price": 3.73
+    },
+    
+    {
+      "product_code": "SS-178",
+      "description": "Seats",
+      "quantity": 949,
+      "price": 44.11
+    },
+    
+    {
+      "product_code": "WS/813-L21",
+      "description": "Inhibitor Solution",
+      "quantity": 312,
+      "price": 1.5
+    },
+    
+    {
+      "product_code": "19-TS-7334",
+      "description": "EnerChem Kit Repair Viton Premium Model",
+      "quantity": 427,
+      "price": 46.89
     }
     
   ],
-  "subtotal": "4383.0",
-  "tax": "361.6",
-  "total": "4744.6"
+  "subtotal": "183478.32",
+  "tax": "15136.96",
+  "total": "198615.28"
 }

@@ -28,7 +28,7 @@ from PIL import Image, ImageFilter, ImageOps
 import numpy as np
 
 # Data validation
-from pydantic import BaseModel, validator, model_validator
+from pydantic import BaseModel, field_validator, model_validator
 
 # Template rendering
 from jinja2 import Template
@@ -207,7 +207,7 @@ class LineItem(BaseModel):
     unit_price: Union[float, str]
     total_price: Optional[Union[float, str]] = None
 
-    @validator("quantity")
+    @field_validator("quantity")
     def validate_quantity(cls, v):
         if isinstance(v, str):
             try:
@@ -216,14 +216,54 @@ class LineItem(BaseModel):
                 pass
         return v
 
-    @validator("unit_price")
-    def validate_unit_price(cls, v):
-        if isinstance(v, str):
+    @field_validator("unit_price")
+    def validate_unit_price(cls, v: Union[str, float, int]) -> float:
+        """Validates and normalizes unit_price values. Handles:
+        - String/numeric inputs
+        - Comma separation
+        - Negative values
+        - Detailed error reporting
+        """
+        # Handle numeric types directly
+        if isinstance(v, (int, float)):
+            if v < 0:
+                raise ValueError("Unit price cannot be negative")
+            return float(v)
+        
+        # Handle string inputs
+        elif isinstance(v, str):
+            # Remove currency symbols and whitespace
+            cleaned_value = v.strip()
+            
+            # Check for negative sign before removing currency symbol
+            is_negative = cleaned_value.startswith('-')
+            
+            # Remove currency symbol if present
+            if cleaned_value.startswith('$') or cleaned_value.startswith('-$'):
+                cleaned_value = cleaned_value.replace('$', '', 1)
+            
+            # Remove commas for number formatting
+            cleaned_value = cleaned_value.replace(",", "")
+            
             try:
-                return float(v.replace(",", ""))
-            except ValueError:
-                pass
-        return v
+                # Convert to float
+                float_value = float(cleaned_value)
+                
+                # Check for negative values
+                if float_value < 0 or is_negative:
+                    raise ValueError("Unit price cannot be negative")
+                
+                return float_value
+            except ValueError as e:
+                # Check if this was our own negative value error
+                if "cannot be negative" in str(e):
+                    raise
+                # Otherwise it's a format error
+                raise ValueError(f"Invalid unit price format: '{v}'. Expected a numeric value.")
+        
+        # Handle invalid types
+        else:
+            raise ValueError(f"Unit price must be a number or string, got {type(v).__name__}")
 
     @model_validator(mode="after")
     def calculate_total_price(self):

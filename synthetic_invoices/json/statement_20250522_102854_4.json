@@ -1,0 +1,46 @@
+{
+  "statement_date": "5/8/2025",
+  "to": {
+    "customer_name": "LUCKY LAD ENERGY LLC",
+    "attention": null,
+    "address": "PO BOX 9384\nCONROE, TX 77305-1379"
+  },
+  "transactions": [
+    {
+      "date": "11/27/2024",
+      "transaction": "INV #46864. Due 12/27/2024. Orig. Amount $3,422.42.",
+      "amount": "3,422.42",
+      "balance": "3,422.42"
+    },
+    {
+      "date": "12/14/2024",
+      "transaction": "INV #1135. Due 1/13/2025. Orig. Amount $3,557.66.\nKimberlyborough South 11-",
+      "amount": "3,557.66",
+      "balance": "6,980.08"
+    },
+    {
+      "date": "1/5/2025",
+      "transaction": "INV #95132. Due 2/4/2025. Orig. Amount $3,405.35.",
+      "amount": "3,405.35",
+      "balance": "10,385.43"
+    },
+    {
+      "date": "1/7/2025",
+      "transaction": "INV #43091. Due 2/6/2025. Orig. Amount $1,528.79.",
+      "amount": "1,528.79",
+      "balance": "11,914.22"
+    },
+    {
+      "date": "2/4/2025",
+      "transaction": "INV #47491. Due 3/6/2025. Orig. Amount $2,146.55.",
+      "amount": "2,146.55",
+      "balance": "14,060.77"
+    },
+    {
+      "date": "2/14/2025",
+      "transaction": "INV #92374. Due 3/16/2025. Orig. Amount $3,148.60.",
+      "amount": "3,148.60",
+      "balance": "17,209.37"
+    }
+  ]
+}

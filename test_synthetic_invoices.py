@@ -112,5 +112,96 @@ class TestSyntheticInvoiceGenerator(unittest.TestCase):
         for result in validation_results:
             self.assertTrue(result["valid"], f"Validation failed for {result['file']}: {result['errors']}")
 
+class TestUnitPriceValidation(unittest.TestCase):
+    """Test cases for the unit_price validator in LineItem model"""
+    
+    def test_valid_formats(self):
+        """Test that valid unit price formats are correctly normalized"""
+        from synthetic_invoice_generator import LineItem
+        
+        # Test cases with expected results
+        test_cases = [
+            # Standard numeric inputs
+            (10, 10.0),
+            (10.5, 10.5),
+            
+            # String inputs with different formats
+            ("10", 10.0),
+            ("10.5", 10.5),
+            ("10.50", 10.5),
+            ("10,000", 10000.0),
+            ("10,000.50", 10000.5),
+            ("$10", 10.0),
+            ("$10.50", 10.5),
+            ("$10,000.50", 10000.5),
+        ]
+        
+        for input_value, expected_output in test_cases:
+            with self.subTest(input=input_value):
+                line_item = LineItem(
+                    item="Test Item",
+                    description="Test Description",
+                    unit="EA",
+                    quantity=1,
+                    unit_price=input_value
+                )
+                self.assertEqual(line_item.unit_price, expected_output)
+    
+    def test_invalid_formats(self):
+        """Test that invalid unit price formats raise appropriate validation errors"""
+        from synthetic_invoice_generator import LineItem
+        from pydantic import ValidationError
+        
+        # Test cases that should raise validation errors
+        invalid_inputs = [
+            "not_a_number",
+            "10.5.5",
+            "10$",
+            "price: 10",
+            {},  # Non-string/numeric types
+            [],
+            None,
+        ]
+        
+        for input_value in invalid_inputs:
+            with self.subTest(input=input_value):
+                with self.assertRaises(ValidationError) as context:
+                    LineItem(
+                        item="Test Item",
+                        description="Test Description",
+                        unit="EA",
+                        quantity=1,
+                        unit_price=input_value
+                    )
+                # Check that the error message mentions unit_price
+                self.assertIn("unit_price", str(context.exception))
+    
+    def test_negative_values(self):
+        """Test handling of negative unit price values"""
+        from synthetic_invoice_generator import LineItem
+        from pydantic import ValidationError
+        
+        # Test cases with negative values
+        test_cases = [
+            -10,
+            -10.5,
+            "-10",
+            "-10.5",
+            "-$10.50",
+        ]
+        
+        for input_value in test_cases:
+            with self.subTest(input=input_value):
+                with self.assertRaises(ValidationError) as context:
+                    LineItem(
+                        item="Test Item",
+                        description="Test Description",
+                        unit="EA",
+                        quantity=1,
+                        unit_price=input_value
+                    )
+                # Check that the error message mentions negative values
+                self.assertIn("negative", str(context.exception).lower())
+
 if __name__ == "__main__":
     unittest.main()

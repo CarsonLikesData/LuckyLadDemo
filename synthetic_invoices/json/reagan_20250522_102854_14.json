@@ -1,0 +1,35 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy LLC",
+    "statement_date": "4/26/25"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "OLA804",
+      "description": "PetroSol Compression Fitting",
+      "quantity": 556,
+      "price": 3.47
+    },
+    
+    {
+      "product_code": "PS/227-B66",
+      "description": "EnerChem Seats",
+      "quantity": 75,
+      "price": 352.9
+    },
+    
+    {
+      "product_code": "TS/351-C18",
+      "description": "Demulsifier 1/4 inch",
+      "quantity": 476,
+      "price": 331.03
+    }
+    
+  ],
+  "subtotal": "185967.1",
+  "tax": "15342.29",
+  "total": "201309.39"
+}

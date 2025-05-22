@@ -1,0 +1,38 @@
+
+{
+  "invoice_number": "254105",
+  "invoice_date": "5/3/2025",
+  "due_date": "5/18/2025",
+  "bill_to": {
+    "customer_name": "LUCKY LAD ENERGY LLC",
+    "address": "PO Box 1244 Conroe, TX 77305"
+  },
+  "ship_to": {
+    "customer_name": "LUCKY LAD ENERGY LLC",
+    "address": "Godchaux 4 Tank Battery"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "Lewis-Schmitt Joint 1",
+      "item": "DS-9428",
+      "description": "Seats Medium-Pressure",
+      "quantity": 289,
+      "unit_price": 3.51,
+      "total_price": 1014.39
+    },
+    
+    {
+      "well_name": "Jacquelinefort South 8",
+      "item": "CH-9590",
+      "description": "Wellhead Component Grade Commercial",
+      "quantity": 894,
+      "unit_price": 14.41,
+      "total_price": 12882.54
+    }
+    
+  ],
+  "subtotal": "13896.93",
+  "tax": "1146.5",
+  "total": "15043.43"
+}

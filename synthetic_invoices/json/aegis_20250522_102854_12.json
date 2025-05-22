@@ -1,0 +1,38 @@
+
+{
+  "invoice_number": "256370",
+  "invoice_date": "4-20-2025",
+  "due_date": "5-20-2025",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy LLC",
+    "address": "PO Box 1194 Conroe, TX 77305 USA"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy LLC",
+    "address": "Godchaux 2 Tank Battery"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "",
+      "item": "SSZQ-301",
+      "description": "Wellhead Component",
+      "quantity": 992,
+      "unit_price": 37.63,
+      "total_price": 37328.96
+    },
+    
+    {
+      "well_name": "",
+      "item": "DSJB-209",
+      "description": "Pressure Regulator",
+      "quantity": 575,
+      "unit_price": 198.66,
+      "total_price": 114229.5
+    }
+    
+  ],
+  "subtotal": "151558.46",
+  "tax": "12503.57",
+  "total": "164062.03"
+}

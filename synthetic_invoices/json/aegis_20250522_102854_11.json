@@ -1,0 +1,29 @@
+
+{
+  "invoice_number": "808630",
+  "invoice_date": "4-4-2025",
+  "due_date": "5-4-2025",
+  "bill_to": {
+    "customer_name": "LUCKY LAD ENERGY LLC",
+    "address": "PO Box 3325 Conroe, TX 77305 USA"
+  },
+  "ship_to": {
+    "customer_name": "LUCKY LAD ENERGY LLC",
+    "address": "Myers 1 Site"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "Bray 7",
+      "item": "CS265",
+      "description": "Darts",
+      "quantity": 173,
+      "unit_price": 3.37,
+      "total_price": 583.01
+    }
+    
+  ],
+  "subtotal": "583.01",
+  "tax": "48.1",
+  "total": "631.11"
+}

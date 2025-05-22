@@ -1,0 +1,15 @@
+
+{
+  "invoice_number": "253941",
+  "date": "5/5/2025",
+  "sold_to": "Lucky Lad Energy L.L.C. 59244 Raymond Haven Suite 667 Conroe, TX 77305",
+  "gallons": "579",
+  "price_per_gal": "2.81",
+  "amount": "1626.99",
+  "tax": "140.99",
+  "total_payment_due": "1849.98",
+  "tank_serial_number": "405348757",
+  "tank_size": "250",
+  "before_percentage": "79",
+  "after_percentage": "95"
+}

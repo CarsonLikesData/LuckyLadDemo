@@ -1,0 +1,63 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "LUCKY LAD ENERGY LLC",
+    "statement_date": "5/16/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "MS-6531",
+      "description": "Assy Rod Piston",
+      "quantity": 414.13,
+      "price": 276.0
+    },
+    
+    {
+      "product_code": "CH-5394",
+      "description": "H2S Scavenger Premium Model",
+      "quantity": 121.3,
+      "price": 57.5
+    },
+    
+    {
+      "product_code": "PS-1347",
+      "description": "H2S Scavenger",
+      "quantity": 248,
+      "price": 1.54
+    },
+    
+    {
+      "product_code": "PSAS-156",
+      "description": "ChemTech Flow Control Unit 1/2 inch",
+      "quantity": 179,
+      "price": 35.49
+    },
+    
+    {
+      "product_code": "SS/462-S85",
+      "description": "H2S Scavenger",
+      "quantity": 580,
+      "price": 45.67
+    },
+    
+    {
+      "product_code": "96-CH-4410",
+      "description": "OLA-905 (Oil - Low Ash) Standard Model",
+      "quantity": 834,
+      "price": 248.53
+    },
+    
+    {
+      "product_code": "OLA/431-L74",
+      "description": "Cylinder",
+      "quantity": 929,
+      "price": 0.92
+    }
+    
+  ],
+  "subtotal": "362626.56",
+  "tax": "29916.69",
+  "total": "392543.25"
+}

@@ -1,0 +1,15 @@
+
+{
+  "invoice_number": "606-9508",
+  "date": "3/26/2025",
+  "sold_to": "Lucky Lad Energy 8822 David Mall Apt. 943 Conroe, TX 77305",
+  "gallons": "455",
+  "price_per_gal": "4.02",
+  "amount": "1829.1",
+  "tax": "162.78",
+  "total_payment_due": "2135.88",
+  "tank_serial_number": "474648367",
+  "tank_size": "250",
+  "before_percentage": "30",
+  "after_percentage": "83"
+}

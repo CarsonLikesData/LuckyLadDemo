@@ -1,0 +1,28 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy L.L.C.",
+    "statement_date": "5/17/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "FS282",
+      "description": "Assy Rod Piston",
+      "quantity": 47.47,
+      "price": 3.88
+    },
+    
+    {
+      "product_code": "72-DS-5539",
+      "description": "WellGuard Kit Repair Viton",
+      "quantity": 644,
+      "price": 164.36
+    }
+    
+  ],
+  "subtotal": "106032.01999999999",
+  "tax": "8747.64",
+  "total": "114779.65999999999"
+}

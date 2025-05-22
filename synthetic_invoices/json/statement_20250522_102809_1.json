@@ -1,0 +1,64 @@
+{
+  "statement_date": "4/30/2025",
+  "to": {
+    "customer_name": "LUCKY LAD ENERGY LLC",
+    "attention": null,
+    "address": "PO BOX 3402\nCONROE, TX 77305-1379"
+  },
+  "transactions": [
+    {
+      "date": "12/7/2024",
+      "transaction": "INV #82955. Due 1/6/2025. Orig. Amount $2,328.18.",
+      "amount": "2,328.18",
+      "balance": "2,328.18"
+    },
+    {
+      "date": "12/14/2024",
+      "transaction": "INV #12492. Due 1/13/2025. Orig. Amount $1,849.30.\nGodchaux 7-",
+      "amount": "1,849.30",
+      "balance": "4,177.48"
+    },
+    {
+      "date": "12/25/2024",
+      "transaction": "INV #40846. Due 1/24/2025. Orig. Amount $1,710.70.",
+      "amount": "1,710.70",
+      "balance": "5,888.18"
+    },
+    {
+      "date": "1/13/2025",
+      "transaction": "INV #96139. Due 2/12/2025. Orig. Amount $3,941.48.",
+      "amount": "3,941.48",
+      "balance": "9,829.66"
+    },
+    {
+      "date": "1/26/2025",
+      "transaction": "INV #36342. Due 2/25/2025. Orig. Amount $3,529.29.",
+      "amount": "3,529.29",
+      "balance": "13,358.95"
+    },
+    {
+      "date": "2/10/2025",
+      "transaction": "GENJRNL #82-93-18R. Reverse of GJE 22-76-41 Transfer of Credits for\nLUCKY LAD ENERGY LLC from LUCKY LAD ENERGY LLC to Kirby Walker",
+      "amount": "-917.46",
+      "balance": "12,441.49"
+    },
+    {
+      "date": "3/5/2025",
+      "transaction": "INV #61825. Due 4/4/2025. Orig. Amount $3,621.20.",
+      "amount": "3,621.20",
+      "balance": "16,062.69"
+    },
+    {
+      "date": "3/11/2025",
+      "transaction": "INV #54224. Due 4/10/2025. Orig. Amount $3,631.66.",
+      "amount": "3,631.66",
+      "balance": "19,694.35"
+    },
+    {
+      "date": "4/5/2025",
+      "transaction": "INV #27741. Due 5/5/2025. Orig. Amount $3,361.39.",
+      "amount": "3,361.39",
+      "balance": "23,055.74"
+    }
+  ]
+}

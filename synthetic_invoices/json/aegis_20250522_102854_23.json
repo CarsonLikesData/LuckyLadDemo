@@ -1,0 +1,56 @@
+
+{
+  "invoice_number": "INV619742",
+  "invoice_date": "5/3/2025",
+  "due_date": "5/18/2025",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy LLC",
+    "address": "PO Box 6463 Conroe, TX 77305 USA"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy LLC",
+    "address": "Johnson-Butler Combined 2 Site"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "",
+      "item": "85-PS-7813",
+      "description": "H2S Scavenger",
+      "quantity": 238,
+      "unit_price": 298.21,
+      "total_price": 70973.98
+    },
+    
+    {
+      "well_name": "Stevens-Smith Joint 1",
+      "item": "SS766",
+      "description": "Valve Assembly",
+      "quantity": 57,
+      "unit_price": 88.0,
+      "total_price": 5016.0
+    },
+    
+    {
+      "well_name": "40956 Garcia Creek",
+      "item": "WSGL-833",
+      "description": "FlowPro Valve Assembly Standard Model",
+      "quantity": 693,
+      "unit_price": 343.82,
+      "total_price": 238267.26
+    },
+    
+    {
+      "well_name": "Kirby Riley",
+      "item": "CSOE-570",
+      "description": "Inhibitor Solution",
+      "quantity": 478,
+      "unit_price": 4.91,
+      "total_price": 2346.98
+    }
+    
+  ],
+  "subtotal": "316604.22000000003",
+  "tax": "26119.85",
+  "total": "342724.07"
+}

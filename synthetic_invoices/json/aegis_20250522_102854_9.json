@@ -1,0 +1,101 @@
+
+{
+  "invoice_number": "954-5069",
+  "invoice_date": "5/17/2025",
+  "due_date": "7/1/2025",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy",
+    "address": "4383 Gray Parks Suite 572 Conroe, TX 77305"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy",
+    "address": "Field Office: Rivas Township South"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "Perry C-80",
+      "item": "CH/475-A2",
+      "description": "Kit Repair Viton",
+      "quantity": 220,
+      "unit_price": 32.35,
+      "total_price": 7117.0
+    },
+    
+    {
+      "well_name": "52061 Jackson Creek",
+      "item": "MSYY-301",
+      "description": "Wellhead Component Type L",
+      "quantity": 632,
+      "unit_price": 1.74,
+      "total_price": 1099.68
+    },
+    
+    {
+      "well_name": "Estrada ALT",
+      "item": "MS295",
+      "description": "ChemTech Valve Assembly",
+      "quantity": 320,
+      "unit_price": 4.9,
+      "total_price": 1568.0
+    },
+    
+    {
+      "well_name": "Kirby Gonzalez",
+      "item": "TS/747-J64",
+      "description": "Seats Economy Model",
+      "quantity": 114,
+      "unit_price": 16.54,
+      "total_price": 1885.56
+    },
+    
+    {
+      "well_name": "Hernandez UNIT",
+      "item": "36-CS-1218",
+      "description": "Darts 1 inch",
+      "quantity": 32,
+      "unit_price": 4.02,
+      "total_price": 128.64
+    },
+    
+    {
+      "well_name": "",
+      "item": "51-CS-7270",
+      "description": "SCALE-SHIELD SS-728",
+      "quantity": 315,
+      "unit_price": 4.42,
+      "total_price": 1392.3
+    },
+    
+    {
+      "well_name": "Medina ALT",
+      "item": "FSDU-505",
+      "description": "EnerChem Pressure Regulator",
+      "quantity": 921,
+      "unit_price": 0.84,
+      "total_price": 773.64
+    },
+    
+    {
+      "well_name": "Kirby Lutz",
+      "item": "SSOI-826",
+      "description": "Assy Rod Piston",
+      "quantity": 802,
+      "unit_price": 4.0,
+      "total_price": 3208.0
+    },
+    
+    {
+      "well_name": "Ramos-Morris Combined 2",
+      "item": "PS-3355",
+      "description": "SCALE-SHIELD SS-728",
+      "quantity": 825,
+      "unit_price": 236.57,
+      "total_price": 195170.25
+    }
+    
+  ],
+  "subtotal": "212343.07",
+  "tax": "17518.3",
+  "total": "229861.37"
+}

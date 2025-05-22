@@ -1,0 +1,56 @@
+
+{
+  "invoice_number": "259795",
+  "invoice_date": "4/10/2025",
+  "due_date": "5/10/2025",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy",
+    "address": "PO Box 7346 Conroe, TX 77305 USA"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy",
+    "address": "Field Office: Mitchell County East"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "",
+      "item": "30-FS-1949",
+      "description": "WellGuard Pressure Regulator Grade B",
+      "quantity": 80.05,
+      "unit_price": 2.24,
+      "total_price": 179.31
+    },
+    
+    {
+      "well_name": "Alvarado B-70",
+      "item": "CH77",
+      "description": "H2S Scavenger Grade B",
+      "quantity": 968,
+      "unit_price": 0.89,
+      "total_price": 861.52
+    },
+    
+    {
+      "well_name": "Mcdaniel D-29",
+      "item": "CH-2855",
+      "description": "Compression Fitting",
+      "quantity": 725,
+      "unit_price": 32.57,
+      "total_price": 23613.25
+    },
+    
+    {
+      "well_name": "Kirby Webb",
+      "item": "TS117",
+      "description": "Valve Assembly",
+      "quantity": 775,
+      "unit_price": 0.57,
+      "total_price": 441.75
+    }
+    
+  ],
+  "subtotal": "25095.83",
+  "tax": "2070.41",
+  "total": "27166.24"
+}

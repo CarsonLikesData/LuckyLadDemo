@@ -1,0 +1,21 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy LLC",
+    "statement_date": "4/9/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "CH19",
+      "description": "Compression Fitting",
+      "quantity": 753,
+      "price": 1.9
+    }
+    
+  ],
+  "subtotal": "1430.7",
+  "tax": "118.03",
+  "total": "1548.73"
+}

@@ -1,0 +1,34 @@
+{
+  "statement_date": "4/30/2025",
+  "to": {
+    "customer_name": "LUCKY LAD ENERGY LLC",
+    "attention": null,
+    "address": "PO BOX 8844\nCONROE, TX 77305-1379"
+  },
+  "transactions": [
+    {
+      "date": "11/28/2024",
+      "transaction": "INV #48596. Due 12/28/2024. Orig. Amount $826.74.",
+      "amount": "826.74",
+      "balance": "826.74"
+    },
+    {
+      "date": "12/8/2024",
+      "transaction": "INV #3134. Due 1/7/2025. Orig. Amount $1,987.53.",
+      "amount": "1,987.53",
+      "balance": "2,814.27"
+    },
+    {
+      "date": "12/30/2024",
+      "transaction": "INV #78224. Due 1/29/2025. Orig. Amount $3,858.55.",
+      "amount": "3,858.55",
+      "balance": "6,672.82"
+    },
+    {
+      "date": "1/10/2025",
+      "transaction": "INV #59061. Due 2/9/2025. Orig. Amount $3,768.68.\nHester-Burgess Combined 1-",
+      "amount": "3,768.68",
+      "balance": "10,441.50"
+    }
+  ]
+}

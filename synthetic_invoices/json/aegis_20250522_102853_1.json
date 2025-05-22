@@ -1,0 +1,38 @@
+
+{
+  "invoice_number": "SI85334",
+  "invoice_date": "3-27-2025",
+  "due_date": "5-11-2025",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy",
+    "address": "177 Norma Locks Apt. 880 Conroe, TX 77305"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy",
+    "address": "131 Stephanie Viaduct Suite 137 Conroe, TX 77305"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "38245 Buchanan Creek",
+      "item": "CH533",
+      "description": "Propane Premium Model",
+      "quantity": 738,
+      "unit_price": 39.45,
+      "total_price": 29114.1
+    },
+    
+    {
+      "well_name": "52715 Walker Creek",
+      "item": "OLA915",
+      "description": "Darts",
+      "quantity": 180,
+      "unit_price": 37.3,
+      "total_price": 6714.0
+    }
+    
+  ],
+  "subtotal": "35828.1",
+  "tax": "2955.82",
+  "total": "38783.92"
+}

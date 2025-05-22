@@ -1,0 +1,42 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy L.L.C.",
+    "statement_date": "May 5, 2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "WS-4532",
+      "description": "Corr-Shield CS-1148",
+      "quantity": 226,
+      "price": 7.4
+    },
+    
+    {
+      "product_code": "FS/911-G9",
+      "description": "METHANOL",
+      "quantity": 394,
+      "price": 2.52
+    },
+    
+    {
+      "product_code": "DS/299-T67",
+      "description": "Phase Shield PS-653M High-Pressure",
+      "quantity": 620,
+      "price": 20.9
+    },
+    
+    {
+      "product_code": "93-MS-4545",
+      "description": "OLA-905 (Oil - Low Ash)",
+      "quantity": 657,
+      "price": 139.4
+    }
+    
+  ],
+  "subtotal": "107209.08",
+  "tax": "8844.75",
+  "total": "116053.83"
+}

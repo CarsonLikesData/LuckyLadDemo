@@ -1,0 +1,70 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy, LLC",
+    "statement_date": "4/8/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "FS411",
+      "description": "Darts Premium Model",
+      "quantity": 836,
+      "price": 4.56
+    },
+    
+    {
+      "product_code": "PSLI-811",
+      "description": "ChemTech Phase Shield PS-653M",
+      "quantity": 120.48,
+      "price": 210.5
+    },
+    
+    {
+      "product_code": "97-OLA-8946",
+      "description": "D-SHIELD DS-129 2 inch",
+      "quantity": 31,
+      "price": 416.08
+    },
+    
+    {
+      "product_code": "WS-5084",
+      "description": "OLA-905 (Oil - Low Ash) Medium-Pressure",
+      "quantity": 267,
+      "price": 2.5
+    },
+    
+    {
+      "product_code": "TS-5171",
+      "description": "Corr-Shield CS-1148",
+      "quantity": 80.11,
+      "price": 474.96
+    },
+    
+    {
+      "product_code": "TS-2970",
+      "description": "Demulsifier Type I",
+      "quantity": 948,
+      "price": 470.91
+    },
+    
+    {
+      "product_code": "FS219",
+      "description": "Paraffin Treatment Premium Model",
+      "quantity": 559,
+      "price": 14.74
+    },
+    
+    {
+      "product_code": "TS-7779",
+      "description": "Biocide Formula",
+      "quantity": 588,
+      "price": 276.71
+    }
+    
+  ],
+  "subtotal": "698156.05",
+  "tax": "57597.87",
+  "total": "755753.92"
+}

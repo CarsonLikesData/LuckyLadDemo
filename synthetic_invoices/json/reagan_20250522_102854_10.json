@@ -1,0 +1,21 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy LLC",
+    "statement_date": "5/18/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "TS660",
+      "description": "Assy Rod Piston 2 inch",
+      "quantity": 145,
+      "price": 27.97
+    }
+    
+  ],
+  "subtotal": "4055.65",
+  "tax": "334.59",
+  "total": "4390.24"
+}

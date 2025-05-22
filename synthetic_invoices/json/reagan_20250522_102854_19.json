@@ -1,0 +1,49 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy LLC",
+    "statement_date": "4/21/25"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "PSDA-498",
+      "description": "Demulsifier",
+      "quantity": 24.43,
+      "price": 4.83
+    },
+    
+    {
+      "product_code": "FSDJ-315",
+      "description": "Darts",
+      "quantity": 856,
+      "price": 457.23
+    },
+    
+    {
+      "product_code": "MS-5148",
+      "description": "Methanol High-Pressure",
+      "quantity": 708,
+      "price": 448.21
+    },
+    
+    {
+      "product_code": "MS832",
+      "description": "Corr-Shield CS-1148",
+      "quantity": 445,
+      "price": 240.21
+    },
+    
+    {
+      "product_code": "DS/571-O70",
+      "description": "Darts",
+      "quantity": 595,
+      "price": 27.66
+    }
+    
+  ],
+  "subtotal": "832190.71",
+  "tax": "68655.73",
+  "total": "900846.44"
+}

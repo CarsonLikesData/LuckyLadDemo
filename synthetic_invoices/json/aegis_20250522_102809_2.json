@@ -1,0 +1,47 @@
+
+{
+  "invoice_number": "BI-2275",
+  "invoice_date": "4/19/2025",
+  "due_date": "5/19/2025",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy, LLC",
+    "address": "7798 Johnson Valleys Suite 241 Conroe, TX 77305"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy, LLC",
+    "address": "Field Office: Miller Parish East"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "Lawrence-Ponce Combined 1",
+      "item": "SSDP-309",
+      "description": "Corr-Shield CS-1148",
+      "quantity": 52,
+      "unit_price": 48.59,
+      "total_price": 2526.68
+    },
+    
+    {
+      "well_name": "",
+      "item": "OLA633",
+      "description": "H2S Scavenger",
+      "quantity": 789,
+      "unit_price": 284.11,
+      "total_price": 224162.79
+    },
+    
+    {
+      "well_name": "",
+      "item": "MSBT-945",
+      "description": "Oxygen Scavenger",
+      "quantity": 647.67,
+      "unit_price": 35.9,
+      "total_price": 23251.35
+    }
+    
+  ],
+  "subtotal": "249940.82",
+  "tax": "20620.12",
+  "total": "270560.94"
+}

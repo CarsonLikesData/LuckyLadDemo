@@ -1,0 +1,15 @@
+
+{
+  "invoice_number": "INV-0409-327",
+  "date": "5/18/25",
+  "sold_to": "Lucky Lad Energy, LLC 81619 Michael Rue Suite 816 Conroe, TX 77305",
+  "gallons": "121",
+  "price_per_gal": "2.84",
+  "amount": "343.64",
+  "tax": "28.35",
+  "total_payment_due": "371.99",
+  "tank_serial_number": "664293019",
+  "tank_size": "500",
+  "before_percentage": "77",
+  "after_percentage": "95"
+}

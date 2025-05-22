@@ -1,0 +1,15 @@
+
+{
+  "invoice_number": "152909",
+  "date": "5/7/2025",
+  "sold_to": "LUCKY LAD ENERGY LLC PO Box 4129 Conroe, TX 77305 USA",
+  "gallons": "311",
+  "price_per_gal": "4.25",
+  "amount": "1321.75",
+  "tax": "123.07",
+  "total_payment_due": "1614.82",
+  "tank_serial_number": "279798663",
+  "tank_size": "1000",
+  "before_percentage": "39",
+  "after_percentage": "95"
+}

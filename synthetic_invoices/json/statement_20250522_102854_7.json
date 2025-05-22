@@ -1,0 +1,58 @@
+{
+  "statement_date": "5/12/2025",
+  "to": {
+    "customer_name": "LUCKY LAD ENERGY LLC",
+    "attention": null,
+    "address": "PO BOX 2193\nCONROE, TX 77305-1379"
+  },
+  "transactions": [
+    {
+      "date": "11/30/2024",
+      "transaction": "INV #86275. Due 12/30/2024. Orig. Amount $905.13.",
+      "amount": "905.13",
+      "balance": "905.13"
+    },
+    {
+      "date": "12/9/2024",
+      "transaction": "INV #79199. Due 1/8/2025. Orig. Amount $3,614.35.\n64252 Rodriguez Creek-",
+      "amount": "3,614.35",
+      "balance": "4,519.48"
+    },
+    {
+      "date": "1/2/2025",
+      "transaction": "INV #49907. Due 2/1/2025. Orig. Amount $1,366.89.",
+      "amount": "1,366.89",
+      "balance": "5,886.37"
+    },
+    {
+      "date": "1/10/2025",
+      "transaction": "GENJRNL #84-98-41R. Reverse of GJE 83-27-47 Transfer of Credits for\nLUCKY LAD ENERGY LLC from LUCKY LAD ENERGY LLC to Mclean B-52",
+      "amount": "-917.72",
+      "balance": "4,968.65"
+    },
+    {
+      "date": "1/25/2025",
+      "transaction": "INV #54673. Due 2/24/2025. Orig. Amount $3,756.16.\nCook SWD-",
+      "amount": "3,756.16",
+      "balance": "8,724.81"
+    },
+    {
+      "date": "2/14/2025",
+      "transaction": "INV #58734. Due 3/16/2025. Orig. Amount $3,660.33.",
+      "amount": "3,660.33",
+      "balance": "12,385.14"
+    },
+    {
+      "date": "3/1/2025",
+      "transaction": "INV #57632. Due 3/31/2025. Orig. Amount $899.64.",
+      "amount": "899.64",
+      "balance": "13,284.78"
+    },
+    {
+      "date": "3/14/2025",
+      "transaction": "INV #93182. Due 4/13/2025. Orig. Amount $3,621.92.",
+      "amount": "3,621.92",
+      "balance": "16,906.70"
+    }
+  ]
+}

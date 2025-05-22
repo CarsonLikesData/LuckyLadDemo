@@ -1,0 +1,49 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "LUCKY LAD ENERGY LLC",
+    "statement_date": "5/8/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "TS354",
+      "description": "D-SHIELD DS-129",
+      "quantity": 520,
+      "price": 1.69
+    },
+    
+    {
+      "product_code": "CH836",
+      "description": "ChemTech Biocide Formula",
+      "quantity": 597,
+      "price": 41.22
+    },
+    
+    {
+      "product_code": "CH741",
+      "description": "Flow Control Unit",
+      "quantity": 102,
+      "price": 45.01
+    },
+    
+    {
+      "product_code": "PS774",
+      "description": "Propane Grade C",
+      "quantity": 978,
+      "price": 4.54
+    },
+    
+    {
+      "product_code": "36-TS-4975",
+      "description": "Pressure Regulator",
+      "quantity": 403,
+      "price": 39.61
+    }
+    
+  ],
+  "subtotal": "50481.11",
+  "tax": "4164.69",
+  "total": "54645.8"
+}

@@ -1,0 +1,92 @@
+
+{
+  "invoice_number": "257034",
+  "invoice_date": "3-31-2025",
+  "due_date": "4-15-2025",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy, LLC",
+    "address": "PO Box 5231 Conroe, TX 77305 USA"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy, LLC",
+    "address": "Hutchinson 3 Tank Battery"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "Hernandez-Fox Combined 2",
+      "item": "SS/934-B39",
+      "description": "Biocide Formula",
+      "quantity": 418,
+      "unit_price": 35.0,
+      "total_price": 14630.0
+    },
+    
+    {
+      "well_name": "Ramsey-Parker Exploration #629",
+      "item": "WS-3801",
+      "description": "Wellhead Component",
+      "quantity": 193,
+      "unit_price": 32.79,
+      "total_price": 6328.47
+    },
+    
+    {
+      "well_name": "South Connor North 9",
+      "item": "CH/547-Y15",
+      "description": "WellGuard Kit Repair Viton",
+      "quantity": 267,
+      "unit_price": 47.79,
+      "total_price": 12759.93
+    },
+    
+    {
+      "well_name": "Godchaux 8",
+      "item": "CH-8721",
+      "description": "Inhibitor Solution Low-Pressure",
+      "quantity": 492,
+      "unit_price": 3.09,
+      "total_price": 1520.28
+    },
+    
+    {
+      "well_name": "Carson C-45",
+      "item": "OLANS-995",
+      "description": "H2S Scavenger",
+      "quantity": 604,
+      "unit_price": 39.78,
+      "total_price": 24027.12
+    },
+    
+    {
+      "well_name": "",
+      "item": "CS/963-P18",
+      "description": "ChemTech SCALE-SHIELD SS-728 Type P",
+      "quantity": 499,
+      "unit_price": 26.78,
+      "total_price": 13363.22
+    },
+    
+    {
+      "well_name": "Jacobland South 2",
+      "item": "TS/561-A4",
+      "description": "OilMaster Biocide Formula",
+      "quantity": 268,
+      "unit_price": 367.13,
+      "total_price": 98390.84
+    },
+    
+    {
+      "well_name": "Hernandez UNIT",
+      "item": "CH/659-J1",
+      "description": "Paraffin Treatment",
+      "quantity": 57,
+      "unit_price": 345.48,
+      "total_price": 19692.36
+    }
+    
+  ],
+  "subtotal": "190712.22",
+  "tax": "15733.76",
+  "total": "206445.98"
+}

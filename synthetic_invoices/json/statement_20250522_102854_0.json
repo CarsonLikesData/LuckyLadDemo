@@ -1,0 +1,28 @@
+{
+  "statement_date": "5/12/2025",
+  "to": {
+    "customer_name": "LUCKY LAD ENERGY LLC",
+    "attention": null,
+    "address": "PO BOX 9828\nCONROE, TX 77305-1379"
+  },
+  "transactions": [
+    {
+      "date": "11/27/2024",
+      "transaction": "INV #93251. Due 12/27/2024. Orig. Amount $3,537.98.",
+      "amount": "3,537.98",
+      "balance": "3,537.98"
+    },
+    {
+      "date": "12/14/2024",
+      "transaction": "INV #25270. Due 1/13/2025. Orig. Amount $539.14.\nOrtiz-Rodriguez Combined 5-",
+      "amount": "539.14",
+      "balance": "4,077.12"
+    },
+    {
+      "date": "12/23/2024",
+      "transaction": "INV #20018. Due 1/22/2025. Orig. Amount $2,430.19.\nAllen 6-",
+      "amount": "2,430.19",
+      "balance": "6,507.31"
+    }
+  ]
+}

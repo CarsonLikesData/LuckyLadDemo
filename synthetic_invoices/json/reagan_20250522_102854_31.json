@@ -1,0 +1,28 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy, LLC",
+    "statement_date": "4/25/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "CHSD-994",
+      "description": "Kit Repair Viton",
+      "quantity": 143,
+      "price": 78.25
+    },
+    
+    {
+      "product_code": "TS-7499",
+      "description": "ChemTech Inhibitor Solution",
+      "quantity": 148.12,
+      "price": 20.62
+    }
+    
+  ],
+  "subtotal": "14243.98",
+  "tax": "1175.13",
+  "total": "15419.11"
+}

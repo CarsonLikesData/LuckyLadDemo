@@ -1,0 +1,42 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "LUCKY LAD ENERGY LLC",
+    "statement_date": "5/2/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "FS/343-H75",
+      "description": "Corr-Shield CS-1148 Grade Industrial",
+      "quantity": 312,
+      "price": 1.52
+    },
+    
+    {
+      "product_code": "SS18",
+      "description": "Cylinder",
+      "quantity": 38.91,
+      "price": 8.94
+    },
+    
+    {
+      "product_code": "PS/399-H50",
+      "description": "Kit Repair Viton 1/2 inch",
+      "quantity": 153,
+      "price": 10.24
+    },
+    
+    {
+      "product_code": "85-FS-4929",
+      "description": "Wellhead Component High-Pressure",
+      "quantity": 40.82,
+      "price": 2.9
+    }
+    
+  ],
+  "subtotal": "2507.2",
+  "tax": "206.84",
+  "total": "2714.04"
+}

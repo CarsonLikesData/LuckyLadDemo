@@ -1,0 +1,92 @@
+
+{
+  "invoice_number": "504000",
+  "invoice_date": "4/11/2025",
+  "due_date": "4/26/2025",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy",
+    "address": "PO Box 6709 Conroe, TX 77305"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy",
+    "address": "39756 Shepherd Loaf Suite 415 Conroe, TX 77305"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "",
+      "item": "49-FS-4584",
+      "description": "Propane",
+      "quantity": 254,
+      "unit_price": 1.91,
+      "total_price": 485.14
+    },
+    
+    {
+      "well_name": "",
+      "item": "41-FS-2015",
+      "description": "Flow Control Unit Type F",
+      "quantity": 877.69,
+      "unit_price": 191.49,
+      "total_price": 168068.86
+    },
+    
+    {
+      "well_name": "",
+      "item": "CH454",
+      "description": "OilMaster Darts",
+      "quantity": 47.15,
+      "unit_price": 20.95,
+      "total_price": 987.79
+    },
+    
+    {
+      "well_name": "39202 Davis Creek",
+      "item": "CH621",
+      "description": "Seats Type Y",
+      "quantity": 764,
+      "unit_price": 2.13,
+      "total_price": 1627.32
+    },
+    
+    {
+      "well_name": "Frazier A-24",
+      "item": "25-OLA-6882",
+      "description": "Methanol",
+      "quantity": 30.45,
+      "unit_price": 2.24,
+      "total_price": 68.21
+    },
+    
+    {
+      "well_name": "Godchaux 6",
+      "item": "WSSP-507",
+      "description": "Corr-Shield CS-1148",
+      "quantity": 857,
+      "unit_price": 1.58,
+      "total_price": 1354.06
+    },
+    
+    {
+      "well_name": "Ross, Herrera and Miller Production #959",
+      "item": "WS515",
+      "description": "Demulsifier",
+      "quantity": 641,
+      "unit_price": 452.92,
+      "total_price": 290321.72
+    },
+    
+    {
+      "well_name": "",
+      "item": "CSKY-180",
+      "description": "SCALE-SHIELD SS-728",
+      "quantity": 63,
+      "unit_price": 34.46,
+      "total_price": 2170.98
+    }
+    
+  ],
+  "subtotal": "465084.07999999996",
+  "tax": "38369.44",
+  "total": "503453.51999999996"
+}

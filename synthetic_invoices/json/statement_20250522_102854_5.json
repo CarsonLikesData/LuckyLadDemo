@@ -1,0 +1,70 @@
+{
+  "statement_date": "4/27/2025",
+  "to": {
+    "customer_name": "LUCKY LAD ENERGY LLC",
+    "attention": null,
+    "address": "PO BOX 6451\nCONROE, TX 77305-1379"
+  },
+  "transactions": [
+    {
+      "date": "11/28/2024",
+      "transaction": "INV #15422. Due 12/28/2024. Orig. Amount $1,447.26.",
+      "amount": "1,447.26",
+      "balance": "1,447.26"
+    },
+    {
+      "date": "12/22/2024",
+      "transaction": "INV #59542. Due 1/21/2025. Orig. Amount $3,399.39.",
+      "amount": "3,399.39",
+      "balance": "4,846.65"
+    },
+    {
+      "date": "12/29/2024",
+      "transaction": "INV #31361. Due 1/28/2025. Orig. Amount $1,094.20.",
+      "amount": "1,094.20",
+      "balance": "5,940.85"
+    },
+    {
+      "date": "1/10/2025",
+      "transaction": "INV #65486. Due 2/9/2025. Orig. Amount $653.89.",
+      "amount": "653.89",
+      "balance": "6,594.74"
+    },
+    {
+      "date": "2/1/2025",
+      "transaction": "INV #77937. Due 3/3/2025. Orig. Amount $3,995.48.\nKirby Singh-",
+      "amount": "3,995.48",
+      "balance": "10,590.22"
+    },
+    {
+      "date": "2/6/2025",
+      "transaction": "INV #97629. Due 3/8/2025. Orig. Amount $2,472.72.",
+      "amount": "2,472.72",
+      "balance": "13,062.94"
+    },
+    {
+      "date": "3/4/2025",
+      "transaction": "INV #44677. Due 4/3/2025. Orig. Amount $1,518.30.",
+      "amount": "1,518.30",
+      "balance": "14,581.24"
+    },
+    {
+      "date": "3/14/2025",
+      "transaction": "GENJRNL #88-29-27R. Reverse of GJE 31-16-35 Transfer of Credits for\nLUCKY LAD ENERGY LLC from LUCKY LAD ENERGY LLC to Kirby Graves",
+      "amount": "-1,900.30",
+      "balance": "12,680.94"
+    },
+    {
+      "date": "3/27/2025",
+      "transaction": "INV #96762. Due 4/26/2025. Orig. Amount $2,103.37.",
+      "amount": "2,103.37",
+      "balance": "14,784.31"
+    },
+    {
+      "date": "4/16/2025",
+      "transaction": "INV #98138. Due 5/16/2025. Orig. Amount $1,556.58.",
+      "amount": "1,556.58",
+      "balance": "16,340.89"
+    }
+  ]
+}

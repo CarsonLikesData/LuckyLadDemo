@@ -1,0 +1,49 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy LLC",
+    "statement_date": "5/21/25"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "96-OLA-2123",
+      "description": "Propane Type Z",
+      "quantity": 280,
+      "price": 4.76
+    },
+    
+    {
+      "product_code": "20-TS-7554",
+      "description": "D-SHIELD DS-129",
+      "quantity": 58,
+      "price": 138.63
+    },
+    
+    {
+      "product_code": "FSFF-378",
+      "description": "OLA-905 (Oil - Low Ash)",
+      "quantity": 497,
+      "price": 0.73
+    },
+    
+    {
+      "product_code": "PS-2970",
+      "description": "FlowPro Compression Fitting",
+      "quantity": 973,
+      "price": 1.43
+    },
+    
+    {
+      "product_code": "PS-7487",
+      "description": "Paraffin Treatment Economy Model",
+      "quantity": 486,
+      "price": 1.44
+    }
+    
+  ],
+  "subtotal": "11827.38",
+  "tax": "975.76",
+  "total": "12803.14"
+}

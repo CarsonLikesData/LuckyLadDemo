@@ -1,0 +1,47 @@
+
+{
+  "invoice_number": "IM-3961",
+  "invoice_date": "4/16/2025",
+  "due_date": "5/31/2025",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy L.L.C.",
+    "address": "694 Jennifer Coves Conroe, TX 77305"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy L.L.C.",
+    "address": "Sanders LLC Exploration #616 Site"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "Fisher-Smith Joint 2",
+      "item": "MS462",
+      "description": "SCALE-SHIELD SS-728",
+      "quantity": 548,
+      "unit_price": 101.17,
+      "total_price": 55441.16
+    },
+    
+    {
+      "well_name": "Sullivan 7",
+      "item": "75-CH-3394",
+      "description": "Compression Fitting",
+      "quantity": 852,
+      "unit_price": 9.36,
+      "total_price": 7974.72
+    },
+    
+    {
+      "well_name": "Rich ALT",
+      "item": "TS-2200",
+      "description": "Cylinder",
+      "quantity": 42.89,
+      "unit_price": 17.47,
+      "total_price": 749.29
+    }
+    
+  ],
+  "subtotal": "64165.170000000006",
+  "tax": "5293.63",
+  "total": "69458.8"
+}

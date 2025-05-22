@@ -1,0 +1,101 @@
+
+{
+  "invoice_number": "INV-0520-390",
+  "invoice_date": "4/8/2025",
+  "due_date": "5/8/2025",
+  "bill_to": {
+    "customer_name": "LUCKY LAD ENERGY LLC",
+    "address": "PO Box 4670 Conroe, TX 77305"
+  },
+  "ship_to": {
+    "customer_name": "LUCKY LAD ENERGY LLC",
+    "address": "Well Site 8666 Hernandez County East Field"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "Kirby Martinez",
+      "item": "DS943",
+      "description": "Assy Rod Piston",
+      "quantity": 119,
+      "unit_price": 2.7,
+      "total_price": 321.3
+    },
+    
+    {
+      "well_name": "West Ricky East 7",
+      "item": "83-PS-2875",
+      "description": "OilMaster METHANOL",
+      "quantity": 180,
+      "unit_price": 46.14,
+      "total_price": 8305.2
+    },
+    
+    {
+      "well_name": "",
+      "item": "CS195",
+      "description": "Valve Assembly",
+      "quantity": 271,
+      "unit_price": 3.09,
+      "total_price": 837.39
+    },
+    
+    {
+      "well_name": "Godchaux 4",
+      "item": "37-SS-6298",
+      "description": "Inhibitor Solution",
+      "quantity": 811,
+      "unit_price": 113.08,
+      "total_price": 91707.88
+    },
+    
+    {
+      "well_name": "Durham LLC Production #278",
+      "item": "DS-7139",
+      "description": "Wellhead Component",
+      "quantity": 24,
+      "unit_price": 320.3,
+      "total_price": 7687.2
+    },
+    
+    {
+      "well_name": "North Jamie North 11",
+      "item": "WS751",
+      "description": "METHANOL Premium Model",
+      "quantity": 562,
+      "unit_price": 138.9,
+      "total_price": 78061.8
+    },
+    
+    {
+      "well_name": "Hale-Wilson Combined 5",
+      "item": "DS-9415",
+      "description": "FlowPro Paraffin Treatment",
+      "quantity": 381,
+      "unit_price": 163.22,
+      "total_price": 62186.82
+    },
+    
+    {
+      "well_name": "Reyes ALT",
+      "item": "62-CH-3408",
+      "description": "Paraffin Treatment",
+      "quantity": 585,
+      "unit_price": 3.43,
+      "total_price": 2006.55
+    },
+    
+    {
+      "well_name": "Kirby Morris",
+      "item": "CSWD-233",
+      "description": "SCALE-SHIELD SS-728",
+      "quantity": 676,
+      "unit_price": 33.32,
+      "total_price": 22524.32
+    }
+    
+  ],
+  "subtotal": "273638.46",
+  "tax": "22575.17",
+  "total": "296213.63"
+}

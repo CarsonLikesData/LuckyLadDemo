@@ -1,74 +1,83 @@
 
 {
-  "invoice_number": "243620",
-  "invoice_date": "5/6/2025",
-  "due_date": "6/5/2025",
+  "invoice_number": "SI80535",
+  "invoice_date": "4/6/2025",
+  "due_date": "5/6/2025",
   "bill_to": {
-    "customer_name": "Lucky Lad Energy LLC",
-    "address": "PO Box 7372 Conroe, TX 77305 USA"
+    "customer_name": "Lucky Lad Energy L.L.C.",
+    "address": "PO Box 6654 Conroe, TX 77305 USA"
   },
   "ship_to": {
-    "customer_name": "Lucky Lad Energy LLC",
-    "address": "37960 Lynch Creek Tank Battery"
+    "customer_name": "Lucky Lad Energy L.L.C.",
+    "address": "Field Office: West Jennychester Formation"
   },
   "line_items": [
     
     {
-      "well_name": "Schultz 8",
-      "item": "DS-4758",
-      "description": "Phase Shield PS-653M",
-      "quantity": 373,
-      "unit_price": 17.66,
-      "total_price": 6587.18
-    },
-    
-    {
-      "well_name": "Diaz C-97",
-      "item": "CS-6482",
-      "description": "Darts",
-      "quantity": 190,
-      "unit_price": 14.42,
-      "total_price": 2739.8
-    },
-    
-    {
-      "well_name": "47554 Rodriguez Creek",
-      "item": "CS-4484",
-      "description": "Propane",
-      "quantity": 319,
-      "unit_price": 2.17,
-      "total_price": 692.23
-    },
-    
-    {
-      "well_name": "Godchaux 4",
-      "item": "CS-4225",
-      "description": "OLA-905 (Oil - Low Ash)",
-      "quantity": 344,
-      "unit_price": 10.61,
-      "total_price": 3649.84
-    },
-    
-    {
-      "well_name": "Kirby Austin",
-      "item": "DS-3692",
-      "description": "Phase Shield PS-653M",
-      "quantity": 114,
-      "unit_price": 12.37,
-      "total_price": 1410.18
-    },
-    
-    {
-      "well_name": "Adams 9",
-      "item": "PS-7841",
+      "well_name": "Smith-Harrison Production #114",
+      "item": "MS/321-X64",
       "description": "METHANOL",
-      "quantity": 156,
-      "unit_price": 8.85,
-      "total_price": 1380.6
+      "quantity": 373,
+      "unit_price": 24.27,
+      "total_price": 9052.71
+    },
+    
+    {
+      "well_name": "Moore 9",
+      "item": "CSTW-797",
+      "description": "ChemTech Corr-Shield CS-1148",
+      "quantity": 17.24,
+      "unit_price": 4.81,
+      "total_price": 82.92
+    },
+    
+    {
+      "well_name": "Villarreal C-11",
+      "item": "98-TS-7885",
+      "description": "SCALE-SHIELD SS-728 1/2 inch",
+      "quantity": 413,
+      "unit_price": 389.6,
+      "total_price": 160904.8
+    },
+    
+    {
+      "well_name": "Godchaux 6",
+      "item": "CS/486-F59",
+      "description": "FlowPro D-SHIELD DS-129",
+      "quantity": 853,
+      "unit_price": 14.78,
+      "total_price": 12607.34
+    },
+    
+    {
+      "well_name": "Pierce-Aguilar Production #703",
+      "item": "CH372",
+      "description": "Corr-Shield CS-1148",
+      "quantity": 592,
+      "unit_price": 215.87,
+      "total_price": 127795.04
+    },
+    
+    {
+      "well_name": "Sheppardview East 1",
+      "item": "DS-2017",
+      "description": "D-SHIELD DS-129",
+      "quantity": 530,
+      "unit_price": 451.47,
+      "total_price": 239279.1
+    },
+    
+    {
+      "well_name": "37578 Berg Creek",
+      "item": "96-MS-8187",
+      "description": "OilMaster Darts",
+      "quantity": 434,
+      "unit_price": 4.92,
+      "total_price": 2135.28
     }
     
   ],
-  "subtotal": "16459.83",
-  "tax": "1357.94",
-  "total": "17817.77"
+  "subtotal": "551857.19",
+  "tax": "45528.22",
+  "total": "597385.4099999999"
 }

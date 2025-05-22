@@ -1,0 +1,15 @@
+
+{
+  "invoice_number": "INV-0421-957",
+  "date": "4/23/2025",
+  "sold_to": "Lucky Lad Energy, LLC 790 Miller Viaduct Suite 546 Conroe, TX 77305",
+  "gallons": "678",
+  "price_per_gal": "2.02",
+  "amount": "1369.56",
+  "tax": "112.99",
+  "total_payment_due": "1482.55",
+  "tank_serial_number": "291110611",
+  "tank_size": "500",
+  "before_percentage": "19",
+  "after_percentage": "80"
+}

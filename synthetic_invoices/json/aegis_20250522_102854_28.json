@@ -1,0 +1,38 @@
+
+{
+  "invoice_number": "NK-3419",
+  "invoice_date": "4/11/2025",
+  "due_date": "4/26/2025",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy",
+    "address": "PO Box 2992 Conroe, TX 77305 USA"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy",
+    "address": "Field Office: Michaelborough Basin"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "18087 Thompson Creek",
+      "item": "CS32",
+      "description": "PetroSol Kit Repair Viton",
+      "quantity": 766,
+      "unit_price": 317.37,
+      "total_price": 243105.42
+    },
+    
+    {
+      "well_name": "Roberts UNIT",
+      "item": "19-FS-1624",
+      "description": "WellGuard Propane",
+      "quantity": 760,
+      "unit_price": 428.26,
+      "total_price": 325477.6
+    }
+    
+  ],
+  "subtotal": "568583.02",
+  "tax": "46908.1",
+  "total": "615491.12"
+}

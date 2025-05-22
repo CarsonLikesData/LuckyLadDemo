@@ -1,0 +1,49 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy, LLC",
+    "statement_date": "3/31/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "80-DS-9462",
+      "description": "Compression Fitting 1 inch",
+      "quantity": 16.6,
+      "price": 2.72
+    },
+    
+    {
+      "product_code": "MS/156-E2",
+      "description": "EnerChem Assy Rod Piston Premium Model",
+      "quantity": 178,
+      "price": 1.55
+    },
+    
+    {
+      "product_code": "64-FS-5812",
+      "description": "OLA-905 (Oil - Low Ash)",
+      "quantity": 664,
+      "price": 34.5
+    },
+    
+    {
+      "product_code": "87-WS-7618",
+      "description": "WellGuard Kit Repair Viton",
+      "quantity": 985,
+      "price": 119.6
+    },
+    
+    {
+      "product_code": "OLA480",
+      "description": "OLA-905 (Oil - Low Ash) Type K",
+      "quantity": 937,
+      "price": 12.55
+    }
+    
+  ],
+  "subtotal": "152794.4",
+  "tax": "12605.54",
+  "total": "165399.94"
+}

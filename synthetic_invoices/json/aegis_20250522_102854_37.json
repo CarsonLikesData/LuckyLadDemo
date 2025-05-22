@@ -1,0 +1,29 @@
+
+{
+  "invoice_number": "INV-0309-509",
+  "invoice_date": "5/3/25",
+  "due_date": "5/18/25",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy",
+    "address": "87416 Johnson Island Suite 269 Conroe, TX 77305"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy",
+    "address": "Well Site 1780 Michaelshire Field Field"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "Jenniferstad South 2",
+      "item": "77-OLA-5859",
+      "description": "Flow Control Unit",
+      "quantity": 349,
+      "unit_price": 2.27,
+      "total_price": 792.23
+    }
+    
+  ],
+  "subtotal": "792.23",
+  "tax": "65.36",
+  "total": "857.59"
+}

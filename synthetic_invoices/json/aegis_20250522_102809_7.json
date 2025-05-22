@@ -1,0 +1,74 @@
+
+{
+  "invoice_number": "18791[62]",
+  "invoice_date": "5/4/2025",
+  "due_date": "5/19/2025",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy, LLC",
+    "address": "PO Box 3899 Conroe, TX 77305 USA"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy, LLC",
+    "address": "7594 Hampton Centers Conroe, TX 77305"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "Bell SWD",
+      "item": "FSMP-238",
+      "description": "Biocide Formula",
+      "quantity": 879,
+      "unit_price": 10.93,
+      "total_price": 9607.47
+    },
+    
+    {
+      "well_name": "",
+      "item": "61-MS-3932",
+      "description": "D-SHIELD DS-129",
+      "quantity": 654,
+      "unit_price": 7.94,
+      "total_price": 5192.76
+    },
+    
+    {
+      "well_name": "Kirby Powell",
+      "item": "DSZN-398",
+      "description": "WellGuard Seats",
+      "quantity": 222,
+      "unit_price": 46.61,
+      "total_price": 10347.42
+    },
+    
+    {
+      "well_name": "Maldonado SWD",
+      "item": "95-FS-1344",
+      "description": "Compression Fitting",
+      "quantity": 26.51,
+      "unit_price": 16.12,
+      "total_price": 427.34
+    },
+    
+    {
+      "well_name": "Moore-Brown Combined 4",
+      "item": "WS166",
+      "description": "OilMaster H2S Scavenger",
+      "quantity": 887,
+      "unit_price": 108.74,
+      "total_price": 96452.38
+    },
+    
+    {
+      "well_name": "Mirandatown North 3",
+      "item": "57-OLA-9662",
+      "description": "Phase Shield PS-653M 3/4 inch",
+      "quantity": 115,
+      "unit_price": 4.23,
+      "total_price": 486.45
+    }
+    
+  ],
+  "subtotal": "122513.82",
+  "tax": "10107.39",
+  "total": "132621.21000000002"
+}

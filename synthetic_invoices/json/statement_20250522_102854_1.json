@@ -1,0 +1,70 @@
+{
+  "statement_date": "4/26/2025",
+  "to": {
+    "customer_name": "LUCKY LAD ENERGY LLC",
+    "attention": null,
+    "address": "PO BOX 6147\nCONROE, TX 77305-1379"
+  },
+  "transactions": [
+    {
+      "date": "11/25/2024",
+      "transaction": "GENJRNL #60-13-42R. Reverse of GJE 14-19-78 Transfer of Credits for\nLUCKY LAD ENERGY LLC from LUCKY LAD ENERGY LLC to Greene D-89",
+      "amount": "-917.55",
+      "balance": "-917.55"
+    },
+    {
+      "date": "12/9/2024",
+      "transaction": "INV #86211. Due 1/8/2025. Orig. Amount $885.79.",
+      "amount": "885.79",
+      "balance": "-31.76"
+    },
+    {
+      "date": "12/28/2024",
+      "transaction": "INV #74028. Due 1/27/2025. Orig. Amount $1,259.32.\nWade-Lambert Combined 3-",
+      "amount": "1,259.32",
+      "balance": "1,227.56"
+    },
+    {
+      "date": "1/21/2025",
+      "transaction": "GENJRNL #34-24-93R. Reverse of GJE 84-44-18 Transfer of Credits for\nLUCKY LAD ENERGY LLC from LUCKY LAD ENERGY LLC to Harris ALT",
+      "amount": "-239.31",
+      "balance": "988.25"
+    },
+    {
+      "date": "1/22/2025",
+      "transaction": "GENJRNL #61-68-77R. Reverse of GJE 77-19-71 Transfer of Credits for\nLUCKY LAD ENERGY LLC from LUCKY LAD ENERGY LLC to Bishop-Gomez Combined 4",
+      "amount": "-1,859.52",
+      "balance": "-871.27"
+    },
+    {
+      "date": "2/18/2025",
+      "transaction": "INV #51171. Due 3/20/2025. Orig. Amount $1,023.43.",
+      "amount": "1,023.43",
+      "balance": "152.16"
+    },
+    {
+      "date": "3/7/2025",
+      "transaction": "INV #58896. Due 4/6/2025. Orig. Amount $3,738.91.\nHernandez SWD-",
+      "amount": "3,738.91",
+      "balance": "3,891.07"
+    },
+    {
+      "date": "3/19/2025",
+      "transaction": "INV #20004. Due 4/18/2025. Orig. Amount $3,318.89.",
+      "amount": "3,318.89",
+      "balance": "7,209.96"
+    },
+    {
+      "date": "4/6/2025",
+      "transaction": "INV #86982. Due 5/6/2025. Orig. Amount $2,783.89.\n66788 Phillips Creek-",
+      "amount": "2,783.89",
+      "balance": "9,993.85"
+    },
+    {
+      "date": "4/19/2025",
+      "transaction": "INV #68462. Due 5/19/2025. Orig. Amount $1,297.93.",
+      "amount": "1,297.93",
+      "balance": "11,291.78"
+    }
+  ]
+}

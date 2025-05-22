@@ -1,0 +1,101 @@
+
+{
+  "invoice_number": "INV592453",
+  "invoice_date": "4/17/2025",
+  "due_date": "5/2/2025",
+  "bill_to": {
+    "customer_name": "Lucky Lad Energy LLC",
+    "address": "PO Box 9589 Conroe, TX 77305 USA"
+  },
+  "ship_to": {
+    "customer_name": "Lucky Lad Energy LLC",
+    "address": "Field Office: Banks County West"
+  },
+  "line_items": [
+    
+    {
+      "well_name": "23408 Taylor Creek",
+      "item": "CH401",
+      "description": "Compression Fitting",
+      "quantity": 397,
+      "unit_price": 19.42,
+      "total_price": 7709.74
+    },
+    
+    {
+      "well_name": "60137 Curry Creek",
+      "item": "48-PS-2005",
+      "description": "Phase Shield PS-653M 1 inch",
+      "quantity": 623,
+      "unit_price": 0.85,
+      "total_price": 529.55
+    },
+    
+    {
+      "well_name": "Kirby Ellis",
+      "item": "WS143",
+      "description": "FlowPro H2S Scavenger",
+      "quantity": 794,
+      "unit_price": 2.91,
+      "total_price": 2310.54
+    },
+    
+    {
+      "well_name": "",
+      "item": "SS263",
+      "description": "EnerChem Propane",
+      "quantity": 62,
+      "unit_price": 27.12,
+      "total_price": 1681.44
+    },
+    
+    {
+      "well_name": "Taylor Inc Exploration #671",
+      "item": "PS167",
+      "description": "D-SHIELD DS-129",
+      "quantity": 77,
+      "unit_price": 63.26,
+      "total_price": 4871.02
+    },
+    
+    {
+      "well_name": "Rogers, Martinez and Mitchell Production #709",
+      "item": "CSDQ-190",
+      "description": "Valve Assembly",
+      "quantity": 386,
+      "unit_price": 118.01,
+      "total_price": 45551.86
+    },
+    
+    {
+      "well_name": "Thompson, Rivers and French Production #396",
+      "item": "WS/996-T4",
+      "description": "D-SHIELD DS-129 Type J",
+      "quantity": 211,
+      "unit_price": 4.03,
+      "total_price": 850.33
+    },
+    
+    {
+      "well_name": "Roach 4",
+      "item": "CH/743-I1",
+      "description": "Seats",
+      "quantity": 527,
+      "unit_price": 17.67,
+      "total_price": 9312.09
+    },
+    
+    {
+      "well_name": "",
+      "item": "MS/757-N46",
+      "description": "Propane Type Y",
+      "quantity": 176,
+      "unit_price": 319.84,
+      "total_price": 56291.84
+    }
+    
+  ],
+  "subtotal": "129108.41",
+  "tax": "10651.44",
+  "total": "139759.85"
+}

@@ -1,0 +1,84 @@
+
+{
+  "header": {
+    "vendor": "Reagan Power Compression LLC",
+    "client": "Lucky Lad Energy, LLC",
+    "statement_date": "4/17/2025"
+  },
+  "line_items": [
+    
+    {
+      "product_code": "DS-4785",
+      "description": "PetroSol D-SHIELD DS-129",
+      "quantity": 720,
+      "price": 6.18
+    },
+    
+    {
+      "product_code": "WSPN-608",
+      "description": "Wellhead Component",
+      "quantity": 442,
+      "price": 387.12
+    },
+    
+    {
+      "product_code": "DS-3850",
+      "description": "Pressure Regulator 1/4 inch",
+      "quantity": 991,
+      "price": 12.96
+    },
+    
+    {
+      "product_code": "DS/991-E71",
+      "description": "EnerChem Seats",
+      "quantity": 590,
+      "price": 305.09
+    },
+    
+    {
+      "product_code": "CS-8836",
+      "description": "EnerChem Valve Assembly",
+      "quantity": 954,
+      "price": 1.11
+    },
+    
+    {
+      "product_code": "MSXV-687",
+      "description": "Inhibitor Solution Grade C",
+      "quantity": 564,
+      "price": 398.11
+    },
+    
+    {
+      "product_code": "TSRT-928",
+      "description": "Kit Repair Viton",
+      "quantity": 643,
+      "price": 2.76
+    },
+    
+    {
+      "product_code": "MS567",
+      "description": "Biocide Formula",
+      "quantity": 432,
+      "price": 420.59
+    },
+    
+    {
+      "product_code": "FSXH-627",
+      "description": "Kit Repair Viton",
+      "quantity": 10.72,
+      "price": 364.75
+    },
+    
+    {
+      "product_code": "TS873",
+      "description": "Valve Assembly 1 inch",
+      "quantity": 424,
+      "price": 207.74
+    }
+    
+  ],
+  "subtotal": "869457.52",
+  "tax": "71730.25",
+  "total": "941187.77"
+}

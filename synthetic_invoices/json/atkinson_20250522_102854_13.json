@@ -1,0 +1,15 @@
+
+{
+  "invoice_number": "384-1598",
+  "date": "3/29/2025",
+  "sold_to": "LUCKY LAD ENERGY LLC 58219 Nicole Forges Suite 486 Conroe, TX 77305",
+  "gallons": "297",
+  "price_per_gal": "3.9",
+  "amount": "1158.3",
+  "tax": "95.56",
+  "total_payment_due": "1253.86",
+  "tank_serial_number": "575518059",
+  "tank_size": "250",
+  "before_percentage": "25",
+  "after_percentage": "69"
+}

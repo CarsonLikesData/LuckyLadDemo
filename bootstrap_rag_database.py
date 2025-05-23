@@ -10,7 +10,6 @@ import os
 import json
 import argparse
 from datetime import datetime
-from typing import Dict, List, Any
 
 # Import from main processor
 from lucky_lad_invoice_processor import (

@@ -28,8 +28,8 @@ pip install exchangelib  # For Outlook support
    - Generate a password for "Mail"
 3. Set environment variables:
 ```bash
-export TEST_GMAIL_SENDER="your_sender@gmail.com"
-export TEST_GMAIL_PASSWORD="your_16_char_app_password"
+export TEST_GMAIL_SENDER="carsonDataForge@gmail.com"
+export TEST_GMAIL_PASSWORD="vykb nemu iuet zfrp"
 ```
 
 #### For Outlook:

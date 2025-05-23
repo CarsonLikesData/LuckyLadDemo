@@ -112,9 +112,11 @@ REVIEW_DIR = "invoices_for_review"  # Directory for invoices that need human rev
 
 
 # Gmail configuration
-GMAIL_USERNAME = "lucky.lad.test.df@gmail.com"
-# In production, use environment variables or a secrets manager
-GMAIL_PASSWORD = os.environ.get("GMAIL_PASSWORD", "your_app_password_here")
+GMAIL_USERNAME = "dft.luckylad.test@gmail.com"
+
+GMAIL_PASSWORD = "iwfy wjrz atpu edyt"
+
+# GMAIL_PASSWORD = os.environ.get("GMAIL_PASSWORD", "iwfywjrzatpuedyt")
 
 # Outlook configuration
 USE_OUTLOOK = os.environ.get("USE_OUTLOOK", "False").lower() == "true"

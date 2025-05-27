@@ -132,7 +132,15 @@ def load_json_metadata(file_path):
 def bootstrap_database(sample_dir, force=False):
     """Bootstrap the RAG database with sample invoices"""
     # Get RAG engine
-    rag = get_rag_engine()
+    try:
+        rag = get_rag_engine()
+        print("✅ RAG Engine initialized successfully")
+    except Exception as e:
+        print(f"❌ Failed to initialize RAG Engine: {e}")
+        print(
+            "Make sure you have installed: pip install faiss-cpu sentence-transformers"
+        )
+        return
 
     # Check if database already has invoices
     if len(rag.metadata) > 0 and not force:
@@ -143,11 +151,20 @@ def bootstrap_database(sample_dir, force=False):
     # If force is True, clear the database
     if force and len(rag.metadata) > 0:
         print(f"Clearing existing RAG database with {len(rag.metadata)} invoices...")
-        rag.index = rag.index.reset()
-        rag.metadata = []
-        rag.embeddings = []
-        rag._save_index()
-        print("RAG database cleared.")
+
+        # Clear the database properly
+        try:
+            # Create a new empty index instead of trying to reset
+            import faiss
+
+            rag.index = faiss.IndexFlatL2(384)
+            rag.metadata = []
+            rag.embeddings = []
+            rag._save_index()
+            print("RAG database cleared.")
+        except Exception as e:
+            print(f"Error clearing database: {e}")
+            return
 
     # Get list of PDF files in sample directory
     pdf_files = []

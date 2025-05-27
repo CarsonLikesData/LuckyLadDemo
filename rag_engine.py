@@ -134,6 +134,73 @@ class RAGEngine:
             self.metadata = []
             self.embeddings = []
 
+    def _verify_initialization(self):
+        """Verify that all components are properly initialized."""
+        issues = []
+
+        if not FAISS_AVAILABLE:
+            issues.append("FAISS not available")
+        elif self.index is None:
+            issues.append("FAISS index is None")
+
+        if not SENTENCE_TRANSFORMERS_AVAILABLE:
+            issues.append("SentenceTransformers not available")
+        elif self.embedding_model is None:
+            issues.append("Embedding model is None")
+
+        if self.metadata is None:
+            issues.append("Metadata is None")
+            self.metadata = []
+
+        if self.embeddings is None:
+            issues.append("Embeddings is None")
+            self.embeddings = []
+
+        if issues:
+            error_msg = f"RAG Engine initialization issues: {', '.join(issues)}"
+            logger.error(error_msg)
+            raise RuntimeError(error_msg)
+        else:
+            logger.info("✅ RAG Engine initialized successfully")
+            logger.info(f"Index type: {type(self.index)}")
+            logger.info(f"Embedding model type: {type(self.embedding_model)}")
+            logger.info(f"Current invoice count: {len(self.metadata)}")
+
+    def _create_new_index(self):
+        """Create a new FAISS index."""
+        if not FAISS_AVAILABLE:
+            raise RuntimeError("Cannot create index: FAISS not available")
+
+        try:
+            # Create new index with dimension 384 (all-MiniLM-L6-v2 embedding size)
+            self.index = faiss.IndexFlatL2(384)
+            self.metadata = []
+            self.embeddings = []
+
+            logger.info("Created new vector index")
+
+            # Save the empty index immediately to verify we can write
+            self._save_index()
+
+        except Exception as e:
+            logger.error(f"Error creating new FAISS index: {e}")
+            raise
+
+    def get_status(self):
+        """Get the current status of the RAG engine."""
+        return {
+            "embedding_model_loaded": self.embedding_model is not None,
+            "index_initialized": self.index is not None,
+            "num_invoices": len(self.metadata) if self.metadata else 0,
+            "index_dimension": self.index.d if self.index else None,
+            "vector_db_dir": VECTOR_DB_DIR,
+            "files_exist": {
+                "index": os.path.exists(INDEX_FILE),
+                "metadata": os.path.exists(METADATA_FILE),
+                "embeddings": os.path.exists(EMBEDDINGS_FILE),
+            },
+        }
+
     def _save_index(self):
         """Save the current vector index and metadata to disk."""
         try:

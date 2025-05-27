@@ -5,28 +5,30 @@
 
 import os
 import numpy as np
-import faiss
 import pickle
 from typing import Dict, List, Any
-from sentence_transformers import SentenceTransformer
 import logging
 
-# Add these imports at the top of your rag_engine.py file
+# Improved dependency checking
 try:
     import faiss
 
     FAISS_AVAILABLE = True
-except ImportError:
+    print("✅ FAISS imported successfully")
+except ImportError as e:
     FAISS_AVAILABLE = False
     faiss = None
+    print(f"❌ FAISS import failed: {e}")
 
 try:
     from sentence_transformers import SentenceTransformer
 
     SENTENCE_TRANSFORMERS_AVAILABLE = True
-except ImportError:
+    print("✅ SentenceTransformers imported successfully")
+except ImportError as e:
     SENTENCE_TRANSFORMERS_AVAILABLE = False
     SentenceTransformer = None
+    print(f"❌ SentenceTransformers import failed: {e}")
 
 # Configuration
 VECTOR_DB_DIR = "vector_db"
@@ -42,6 +44,8 @@ logger = logging.getLogger("rag_engine")
 class RAGEngine:
     def __init__(self):
         """Initialize the RAG engine with vector database and embedding model."""
+        print("🚀 Initializing RAG Engine...")
+
         # Create vector database directory if it doesn't exist
         if not os.path.exists(VECTOR_DB_DIR):
             os.makedirs(VECTOR_DB_DIR)
@@ -67,6 +71,10 @@ class RAGEngine:
         """Check if required dependencies are available."""
         missing_deps = []
 
+        print("🔍 Checking dependencies...")
+        print(f"   FAISS_AVAILABLE: {FAISS_AVAILABLE}")
+        print(f"   SENTENCE_TRANSFORMERS_AVAILABLE: {SENTENCE_TRANSFORMERS_AVAILABLE}")
+
         if not FAISS_AVAILABLE:
             missing_deps.append("faiss-cpu")
             logger.error("FAISS not available. Install with: pip install faiss-cpu")
@@ -84,6 +92,8 @@ class RAGEngine:
 
     def _initialize_embedding_model(self):
         """Initialize the sentence transformer model."""
+        print("🤖 Initializing embedding model...")
+
         if not SENTENCE_TRANSFORMERS_AVAILABLE:
             logger.error(
                 "Cannot initialize embedding model: SentenceTransformers not available"
@@ -99,43 +109,97 @@ class RAGEngine:
             logger.info(
                 f"Embedding model test successful. Dimension: {len(test_embedding)}"
             )
+            print("✅ Embedding model loaded successfully")
 
         except Exception as e:
             logger.error(f"Error loading embedding model: {e}")
+            print(f"   ❌ Embedding model failed: {e}")
             self.embedding_model = None
 
     def _load_or_create_index(self):
         """Load existing vector index or create a new one if it doesn't exist."""
+        print("📊 Loading or creating vector index...")
+
+        if not FAISS_AVAILABLE:
+            logger.error("Cannot create index: FAISS not available")
+            print("   ❌ FAISS not available")
+            return
+
         try:
+            # Try to load existing index
             if (
                 os.path.exists(INDEX_FILE)
                 and os.path.exists(METADATA_FILE)
                 and os.path.exists(EMBEDDINGS_FILE)
             ):
-                # Load existing index and metadata
+                logger.info("Loading existing vector index...")
+                print("   📂 Loading existing index...")
+
                 self.index = faiss.read_index(INDEX_FILE)
+
                 with open(METADATA_FILE, "rb") as f:
                     self.metadata = pickle.load(f)
+
                 with open(EMBEDDINGS_FILE, "rb") as f:
                     self.embeddings = pickle.load(f)
+
                 logger.info(
                     f"Loaded existing vector index with {len(self.metadata)} invoices"
                 )
+                print(f"   ✅ Loaded existing index with {len(self.metadata)} invoices")
+
             else:
                 # Create new index
-                self.index = faiss.IndexFlatL2(384)  # Dimension of the embedding model
-                self.metadata = []
-                self.embeddings = []
-                logger.info("Created new vector index")
+                logger.info("Creating new vector index...")
+                print("   🆕 Creating new index...")
+                self._create_new_index()
+
         except Exception as e:
-            logger.error(f"Error loading/creating vector index: {e}")
-            # Create new index as fallback
+            logger.error(f"Error in _load_or_create_index: {e}")
+            print(f"   ⚠️ Error loading index: {e}")
+            logger.info("Attempting to create new index as fallback...")
+            print("   🔄 Creating fallback index...")
+
+            try:
+                self._create_new_index()
+            except Exception as e2:
+                logger.error(f"Failed to create fallback index: {e2}")
+                print(f"   ❌ Fallback index creation failed: {e2}")
+                logger.error("RAG Engine initialization failed!")
+                self.index = None
+
+    def _create_new_index(self):
+        """Create a new FAISS index."""
+        print("   🏗️ Creating new FAISS index...")
+
+        if not FAISS_AVAILABLE:
+            raise RuntimeError("Cannot create index: FAISS not available")
+
+        try:
+            # Test FAISS functionality first
+            test_index = faiss.IndexFlatL2(384)
+            print("   ✅ FAISS test successful")
+
+            # Create new index with dimension 384 (all-MiniLM-L6-v2 embedding size)
             self.index = faiss.IndexFlatL2(384)
             self.metadata = []
             self.embeddings = []
 
+            logger.info("Created new vector index")
+            print("   ✅ New vector index created")
+
+            # Save the empty index immediately to verify we can write
+            self._save_index()
+            print("   ✅ Index saved successfully")
+
+        except Exception as e:
+            logger.error(f"Error creating new FAISS index: {e}")
+            print(f"   ❌ FAISS index creation failed: {e}")
+            raise
+
     def _verify_initialization(self):
         """Verify that all components are properly initialized."""
+        print("✅ Verifying initialization...")
         issues = []
 
         if not FAISS_AVAILABLE:
@@ -159,12 +223,18 @@ class RAGEngine:
         if issues:
             error_msg = f"RAG Engine initialization issues: {', '.join(issues)}"
             logger.error(error_msg)
+            print(f"   ❌ {error_msg}")
             raise RuntimeError(error_msg)
         else:
             logger.info("✅ RAG Engine initialized successfully")
             logger.info(f"Index type: {type(self.index)}")
             logger.info(f"Embedding model type: {type(self.embedding_model)}")
             logger.info(f"Current invoice count: {len(self.metadata)}")
+
+            print("   ✅ All components verified")
+            print(f"   📊 Index type: {type(self.index)}")
+            print(f"   🤖 Embedding model: {type(self.embedding_model)}")
+            print(f"   📁 Current invoices: {len(self.metadata)}")
 
     def _create_new_index(self):
         """Create a new FAISS index."""
